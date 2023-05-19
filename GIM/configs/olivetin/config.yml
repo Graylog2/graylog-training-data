@@ -1,0 +1,13 @@
+# Listen on all addresses available, port 1337
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337 
+
+# Choose from INFO (default), WARN and DEBUG
+logLevel: "DEBUG"
+showFooter: false
+showNewVersions: false
+
+actions:   
+- title: Pihole Logs
+  shell: cat /home/ubuntu/GIT/GIM/log_data/pihole_combined.log | ncat -w 1 -u localhost 1500
+  icon: backup
+  timeout: 900
