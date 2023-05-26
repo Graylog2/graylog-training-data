@@ -1,13 +1,14 @@
 # These are the minimum configurations to change for this exercise
 
-is_leader = true
+is_leader = false
 password_secret = 1VSDgOGEVKHHAwoGbwEJiz8SgnIxbM2dWBJHX9GUiyLKH1gTFrfUTKirrLqd4yrR9YqhqUMl6T6r09cDNmKeeOqTFvu7UKxQ
 root_password_sha2 = 75dfed588d593d88f32a1307351a50c24aec488652907140d5427e223831fef5
 # Unicorn99!
 # Don't do this in production.
 
-mongdb_uri = 
+mongodb_uri = 
 #mongodb://example:27017,example_2:27017/graylog?replicaSet=rs0
+
 elasticsearch_hosts = 
 #http://example:9200,http://example_2:9200
 

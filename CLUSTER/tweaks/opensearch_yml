@@ -2,10 +2,10 @@ cluster.name: graylog
 node.name: ${NODE_NAME}
 path.data: /var/lib/opensearch
 path.logs: /var/log/opensearch
-discovery.seed_hosts: []
+discovery.seed_hosts: [zlmhdkaagc2yqancw-646e2dd343aad0153e4e3b54.labs.strigo.io,zlmhdkaagc2yqancw-646e2dd343aad0153e4e3b55.labs.strigo.io,zlmhdkaagc2yqancw-646e419ea072e7d4bbe71be4.labs.strigo.io]
 # example, example_2
 
-cluster.initial_cluster_manager_nodes: []
+cluster.initial_cluster_manager_nodes: [zlmhdkaagc2yqancw-646e2dd343aad0153e4e3b54.labs.strigo.io,zlmhdkaagc2yqancw-646e2dd343aad0153e4e3b55.labs.strigo.io,zlmhdkaagc2yqancw-646e419ea072e7d4bbe71be4.labs.strigo.io]
 # example, example_2
 
 network.host: 0.0.0.0
