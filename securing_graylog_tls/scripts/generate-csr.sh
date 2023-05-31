@@ -6,8 +6,8 @@ dns2=${dns%-*}
 while true
 do
     read -p "Hostname of Graylog server: " i
-    [ ! $i == "$dns.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns.logfather.org!)"
-    [[ $i == "$dns.logfather.org" ]] && break
+    [ ! $i == "$dns-graylog.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns.logfather.org!)"
+    [[ $i == "$dns-graylog.logfather.org" ]] && break
 done
 
 while true
