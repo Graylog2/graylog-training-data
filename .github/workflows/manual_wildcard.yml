@@ -4,7 +4,7 @@ on:
   workflow_dispatch
     
 jobs:
-  Update-Docker-Compose-File:
+  Update-Wildcard-Cert:
     runs-on: "ubuntu-latest"
     
     steps:
@@ -19,7 +19,7 @@ jobs:
           sudo mkdir /root/.secrets
           sudo touch /root/.secrets/cloudflare
           sudo chmod 600 /root/.secrets/cloudflare
-          sudo printf 'dns_cloudflare_api_token = "%s"' "$CLOUDFLARE_DNS_API_TOKEN" > /root/.secrets/cloudflare
+          printf 'dns_cloudflare_api_token = "%s"' "$CLOUDFLARE_DNS_API_TOKEN" | sudo tee /root/.secrets/cloudflare
       
       - name: "Check Current Version and update if needed" 
         shell: "bash"
