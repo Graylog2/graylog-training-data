@@ -6,8 +6,8 @@ dns2=${dns%-*}
 while true
 do
     read -p "Hostname of Graylog server: " i
-    [ ! $i == "$dns.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns.logfather.org!)"
-    [[ $i == "$dns.logfather.org" ]] && break
+    [ ! $i == "$dns-graylog.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns-graylog.logfather.org!)"
+    [[ $i == "$dns-graylog.logfather.org" ]] && break
 done
 
 while true
@@ -17,6 +17,12 @@ do
     [[ $i == "$dns2-opensearch.logfather.org" ]] && break
 done
 
+while true
+do
+    read -p "Hostname of MongoDB server: " i
+    [ ! $i == "$dns-mongodb.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns-mongodb.logfather.org!)"
+    [[ $i == "$dns-mongodb.logfather.org" ]] && break
+done
 
 echo "=== Generating CSR from provided info..."
 sleep 1

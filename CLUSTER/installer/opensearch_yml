@@ -1,0 +1,13 @@
+node.name: ${HOSTNAME}
+
+discovery.seed_hosts: [node.domain.com,node2.domain.com]
+
+cluster.initial_cluster_manager_nodes: [node.domain.com,node2.domain.com]
+cluster.name: graylog
+
+path.data: /opt/opensearch/data
+path.logs: /var/log/opensearch
+
+network.host: 0.0.0.0
+action.auto_create_index: false
+plugins.security.disabled: true
