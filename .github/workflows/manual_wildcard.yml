@@ -1,0 +1,35 @@
+name: "Manual Wildcard Cert"
+
+on:
+  workflow_dispatch
+    
+jobs:
+  Update-Docker-Compose-File:
+    runs-on: "ubuntu-latest"
+    
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v3"
+
+      - name: "Create Cloudflare key file"
+        shell: "bash"
+        env:
+          CLOUDFLARE_DNS_API_TOKEN: "${{ secrets.DNS_CLOUDFLARE_API_TOKEN }}"
+        run: |
+          touch /root/.secrets/cloudflare
+          chmod 600 /root/.secrets/cloudflare
+          printf 'dns_cloudflare_api_token = "%s"' "$CLOUDFLARE_DNS_API_TOKEN" > /root/.secrets/cloudflare
+      
+      - name: "Check Current Version and update if needed" 
+        shell: "bash"
+        run: |
+          sudo apt update && sudo apt install python3-certbot certbot python3-certbot-nginx python3-certbot-dns-cloudflare python3-cloudflare -y
+          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "*.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos
+          privkey=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/privkey.pem) && sudo cp $privkey certs/privkey.pem
+          cert=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/cert.pem) && sudo cp $cert certs/cert.pem
+          cachain=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/fullchain.pem) && sudo cp $cachain certs/fullchain.pem
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Git Actions Updated Wildcard Certificate"
+          git push
