@@ -16,6 +16,7 @@ jobs:
         env:
           CLOUDFLARE_DNS_API_TOKEN: "${{ secrets.DNS_CLOUDFLARE_API_TOKEN }}"
         run: |
+          sudo mkdir /root/.secrets
           sudo touch /root/.secrets/cloudflare
           sudo chmod 600 /root/.secrets/cloudflare
           sudo printf 'dns_cloudflare_api_token = "%s"' "$CLOUDFLARE_DNS_API_TOKEN" > /root/.secrets/cloudflare
