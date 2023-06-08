@@ -1,7 +1,8 @@
 name: "Manual Wildcard Cert"
 
 on:
-  workflow_dispatch
+  schedule:
+    - cron:  '0 0 1 */2 *'    # At 00:00, on day 1 of the month, every 2 months
     
 jobs:
   Update-Wildcard-Cert:
