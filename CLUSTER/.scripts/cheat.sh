@@ -6,9 +6,9 @@ printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m+:+        +:+    +:+ +:+         +:+
 printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m+#+        +#++:++#++ +#++:++#   +#++:++#++: +#+     +#++:++#   +#++:++#: \n" 
 printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m+#+        +#+    +#+ +#+        +#+     +#+ +#+     +#+        +#+    +#+\n" 
 printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m#+#    #+# #+#    #+# #+#        #+#     #+# #+#     #+#        #+#    #+#\n" 
-printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m ########  ###    ### ########## ###     ### ###     ########## ###    ###\n\e[39m" 
+printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))m ########  ###    ### ########## ###     ### ###     ########## ###    ###\n\n\e[39m" 
 
-printf "You cheater.  Oh well, its here for a reason. :) \n\n"
+printf "You cheater.  Oh well, its here for a reason. :) \nReminder: This is not the entire config, just the stuff thats annoying to copy and paste\nThe colours are random, so just re-run it if they're hard to read.\n\n\n"
 printf " * * * * Mongo Cluster * * * * \n"
 printf "\e[3$(( $RANDOM * 6 / 32767 + 1 ))mmongosh --eval \'rs.add(\"${STRIGO_RESOURCE_0_DNS}\")\'\n\n"
 printf "mongosh --eval \'rs.add(\"${STRIGO_RESOURCE_1_DNS}\")\'\n\n"
