@@ -1,0 +1,86 @@
+# dynamic.toml
+# Traefik dynamic/running config specified in static config
+
+
+# Declare cert & key used by websecure entrypoint:
+[[tls.certificates]]
+  certFile = "/home/admin/.class/certs/fullchain.pem"
+  keyFile = "/home/admin/.class/certs/privkey.pem"
+
+
+[http.routers]
+  [[http.routers.graylog-web]]
+    entryPoints = ["websecure"]
+    # Need to set this to whatever the user is going to put in the URL, which I think is the *.logfather.org DNS record.
+    # Is there an env var that will contain this?
+    rule = "Host(`{{env STRIGO_RESOURCE_DNS}}`)"
+    service = "graylog-web"
+
+
+[http.services]
+  [http.services.graylog-web.loadBalancer]
+    [http.services.graylog-web.loadBalancer.healthCheck]
+      path = "/api/system/lbstatus"
+    
+    [[http.services.graylog-web.loadBalancer.servers]]
+      url = "http://{{env STRIGO_RESOURCE_0_DNS}}:9000/"
+
+    [[http.services.graylog-web.loadBalancer.servers]]
+      url = "http://{{env STRIGO_RESOURCE_1_DNS}}:9000/"
+
+    [[http.services.graylog-web.loadBalancer.servers]]
+      url = "http://{{env STRIGO_RESOURCE_2_DNS}}:9000/"
+
+
+[tcp.routers]
+  [tcp.routers.beats]
+    entryPoints = ["beats"]
+    rule = "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+    service = "beats"
+
+  [tcp.routers.raw]
+    entryPoints = ["raw"]
+    rule = "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+    service = "raw"
+
+
+[tcp.services]
+  [tcp.services.beats.loadBalancer]
+    # These need to be IP addresses, so there needs to be an env var set
+    # that contains IP addresses for each clustered node:
+    [[tcp.services.beats.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_0_IP}}:5044"
+
+    [[tcp.services.beats.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_1_IP}}:5044"
+
+    [[tcp.services.beats.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_2_IP}}:5044"
+
+  [tcp.services.raw.loadBalancer]
+    [[tcp.services.raw.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_0_IP}}:5555"
+
+    [[tcp.services.raw.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_1_IP}}:5555"
+
+    [[tcp.services.raw.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_2_IP}}:5555"
+
+
+[udp.routers]
+  [udp.routers.syslog]
+    entryPoints = ["syslog"]
+    service = "syslog"
+
+
+[udp.services]
+  [udp.services.syslog]
+    [[udp.services.syslog.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_0_IP}}:514"
+
+    [[udp.services.syslog.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_1_IP}}:514"
+
+    [[udp.services.syslog.loadBalancer.servers]]
+      address = "{{env STRIGO_RESOURCE_2_IP}}:514"
