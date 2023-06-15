@@ -1,0 +1,24 @@
+# traefik.toml
+logLevel = "DEBUG"
+defaultEntryPoints = ["http", "https"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/home/admin/.class/certs/fullchain.pem"
+      KeyFile = "/home/admin/.class/certs/privkey.pem"
+  [entryPoints.syslog]
+    address = ":514/udp"
+  [entryPoints.beats]
+    address = ":5044"  
+  [entryPoints.raw]
+    address = ":5000"
+  
+[file]
+watch = true
+filename = "/home/admin/.class/CLUSTER/.configs/rules.toml"

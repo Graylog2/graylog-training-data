@@ -1,0 +1,35 @@
+# rules
+
+# configure the backend server addresses
+[backends]
+  [backends.graylog]
+    [backends.graylog.servers.primary]
+    url = "http://172.17.0.2:9000"
+    weight = 10
+    [backends.graylog.servers.node_1]
+    url = "http://172.17.0.3:9000"
+    weight = 5
+    [backends.graylog.servers.node_2]
+    url = "http://172.17.0.3:9000"
+    weight = 5
+
+[frontends]
+  [frontends.frontend]
+  backend = "graylog"
+  passHostHeader = true
+  priority = 10
+  entrypoints = ["https"] 
+    [frontends.frontend2.routes.test_1]
+    rule = "Host:{subdomain:[a-z]+}.localhost"
+
+[udp.services]
+  [udp.services.syslog]
+    [udp.services.syslog.loadBalancer]
+      [udp.services.syslog.loadBalancer.servers.server1]
+        address = "private-ip-server-1:514/"
+      [udp.services.syslog.loadBalancer.servers.server2]
+        address = "private-ip-server-1:514/"
+      [udp.services.syslog.loadBalancer.servers.server3]
+        address = "private-ip-server-1:514/"
+
+  
