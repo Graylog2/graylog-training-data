@@ -21,7 +21,7 @@
     address = ":443"
     [entryPoints.websecure.http.tls]
       [[entryPoints.websecure.http.tls.domains]]
-        main = "*.logfather.org"
+        main = "*.logfather.org"  # Unsure if wildcard in CN will work. If not, can just put whatever we want here bc the SAN is the only thing apps care about these days
         sans = ["*.logfather.org"]
 
   [entryPoints.syslog]
