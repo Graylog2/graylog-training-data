@@ -13,8 +13,8 @@ sudo useradd \
   --system --uid 321 traefik
 sudo mkdir /etc/traefik
 sudo mkdir /etc/traefik/acme
-## copy traefik.toml once created
-sudo cp /path/to/traefik.toml /etc/traefik
+## copy configs
+sudo cp ../.configs/traefik.toml ../.configs/dynamic.toml /etc/traefik
 
 sudo chown -R root:root /etc/traefik
 sudo chown -R traefik:traefik /etc/traefik/acme
@@ -22,7 +22,7 @@ sudo chown root:root /etc/traefik/traefik.toml
 sudo chmod 644 /etc/traefik/traefik.toml
 
 ## copy traefik service file once created
-sudo cp /path/to/traefik.service /etc/systemd/system/
+sudo cp ./traefik.service /etc/systemd/system/
 
 sudo chown root:root /etc/systemd/system/traefik.service
 sudo chmod 644 /etc/systemd/system/traefik.service
