@@ -1,0 +1,44 @@
+log:
+  filePath: "/var/log/traefik/server.log"
+  level: DEBUG
+
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+
+api:
+  dashboard: true                             # Enable the dashboard
+  insecure: true
+
+# Certificate Resolvers are responsible for retrieving certificates from an ACME server
+# See https://doc.traefik.io/traefik/https/acme/#certificate-resolvers
+
+entryPoints:
+  http:
+    address: ":80"                            # Create the HTTP entrypoint on port 80
+    http:
+      redirections:                           # HTTPS redirection (80 to 443)
+        entryPoint:
+          to: "https"                         # The target element
+          scheme: "https"                     # The redirection target scheme
+  https:
+    address: ":443"                           # Create the HTTPS entrypoint on port 443
+    http:
+      tls:
+        domains:
+          - main: "logfather.org"
+  syslog:
+    address: ":514/udp"
+  beats:
+    address: ":5044/tcp"
+  raw:
+    address: ":5555/tcp"
+
+global:
+  checknewversion: true                       # Periodically check if a new version has been released.
+  sendanonymoususage: true                    # Periodically send anonymous usage statistics.
+
+providers:
+  file:
+    filename: "/etc/traefik/config.yml"       # Link to the dynamic configuration
+    watch: true                               # Watch for modifications
+  providersThrottleDuration: 10               # Configuration reload frequency
