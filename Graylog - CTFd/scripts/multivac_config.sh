@@ -1,0 +1,1 @@
+echo 'printf "You found the right system, here is a flag: CosmicACOneDay!\n"' >> /root/.bashrc

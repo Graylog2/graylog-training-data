@@ -44,6 +44,26 @@ cluster: null
 EOF
 # init the LXC container with ubuntu focal
 lxc init images:ubuntu/focal/amd64 multivac
+# setup static IP for multivac container
+cat <<EOF>/var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/netplan/10-lxc.yaml
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: false
+      dhcp-identifier: mac
+      addresses: [172.18.10.10/16]
+      gateway4: 172.18.0.1
+      nameservers:
+        addresses: [1.1.1.1]
+EOF
+# setup hosts file resolution for graylog container in multivac
+graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.graylog_default.IPAddress }}' graylog-graylog-1)
+echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
+# start multivac!
+#lxc start multivac
+# execute multivac config script
+#lxc exec multivac -- bash -c "$(cat multivac_config.sh)"
 
 #Dan's Log magic goes here
 
