@@ -1,0 +1,13 @@
+# Listen on all addresses available, port 1337
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337 
+
+# Choose from INFO (default), WARN and DEBUG
+logLevel: "DEBUG"
+showFooter: false
+showNewVersions: false
+
+actions:   
+- title: PFSense Logs
+  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 5555
+  icon: backup
+  timeout: 900
