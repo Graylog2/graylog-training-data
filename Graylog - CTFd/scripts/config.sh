@@ -78,9 +78,9 @@ curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" 
 
 #Move Log Data
 mkdir /etc/graylog/log_data
-mv /Graylog - CTFd/log_data/* /etc/graylog/log_data
+mv "/Graylog - CTFd/log_data/*" /etc/graylog/log_data
 
 #Update OT Config 
-mv /Graylog - CTFd/configs/olivetin/config.yaml /etc/OliveTin/config.yaml
+mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 
 #Cleanup this folder so noones cheaters
