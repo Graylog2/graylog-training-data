@@ -2,39 +2,61 @@
 # Main Traefik static/startup config
 
 
-# Specify logging options:
+# Logging options:
 [log]
   level = "DEBUG"
   format = "json"
   filepath = "/var/log/traefik/traefik.log"
 
+[accessLog]
+  filePath = "/var/log/traefik/access.log"
 
+# Enable API (optional):
+# Enabling the API in production is not recommended, because it will expose all configuration elements, including sensitive data.
+[api]
+  dashboard = false
+  insecure = false
+
+# Global options (all optional):
+[global]
+  checkNewVersion = true                                              # recommended
+  sendAnonymousUsage = true                                           # recommended if feeling altruistic
+
+# Entrypoints (listeners):
 [entryPoints]
 
   [entryPoints.web]
-    address = ":80"
+    address = ":80"                                                   # Create the HTTP entrypoint on port 80
     [entryPoints.web.http.redirections]
-      [entryPoints.web.http.redirections.entryPoint]
-        to = "websecure"
+      [entryPoints.web.http.redirections.entryPoint]                  # HTTPS redirection (80 to 443)
+        to = "websecure"                                              # The target element
+        scheme = "https"                                              # The redirection target scheme
 
   [entryPoints.websecure]
-    address = ":443"
+    address = ":443"                                                  # Create the HTTPS entrypoint on port 443
     [entryPoints.websecure.http.tls]
       [[entryPoints.websecure.http.tls.domains]]
-        main = "{{env publicdns}}"  # Unsure if wildcard in CN will work. If not, can just put whatever we want here bc the SAN is the only thing apps care about these days
-        sans = ["{{env publicdns}}"]
+        main = "{{env publicdns}}"                                    # The target domains for TLS hostname verification
+        #sans = ["{{env publicdns}}"]                                 # Specify SANS DNS and/or IP's if necessary
 
   [entryPoints.syslog]
     address = ":514/udp"
+    [entryPoints.syslog.forwardedHeaders]
+      trustedIPs = ["172.16.0.0/12"]                                  # Add your IP's or subnets here where Graylog Inputs are listening
 
   [entryPoints.beats]
-    address = ":5044"  
+    address = ":5044"
+    [entryPoints.beats.forwardedHeaders]
+      trustedIPs = ["172.16.0.0/12"]                                  # Add your IP's or subnets here where Graylog Inputs are listening
 
   [entryPoints.raw]
     address = ":5000"
+    [entryPoints.raw.forwardedHeaders]
+      trustedIPs = ["172.16.0.0/12"]                                  # Add your IP's or subnets here where Graylog Inputs are listening
 
 
-[providers] 
+[providers]
+  providersThrottleDuration = 10                                      # Configuration reload frequency
   [providers.file]
-    watch = true
-    filename = "/home/admin/.class/CLUSTER/.configs/dynamic.toml"
+    watch = true                                                      # Watch for modifications
+    filename = "/etc/traefik/dynamic.toml"     # Link to the dynamic configuration
