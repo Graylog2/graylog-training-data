@@ -13,7 +13,7 @@
     entryPoints = ["websecure"]
     # Need to set this to whatever the user is going to put in the URL, which I think is the *.logfather.org DNS record.
     # Is there an env var that will contain this?
-    rule = "Host(`{{env STRIGO_RESOURCE_DNS}}`)"
+    rule = "Host(`{{env publicdns}}`)"
     service = "graylog-web"
 
 
@@ -35,12 +35,12 @@
 [tcp.routers]
   [tcp.routers.beats]
     entryPoints = ["beats"]
-    rule = "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+    rule = "HostSNIRegexp(`{subdomain:[a-z]+}-lab.logfather.org`)"
     service = "beats"
 
   [tcp.routers.raw]
     entryPoints = ["raw"]
-    rule = "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+    rule = "HostSNIRegexp(`{subdomain:[a-z]+}-lab.logfather.org`)"
     service = "raw"
 
 
