@@ -1,0 +1,79 @@
+# graylog.yml
+# Traefik dynamic/running config specified in static config
+
+http:
+  routers:
+    graylog-router:
+      entryPoints:
+        - "https"
+      rule: "Host(`abe-lab12.logfather.org`)"
+      service: "graylog-web"
+      tls: {}
+    graylog-api-router:
+      entryPoints:
+        - "https"
+      rule: "Host(`abe-lab12.logfather.org`) && Path(`/api`)"
+      service: "graylog-api-web"
+      tls: {}
+  services:
+    graylog-web:
+      loadBalancer:
+        servers:
+          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:9000/" 
+          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:9000/"
+          - url: "http://izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:9000/"
+        healthCheck:
+          path: /api/system/lbstatus
+    graylog-api-web:
+       loadBalancer:
+        servers:
+          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:9000/" 
+        healthCheck:
+          path: /api/system/lbstatus
+# Declare cert & key used by websecure entrypoint:
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certs/fullchain.pem"
+      keyFile: "/etc/traefik/certs/privkey.pem"
+
+tcp:
+  routers:
+    beats-router:
+      entryPoints:
+        - "beats"
+      rule: "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+      service: "beats"
+        tls: {}
+    raw-router:
+      entryPoints:
+        - "raw"
+      rule: "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
+      service: "raw"
+        #  tls: {}
+  services:
+    beats:
+      loadBalancer:
+        servers:
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:5044" 
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:5044"
+          - address: "izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:5044"
+    raw:
+      loadBalancer:
+        servers:
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:5555"
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:5555"
+          - address: "izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:5555"
+
+udp:
+  routers:
+    syslog-router:
+      entryPoints:
+        - "syslog"
+      service: "syslog"
+  services:
+    syslog:
+      loadBalancer:
+        servers:
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:514"
+          - address: "izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:514"
+          - address: "izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:514"

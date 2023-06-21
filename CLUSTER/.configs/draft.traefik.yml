@@ -28,10 +28,19 @@ entryPoints:
           - main: "logfather.org"
   syslog:
     address: ":514/udp"
+      forwardedHeaders:
+      trustedIPs:
+        - "172.16.0.0/12"
   beats:
     address: ":5044/tcp"
+      forwardedHeaders:
+      trustedIPs:
+        - "172.16.0.0/12"
   raw:
     address: ":5555/tcp"
+      forwardedHeaders:
+      trustedIPs:
+        - "172.16.0.0/12"
 
 global:
   checknewversion: true                       # Periodically check if a new version has been released.
