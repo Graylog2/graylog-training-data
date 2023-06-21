@@ -23,7 +23,7 @@
       path = "/api/system/lbstatus"
     
     [[http.services.graylog-web.loadBalancer.servers]]
-      url = "http://{{env STRIGO_RESOURCE_0_DNS}}:9000/"
+      url = "http://{{env STRIGO_RESOURCE_0_DNS}}:9000/"  # *.strigo.io addresses should be fine here
 
     [[http.services.graylog-web.loadBalancer.servers]]
       url = "http://{{env STRIGO_RESOURCE_1_DNS}}:9000/"
@@ -47,7 +47,8 @@
 [tcp.services]
   [tcp.services.beats.loadBalancer]
     # These need to be IP addresses, so there needs to be an env var set
-    # that contains IP addresses for each clustered node:
+    # that contains IP addresses for each clustered node. A simple
+    # nslookup against the strigo.io hostname in the launch script should work
     [[tcp.services.beats.loadBalancer.servers]]
       address = "{{env STRIGO_RESOURCE_0_IP}}:5044"
 
@@ -77,7 +78,7 @@
 [udp.services]
   [udp.services.syslog]
     [[udp.services.syslog.loadBalancer.servers]]
-      address = "{{env STRIGO_RESOURCE_0_IP}}:514"
+      address = "{{env STRIGO_RESOURCE_0_IP}}:514"  # *.strigo.io addresses should be fine here
 
     [[udp.services.syslog.loadBalancer.servers]]
       address = "{{env STRIGO_RESOURCE_1_IP}}:514"
