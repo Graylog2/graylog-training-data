@@ -1,0 +1,235 @@
+{
+  "v": 1,
+  "id": "2481dbe9-61a3-46b1-a052-51506ac380ac",
+  "rev": 1,
+  "name": "Unix Graybeard",
+  "summary": "Adventures of a Unix Graybeard",
+  "description": "CTF Stuff for Unix Graybeardness",
+  "vendor": "BroFreshionalBlurvices",
+  "url": "https://www.graylog.org",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "sidecar_collector_configuration",
+        "version": "1"
+      },
+      "id": "13616529-9ad7-4a57-9b29-d82192c1d5c4",
+      "data": {
+        "collector_id": {
+          "@type": "string",
+          "@value": "81210fb0-6d47-4d02-8713-008d7dff41c4"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "isaac"
+        },
+        "color": {
+          "@type": "string",
+          "@value": "#FFFFFF"
+        },
+        "template": {
+          "@type": "string",
+          "@value": "# Needed for Graylog\nfields_under_root: true\nfields.collector_node_id: ${sidecar.nodeName}\nfields.gl2_source_collector: ${sidecar.nodeId}\n\nfilebeat.inputs:\n- input_type: log\n  paths:\n    - /var/log/thelastquestion.log\n  type: log\noutput.logstash:\n   hosts: [\"graylog:5044\"]\npath:\n  data: ${sidecar.spoolDir!\"/var/lib/graylog-sidecar/collectors/filebeat\"}/data\n  logs: ${sidecar.spoolDir!\"/var/lib/graylog-sidecar/collectors/filebeat\"}/log\nlogging.level: info\nlogging.to_files: true\nlogging.files:\n  path: /var/log/filebeat\n  name: filebeat\n  keepfiles: 1\n  permissions: 0640"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "04ed08dd-a157-4e07-aa78-82303326f0fd",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MQ-17J's Server Messages"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "MQ-173 worked really hard to decode these messages."
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"MQ-17J's Server Messages\"\nwhen\n  to_string($message.source) == \"multivac\"\nthen\n  let new_message = base64_decode(to_string($message.message));\n  let new_messagea = replace(new_message,\"ug\",\"wn\");\n  let new_messageb = replace(new_messagea,\"igan\",\"alac\");\n  let new_messagec = replace(new_messageb,\"r\",\"line\");\n  set_field(\"message\", new_messagec);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "c3138156-a505-4cab-9c66-23d718a6c9b1",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Global Beats"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5044
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "no_beats_prefix": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog.plugins.beats.Beats2Input"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "6499925b-ecc9-4fab-81c6-a0f23b5af641",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MQ-17J"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Important Messages from Important Servers"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"MQ-17J\"\nstage 0 match either\nrule \"MQ-17J's Server Messages\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "sidecar_collector",
+        "version": "1"
+      },
+      "id": "81210fb0-6d47-4d02-8713-008d7dff41c4",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "filebeat"
+        },
+        "service_type": {
+          "@type": "string",
+          "@value": "exec"
+        },
+        "node_operating_system": {
+          "@type": "string",
+          "@value": "linux"
+        },
+        "executable_path": {
+          "@type": "string",
+          "@value": "/usr/share/filebeat/bin/filebeat"
+        },
+        "execute_parameters": {
+          "@type": "string",
+          "@value": "-c  %s"
+        },
+        "validation_parameters": {
+          "@type": "string",
+          "@value": "test config -c %s"
+        },
+        "default_template": {
+          "@type": "string",
+          "@value": "# Needed for Graylog\nfields_under_root: true\nfields.collector_node_id: ${sidecar.nodeName}\nfields.gl2_source_collector: ${sidecar.nodeId}\n\nfilebeat.inputs:\n- input_type: log\n  paths:\n    - /var/log/*.log\n  type: log\noutput.logstash:\n   hosts: [\"192.168.1.1:5044\"]\npath:\n  data: ${sidecar.spoolDir!\"/var/lib/graylog-sidecar/collectors/filebeat\"}/data\n  logs: ${sidecar.spoolDir!\"/var/lib/graylog-sidecar/collectors/filebeat\"}/log"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    }
+  ]
+}
