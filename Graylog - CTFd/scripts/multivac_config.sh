@@ -10,6 +10,7 @@ apt-get install -y graylog-sidecar
 apt-get install -y filebeat
 sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 systemctl restart ssh
+echo "ZZZZZGRAYLOGIPZZZZZ graylog" >> /etc/hosts
 echo 'root:AlexanderAdell' | chpasswd
 sed -i '1s/^/\n/' /etc/graylog/sidecar/sidecar.yml
 sed -i '1s/^/#Have a flag: oN-a-sPace-sHip-tO-X-23\n/' /etc/graylog/sidecar/sidecar.yml
