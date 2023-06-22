@@ -85,7 +85,7 @@ mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
 
 #Add course CPs
-for entry in /home/ubuntu/GIT/GIM/configs/content_packs/*
+for entry in "/Graylog - CTFd/configs/content_packs/*"
 do
   printf "\n\nInstalling Content Package: $entry\n"
   id=$(cat $entry | jq -r '.id')
