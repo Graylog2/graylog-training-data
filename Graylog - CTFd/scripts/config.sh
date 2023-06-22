@@ -14,7 +14,17 @@ docker run -p 7000:80 -d --restart always --log-driver gelf --log-opt gelf-addre
 #Load Abe's Webhook Tester
 docker run -p 8080:8080 -d --restart always tarampampam/webhook-tester
 
-#Ricks Sysadmin stuffs!
+#Wait for GL before api calls
+while ! curl -s -k -u 'admin:yabba dabba doo' https://localhost/api/system/cluster/nodes; do
+	printf "\n\nWaiting for GL to come online to add content\n"
+    sleep 5
+done
+
+#Rick's Sysadmin stuffs!
+# Add a flag to the home directory passwords.txt
+echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Security' > /home/ubuntu/passwords.txt
+echo 'root@multivac - AlexanderAdell' >> /home/ubuntu/passwords.txt
+chown ubuntu:ubuntu /home/ubuntu/passwords.txt
 # get the docker bridge so we can add the lxc container to it, pretty sure this is illegal in 12 states
 docker_bridge="br-"$(docker network list | grep 'graylog_default' | cut -f 1 -d ' ')
 # init LXD with a config
@@ -61,17 +71,15 @@ EOF
 # setup hosts file resolution for graylog container in multivac
 graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.graylog_default.IPAddress }}' graylog-graylog-1)
 echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
+echo "172.18.10.10 multivac" >> /etc/hosts
 # start multivac!
-#lxc start multivac
+lxc start multivac
 # execute multivac config script
-#lxc exec multivac -- bash -c "$(cat multivac_config.sh)"
+sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/64820c50d55a8e608878168a/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
+sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" multivac_config.sh
+lxc exec multivac -- bash -c "$(cat multivac_config.sh)"
 
 # Do Graylog launch and wait last...
-#Wait for GL before api calls
-while ! curl -s -k -u 'admin:yabba dabba doo' https://localhost/api/system/cluster/nodes; do
-	printf "\n\nWaiting for GL to come online to add content\n"
-    sleep 5
-done
 
 #Add GL inputs
 curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.raw.tcp.RawTCPInput","configuration":{"bind_address":"0.0.0.0","port":5555,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":false,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8"},"title":"RAW Data","global":true,"node":"93f01a3f-d051-436f-9bab-0c11f22cd55c"}'
@@ -85,7 +93,7 @@ mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
 
 #Add course CPs
-for entry in "/Graylog - CTFd/configs/content_packs/*"
+for entry in /Graylog\ -\ CTFd//configs/content_packs/*
 do
   printf "\n\nInstalling Content Package: $entry\n"
   id=$(cat $entry | jq -r '.id')
