@@ -12,14 +12,12 @@ actions:
   icon: backup
   timeout: 900
 
-actions:   
 - title: We Book
-  shell: while read x; do echo -e $x"\0" | nc localhost 12201 -w0; done < /etc/graylog/log_data/we_book.log
+  shell: while read x; do echo $x"\0" | nc localhost 12201 -w 1; done < /etc/graylog/log_data/we_book.log
   icon: "&#128218"
   timeout: 900
-
-actions:   
+   
 - title: Poetic Regex
-  shell: while read x; do echo -e $x"\0" | nc localhost 12201 -w0; sleep 0.01; done < /etc/graylog/log_data/nasty.log
+  shell: while read x; do echo $x"\0" | nc localhost 12201 -w 1; sleep 0.01; done < /etc/graylog/log_data/nasty.log
   icon: "&#128513"
   timeout: 900
