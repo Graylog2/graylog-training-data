@@ -19,7 +19,7 @@ actions:
   timeout: 900
 
 actions:   
-- title: Nasty Poetic Regex
+- title: Poetic Regex
   shell: while read x; do echo -e $x"\0" | nc localhost 12201 -w0; sleep 0.01; done < /etc/graylog/log_data/nasty.log
   icon: "&#128513"
   timeout: 900
