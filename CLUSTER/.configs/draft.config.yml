@@ -1,5 +1,12 @@
-# graylog.yml
+# dynamic.yml
 # Traefik dynamic/running config specified in static config
+
+
+# Declare cert & key used by websecure entrypoint:
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certs/fullchain.pem"
+      keyFile: "/etc/traefik/certs/privkey.pem"
 
 http:
   routers:
@@ -13,17 +20,11 @@ http:
     graylog-web:
       loadBalancer:
         servers:
-          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:9000/" 
-          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:9000/"
-          - url: "http://izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:9000/"
+          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b54.labs.strigo.io:9000/"         # These addresses need only to be resolvable/routable from Traefik host
+          - url: "http://izrfyicsax7m6imkf-646e2dd343aad0153e4e3b55.labs.strigo.io:9000/"         # These addresses need only to be resolvable/routable from Traefik host
+          - url: "http://izrfyicsax7m6imkf-646e419ea072e7d4bbe71be4.labs.strigo.io:9000/"         # These addresses need only to be resolvable/routable from Traefik host
         healthCheck:
-          path: /api/system/lbstatus
-
-# Declare cert & key used by websecure entrypoint:
-tls:
-  certificates:
-    - certFile: "/etc/traefik/certs/fullchain.pem"
-      keyFile: "/etc/traefik/certs/privkey.pem"
+          path: /api/system/lbstatus                                                              # Graylog API endpoint to query for LB status
 
 tcp:
   routers:
@@ -31,22 +32,22 @@ tcp:
       entryPoints:
         - "beats"
       rule: "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
-      service: "beats"
+      service: "beats-service"
       tls: {}
     raw-router:
       entryPoints:
         - "raw"
       rule: "HostSNIRegexp(`{subdomain:[a-z]+}.logfather.org`)"
-      service: "raw"
+      service: "raw-service"
       tls: {}
   services:
-    beats:
+    beats-service:
       loadBalancer:
         servers:
           - address: "localhost:5044"
 #          - address: "localhost:5045"
 #          - address: "localhost:5046"
-    raw:
+    raw-service:
       loadBalancer:
         servers:
           - address: "localhost:5555"
@@ -58,9 +59,9 @@ udp:
     syslog-router:
       entryPoints:
         - "syslog"
-      service: "syslog"
+      service: "syslog-service"
   services:
-    syslog:
+    syslog-service:
       loadBalancer:
         servers:
           - address: "localhost:514"
