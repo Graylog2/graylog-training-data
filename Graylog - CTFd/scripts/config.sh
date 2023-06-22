@@ -77,7 +77,7 @@ lxc start multivac
 # execute multivac config script
 sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/64820c50d55a8e608878168a/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
 sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" multivac_config.sh
-lxc exec multivac -- bash -c "$(cat multivac_config.sh)"
+lxc exec multivac -- bash -c "$(cat /Graylog\ -\ CTFd/scripts/multivac_config.sh)"
 
 # Do Graylog launch and wait last...
 
