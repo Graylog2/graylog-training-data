@@ -8,16 +8,16 @@ showNewVersions: false
 
 actions:   
 - title: PFSense Logs
-  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 1514
   icon: backup
   timeout: 900
 
 - title: We Book
-  shell: while read x; do echo $x"\0" | nc localhost 12201 -w 1; done < /etc/graylog/log_data/we_book.log
+  shell: while read x; do echo $x"\0" | ncat localhost 12201 -w200ms; done < /etc/graylog/log_data/we_book.log
   icon: "&#128218"
   timeout: 900
    
 - title: Poetic Regex
-  shell: while read x; do echo $x"\0" | nc localhost 12201 -w 1; sleep 0.01; done < /etc/graylog/log_data/nasty.log
+  shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/nasty.log
   icon: "&#128513"
   timeout: 900
