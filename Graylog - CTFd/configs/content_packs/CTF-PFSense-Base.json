@@ -1,0 +1,181 @@
+{
+  "v": 1,
+  "id": "4d852358-bf03-4a07-a5ae-c03904fe9a0f",
+  "rev": 1,
+  "name": "Base PFSense CP - CTF",
+  "summary": "CTF PFSense CP",
+  "description": "",
+  "vendor": "GL PS - we are rockstarz",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "41d1ce1a-8307-42f8-ac49-827dc839caf7",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Routing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Default Routing"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Routing\"\nstage 0 match either\nrule \"Route - PFSense Logs\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "5a4f7fac-6080-45ec-9e0c-53e3aee557ca",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "PFSense"
+        },
+        "stream_rules": [],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "bcb07ce2-83cb-4e22-a505-6c348e604321",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "PFSense"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"PFSense\"\nstage 0 match either\nrule \"Parse - PFSense - IPs and Ports\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "5a4f7fac-6080-45ec-9e0c-53e3aee557ca"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "61f9c511-def4-4adb-9fd0-95fd7adbc0ad",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - PFSense Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - PFSense Logs\"\nwhen\n    from_input(\n        name: \"Syslog Data\"\n    )\nthen\n    route_to_stream(\n        name: \"PFSense\",\n        remove_from_default: true\n    );\nend "
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "e55f3cc1-04ec-4672-8027-6a392fa24e69",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - PFSense - IPs and Ports"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - PFSense - IPs and Ports\"\nwhen\n    //We don't care about the rules since we are only working with messages in the PFSense pipeline anyway\n    true\nthen\n\n// Grok Pattern custom based on log data received\nlet grokp = grok(\n    pattern: \"YOUR EXACT GROK PATTERN\", \n    value: to_string($message.message),\n    only_named_captures: true\n);\n \n// Set GROK Parsed Fields\nset_fields(grokp);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.2+d970230"
+        }
+      ]
+    }
+  ]
+}
