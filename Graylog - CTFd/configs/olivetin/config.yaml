@@ -21,3 +21,8 @@ actions:
   shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/nasty.log
   icon: "&#128513"
   timeout: 900
+
+- title: Mining Security Data
+  shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/miningdata.log
+  icon: "&#128737"
+  timeout: 900
