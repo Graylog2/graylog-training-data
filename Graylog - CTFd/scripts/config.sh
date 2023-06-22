@@ -84,4 +84,16 @@ mv "/Graylog - CTFd/log_data/" /etc/graylog/
 mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
 
+#Add course CPs
+for entry in /home/ubuntu/GIT/GIM/configs/content_packs/*
+do
+  printf "\n\nInstalling Content Package: $entry\n"
+  id=$(cat $entry | jq -r '.id')
+  ver=$(cat $entry | jq -r '.rev')
+  printf "\n\nID:$entry and Version: $ver\n"
+  curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs"  -H 'Content-Type: application/json' -H 'X-Requested-By: PS_Packer' -d @"$entry"
+  printf "\n\nEnabling Content Package: $entry\n"
+  curl -k -u'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}'
+done
+
 #Cleanup this folder so noones cheaters
