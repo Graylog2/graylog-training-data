@@ -8,7 +8,7 @@ showNewVersions: false
 
 actions:   
 - title: PFSense Logs
-  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 1514
   icon: backup
   timeout: 900
 
