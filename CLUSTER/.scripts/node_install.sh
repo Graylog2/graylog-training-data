@@ -4,6 +4,11 @@ wget -qO- https://pgp.mongodb.com/server-6.0.asc | sudo tee -a /etc/apt/trusted.
 echo "deb http://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 sudo apt-get update
 
+if [ "$EUID" -ne 0 ]
+  then echo "We know its bad advice, but run this as root"
+  exit
+fi
+
 sudo apt-get install -y mongodb-org
 
 sudo systemctl daemon-reload
