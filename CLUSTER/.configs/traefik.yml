@@ -1,8 +1,3 @@
-# traefik.yml
-# Main Traefik static/startup config
-
-
-# Logging options:
 log:
   filePath: "/var/log/traefik/server.log"
   level: DEBUG
@@ -10,8 +5,6 @@ log:
 accessLog:
   filePath: "/var/log/traefik/access.log"
 
-# Enable API (optional):
-# Enabling the API in production is not recommended, because it will expose all configuration elements, including sensitive data.
 api:
   dashboard: true                             # Enable the dashboard
   insecure: true
@@ -19,7 +12,6 @@ api:
 # Certificate Resolvers are responsible for retrieving certificates from an ACME server
 # See https://doc.traefik.io/traefik/https/acme/#certificate-resolvers
 
-# Entrypoints (listeners):
 entryPoints:
   http:
     address: ":80"                            # Create the HTTP entrypoint on port 80
@@ -33,30 +25,23 @@ entryPoints:
     http:
       tls:
         domains:
-          - main: "logfather.org"             # The target domains for TLS hostname verification
-          #- sans: "logfather.org"            # Specify SANS DNS and/or IP's if necessary
+          - main: "logfather.org"
   syslog:
     address: ":514/udp"
-      forwardedHeaders:
-      trustedIPs:
-        - "172.16.0.0/12"                     # Add your IP's or subnets here where Graylog Inputs are listening
+    proxyProtocol:
+      insecure: true
   beats:
     address: ":5044/tcp"
-      forwardedHeaders:
-      trustedIPs:
-        - "172.16.0.0/12"                     # Add your IP's or subnets here where Graylog Inputs are listening
   raw:
     address: ":5555/tcp"
-      forwardedHeaders:
-      trustedIPs:
-        - "172.16.0.0/12"                     # Add your IP's or subnets here where Graylog Inputs are listening
-
+    proxyProtocol:
+      insecure: true
 global:
   checknewversion: true                       # Periodically check if a new version has been released.
   sendanonymoususage: true                    # Periodically send anonymous usage statistics.
 
 providers:
   file:
-    filename: "/etc/traefik/config.yml"       # Link to the dynamic configuration
+    filename: "/etc/traefik/traefik-dynamic.yml"       # Link to the dynamic configuration
     watch: true                               # Watch for modifications
   providersThrottleDuration: 10               # Configuration reload frequency
