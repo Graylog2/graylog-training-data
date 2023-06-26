@@ -1,27 +1,24 @@
 #!/bin/bash
 
-# Set $dns2 to the common root domain name: "[username]-lab"
-dns2=${dns%-*}
-
 while true
 do
     read -p "Hostname of Graylog server: " i
-    [ ! $i == "$dns-graylog.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns-graylog.logfather.org!)"
-    [[ $i == "$dns-graylog.logfather.org" ]] && break
+    [ ! $i == "$publicdns" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $publicdns!)"
+    [[ $i == "$publicdns" ]] && break
 done
 
 while true
 do
     read -p "Hostname of Opensearch server: " i
-    [ ! $i == "$dns2-opensearch.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns2-opensearch.logfather.org!)"
-    [[ $i == "$dns2-opensearch.logfather.org" ]] && break
+    [ ! $i == "$user-opensearch.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $user-opensearch.logfather.org!)"
+    [[ $i == "$user-opensearch.logfather.org" ]] && break
 done
 
 while true
 do
     read -p "Hostname of MongoDB server: " i
-    [ ! $i == "$dns-mongodb.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns-mongodb.logfather.org!)"
-    [[ $i == "$dns-mongodb.logfather.org" ]] && break
+    [ ! $i == "$user-mongodb.logfather.org" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $user-mongodb.logfather.org!)"
+    [[ $i == "$user-mongodb.logfather.org" ]] && break
 done
 
 echo "=== Generating CSR from provided info..."
@@ -30,8 +27,8 @@ echo "=== Submitting CSR to CA for signing..."
 sleep 3
 
 mkdir ~/ssl
-sudo cp /etc/graylog/cert.pem /etc/graylog/privkey.pem /etc/graylog/fullchain.pem ~/ssl
-sudo chown $USER.$USER -R ~/ssl
+sudo cp /home/admin/.class/certs/cert.pem /home/admin/.class/certs/privkey.pem /home/admin/.class/certs/fullchain.pem ~/ssl
+sudo chown 1000.1000 -R ~/ssl
 echo "=== Certificate signature succeeded!"
 echo "=== Your certificate, private key, and full cert chain have been uploaded to the ~/ssl directory:"
 echo "=== Server cert      : ~/ssl/cert.pem"
