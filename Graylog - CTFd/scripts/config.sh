@@ -114,14 +114,3 @@ rm -r /Graylog\ -\ CTFd/
 
 #Create file for lab to finally appear
 touch /home/ubuntu/gogogo
-
-
-cat <<EOF >> /home/ubuntu/.bashrc
-#Show nothing until web interface is online
-FILE=/home/ubuntu/gogogo
-until \$(test -f "\$FILE";);
-do
-    printf '. ';
-    sleep 4;
-done
-EOF
