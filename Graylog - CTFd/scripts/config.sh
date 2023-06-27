@@ -89,6 +89,10 @@ curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" 
 #Move Log Data
 mv "/Graylog - CTFd/log_data/" /etc/graylog/
 
+#Move Log Generating Scripts
+mv "/Graylog - CTFd/scripts/nerdy_log_gen.sh" /etc/graylog/log_data
+chmod +x /etc/graylog/log_data/nerdy_log_gen.sh
+
 #Update OT Config 
 mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
