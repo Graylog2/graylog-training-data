@@ -8,8 +8,8 @@ showNewVersions: false
 
 actions:   
 - title: PFSense Logs
-  shell: cat /etc/graylog/log_data/firewall.log | ncat -w 1 localhost 1514
-  icon: backup
+  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | ncat -w 1 localhost 1514
+  icon: '<img src = "https://wpcomputersolutions.com/wp-content/uploads/2018/07/pfsense-logo-e1534531558807.png" width = "48px"/>'
   timeout: 900
 
 - title: We Book
