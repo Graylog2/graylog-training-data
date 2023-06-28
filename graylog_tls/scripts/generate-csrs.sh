@@ -22,9 +22,9 @@ do
 done
 
 
-echo "=== Generating CSR from provided info..."
+echo "=== Generating CSR's from provided info..."
 sleep 2
-echo "=== Submitting CSR to CA for signing..."
+echo "=== Submitting CSR's to CA for signing..."
 sleep 4
 
 mkdir ~/ssl
@@ -38,7 +38,7 @@ cp privkey.pem graylog.key
 cp privkey.pem mongodb.key
 cp privkey.pem opensearch.key
 rm cert.pem privkey.pem fullchain.pem
-echo "=== Certificate signature succeeded!"
+echo "=== Certificates signature succeeded!"
 echo "=== Your CA certificates, server certificates, and private keys have been uploaded to the $HOME/ssl directory:"
 echo "=== Graylog server cert     : $HOME/ssl/graylog.pem"
 echo "=== Graylog server key      : $HOME/ssl/graylog.key"
