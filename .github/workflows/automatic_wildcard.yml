@@ -1,4 +1,4 @@
-name: "Manual Wildcard Cert"
+name: "Automatic Wildcard Cert"
 
 on:
   schedule:
