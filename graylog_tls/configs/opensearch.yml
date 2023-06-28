@@ -20,7 +20,7 @@ cluster.name: graylog
 #
 # Use a descriptive name for the node:
 #
-node.name: ${STRIGO_RESOURCE_1_DNS}
+node.name: STRIGO_RESOURCE_1_DNS
 #
 # Add custom attributes to the node:
 #
