@@ -39,7 +39,7 @@ cp cert.pem opensearch.pem
 cp privkey.pem graylog.key
 cp privkey.pem mongodb.key
 cp privkey.pem opensearch.key
-rm cert.pem privkey.pem fullchain.pem
+rm cert.pem privkey.pem
 echo "=== Certificates signature succeeded!"
 echo "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:"
 echo "=== Graylog server cert     : $HOME/ssl/graylog.pem"
