@@ -28,7 +28,7 @@ apt update && apt install -y mongodb-org graylog-enterprise opensearch
 # Modify server.conf:
 cp "/Securing Graylog with TLS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$publicdns/" /etc/graylog/server/server.conf
-sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/graylog/server/server.conf
+sed -i "s/PUBLICDNS_OS/$publicdns_os/" /etc/graylog/server/server.conf
 
 # # Modify opensearch.yml:
 # cp "/Securing Graylog with TLS/configs/opensearch.yml" /etc/opensearch/
@@ -39,6 +39,7 @@ echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Add mongodb node resolution:
 echo "127.0.0.1 $publicdns_mg" >> /etc/hosts
+echo "127.0.0.1 $publicdns_os" >> /etc/hosts
 
 # Start services:
 systemctl enable --now mongod.service graylog-server.service opensearch.service
