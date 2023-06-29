@@ -48,4 +48,4 @@ cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-cs
 rm -rf "/Securing Graylog with TLS"
 
 #Create file for lab to finally appear
-touch /home/ubuntu/gogogo
+touch /home/admin/gogogo
