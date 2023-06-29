@@ -27,10 +27,10 @@ sleep 2
 echo "=== Submitting CSR's to CA for signing..."
 sleep 4
 
-mkdir ~/ssl
-cd ~/ssl
-sudo cp /home/admin/.class/certs/* .
-sudo chown 1000.1000 -R ~/ssl
+mkdir $HOME/ssl
+sudo cp /certs/* $HOME/ssl
+sudo rm -rf /certs
+sudo chown 1000.1000 -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem mongodb.pem
 cp cert.pem opensearch.pem
@@ -39,7 +39,7 @@ cp privkey.pem mongodb.key
 cp privkey.pem opensearch.key
 rm cert.pem privkey.pem fullchain.pem
 echo "=== Certificates signature succeeded!"
-echo "=== Your CA certificates, server certificates, and private keys have been uploaded to the $HOME/ssl directory:"
+echo "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:"
 echo "=== Graylog server cert     : $HOME/ssl/graylog.pem"
 echo "=== Graylog server key      : $HOME/ssl/graylog.key"
 echo "=== MongoDB server cert     : $HOME/ssl/mongodb.pem"

@@ -45,6 +45,9 @@ systemctl enable --now mongod.service graylog-server.service opensearch.service
 cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-csrs.sh
 chmod +x /home/admin/generate_csrs.sh
 
+# Import certs & keys to /certs:
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
+
 # Create file for lab to finally appear
 touch /home/admin/gogogo
 
