@@ -26,7 +26,7 @@ apt update && apt install -y mongodb-org graylog-enterprise opensearch
 
 # Modify server.conf:
 cp "/Securing Graylog with TLS/configs/server.conf" /etc/graylog/server
-sed -i "s/PUBLICDNS/$publicdns/" /etc/graylog/server/server.conf
+sed -i "s/PUBLICDNS_GL/$publicdns/" /etc/graylog/server/server.conf
 sed -i "s/PUBLICDNS_OS/$dns_os/" /etc/graylog/server/server.conf
 
 # Modify opensearch.yml:
