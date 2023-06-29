@@ -26,13 +26,13 @@ echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.op
 apt update && apt install -y mongodb-org graylog-enterprise opensearch
 
 # Modify server.conf:
-cp /home/admin/.class/graylog_tls/configs/server.conf /etc/graylog/server
+cp "/Securing Graylog with TLS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$publicdns/" /etc/graylog/server/server.conf
 sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/graylog/server/server.conf
 
-# Modify opensearch.yml:
-cp /home/admin/.class/graylog_tls/configs/opensearch.yml /etc/opensearch/
-sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
+# # Modify opensearch.yml:
+# cp "/Securing Graylog with TLS/configs/opensearch.yml" /etc/opensearch/
+# sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
 
 # Set java path for use by Opensearch Security plugin:
 echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
@@ -44,4 +44,7 @@ echo "127.0.0.1 $publicdns_mg" >> /etc/hosts
 systemctl enable --now mongod.service graylog-server.service opensearch.service
 
 # Import CSR generator script:
-cp /home/admin/.class/graylog_tls/scripts/generate-csrs.sh /home/admin/generate-csrs.sh
+cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-csrs.sh
+
+# Cleanup:
+rm -rf "/Securing Graylog with TLS"
