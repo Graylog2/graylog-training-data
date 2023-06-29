@@ -43,9 +43,11 @@ systemctl enable --now mongod.service graylog-server.service opensearch.service
 
 # Import CSR generator script:
 cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-csrs.sh
+chmod +x /home/admin/generate_csrs.sh
+
+# Create file for lab to finally appear
+touch /home/admin/gogogo
 
 # Cleanup:
 rm -rf "/Securing Graylog with TLS"
-
-#Create file for lab to finally appear
-touch /home/admin/gogogo
+rm /home/admin/gogogo
