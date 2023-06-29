@@ -59,7 +59,8 @@ sudo openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pw
 sudo rm /.pwd
 
 # Minor vim behavior tweak to fix undesireable pasting behavior:
-echo "set paste" > ~/.vimrc
+
+printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 
 # Cleanup corse content & create file for lab to finally appear
 sudo rm -rf "/Securing Graylog with TLS" /certs/*.enc
