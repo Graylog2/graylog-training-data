@@ -22,8 +22,9 @@ echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.op
 # Install GL stack:
 apt update && apt install -y mongodb-org graylog-enterprise opensearch
 
-# Set mode for /etc/graylog:
+# Set ownership+mode for /etc/graylog:
 sudo chown graylog.graylog -R /etc/graylog
+sudo chmod g+w -R /etc/graylog
 # Add admin to graylog group
 sudo usermod -aG graylog admin
 
