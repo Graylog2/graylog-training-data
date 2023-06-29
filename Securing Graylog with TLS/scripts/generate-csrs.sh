@@ -10,15 +10,15 @@ done
 while true
 do
     read -p "Hostname of MongoDB server: " i
-    [ ! $i == "$publicdns_mg" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $publicdns_mg!)"
-    [[ $i == "$publicdns_mg" ]] && break
+    [ ! $i == "$dns_mg" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns_mg!)"
+    [[ $i == "$dns_mg" ]] && break
 done
 
 while true
 do
     read -p "Hostname of Opensearch server: " i
-    [ ! $i == "$publicdns_os" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $publicdns_os!)"
-    [[ $i == "$publicdns_os" ]] && break
+    [ ! $i == "$dns_os" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns_os!)"
+    [[ $i == "$dns_os" ]] && break
 done
 
 
