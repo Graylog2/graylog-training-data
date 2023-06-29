@@ -32,13 +32,13 @@ cd $HOME/ssl
 cp /certs/*.pem .
 sudo rm -rf /certs
 sudo chown admin.admin -R $HOME/ssl
-chmod 0600 ./*
 cp cert.pem graylog.pem
 cp cert.pem mongodb.pem
 cp cert.pem opensearch.pem
 cp privkey.pem graylog.key
 cp privkey.pem mongodb.key
 cp privkey.pem opensearch.key
+chmod 0400 ./*.key
 rm cert.pem privkey.pem
 echo "=== Certificates signature succeeded!"
 echo "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:"
