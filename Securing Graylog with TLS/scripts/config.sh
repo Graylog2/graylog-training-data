@@ -1,6 +1,4 @@
 # Securing Graylog with TLS Course setup script
-#Create file for lab to finally appear
-touch /home/admin/gogogo
 
 # Setup GPG keyring:
 apt install -y gnupg
