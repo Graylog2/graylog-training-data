@@ -46,7 +46,15 @@ cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-cs
 chmod +x /home/admin/generate-csrs.sh
 
 # Import certs & keys to /certs:
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
+sudo git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
+sudo openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /home/admin/ssl/privkey.pem
+sudo openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /home/admin/ssl/cert.pem
+sudo rm /.pwd
+cp /certs/cacerts /certs/root-ca.pem /certs/intermediate-ca.pem /home/admin/ssl/
+
+#Cert Permissions
+sudo chown admin.admin /home/admin/ssl/*.pem
+sudo chmod 600 /home/admin/ssl/*.pem
 
 # Create file for lab to finally appear
 touch /home/admin/gogogo
