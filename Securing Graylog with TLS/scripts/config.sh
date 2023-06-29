@@ -49,6 +49,7 @@ chmod +x /home/admin/generate-csrs.sh
 sudo git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
 sudo openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /certs/privkey.pem
 sudo openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /certs/cert.pem
+# Remove sensitive pwd file:
 sudo rm /.pwd
 
 # Cleanup corse content & create file for lab to finally appear
