@@ -53,4 +53,5 @@ touch /home/admin/gogogo
 
 # Cleanup:
 rm -rf "/Securing Graylog with TLS"
+sleep 5
 rm /home/admin/gogogo
