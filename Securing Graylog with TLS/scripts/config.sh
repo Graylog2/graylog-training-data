@@ -30,9 +30,10 @@ cp "/Securing Graylog with TLS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$publicdns/" /etc/graylog/server/server.conf
 sed -i "s/PUBLICDNS_OS/$publicdns_os/" /etc/graylog/server/server.conf
 
-# # Modify opensearch.yml:
-# cp "/Securing Graylog with TLS/configs/opensearch.yml" /etc/opensearch/
+# Modify opensearch.yml:
+cp "/Securing Graylog with TLS/configs/opensearch.yml" /etc/opensearch/
 # sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
+cp "/Securing Graylog with TLS/configs/jvm.options" /etc/opensearch/
 
 # Set java path for use by Opensearch Security plugin:
 echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
