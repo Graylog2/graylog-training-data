@@ -2,6 +2,7 @@
 #load Vars from Strigo
 source /etc/profile
 
+echo "The present working directory is $(pwd)" >> /home/ubuntu/strigosuccess
 echo "Running DNS Registration Steps" >> /home/ubuntu/strigosuccess
 dnscount=0
 DNSMatch=false
@@ -50,16 +51,20 @@ if [[ ! "$DNSMatch" == "true" ]]; then
     echo "Result: $result" >> /home/ubuntu/strigosuccess
 fi
 echo $dns >> /home/ubuntu/DNSSuccess
-echo "Registered DNS record: $dns"
+echo "Registered DNS record: $dns" >> /home/ubuntu/strigosuccess
+sed -i '/export dns=/d' /etc/profile
 echo "export dns=$dns" >> /etc/profile
 
 
 ###Cert Update
+echo "Grabbing Certs" >> /home/ubuntu/strigosuccess
 apt install git-svn -y
 #Certs
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/ubuntu/strigosuccess
+echo "The present working directory is $(pwd)" >> /home/ubuntu/strigosuccess
 
 ## Copy Certs and Decode
+echo "Decoding Certs" >> /home/ubuntu/strigosuccess
 openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
 openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
 openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
@@ -73,7 +78,8 @@ chmod 600 /etc/graylog/*.pem
 #Update OS and keystore with chain
 #keytool -importcert -alias letsencryptca -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
 
-keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
+echo "Updating Keystore" >> /home/ubuntu/strigosuccess
+keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt >> /home/ubuntu/strigosuccess
 
 cp /etc/graylog/fullchain.pem /usr/local/share/ca-certificates/fullchain.crt
 update-ca-certificates
@@ -83,6 +89,15 @@ while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/clus
 	printf "\n\nWaiting for GL to come online to add content\n"
     sleep 5
 done
+
+#Setup Illuminate using API
+printf "\n\nInstalling Illuminate" >> /home/ubuntu/strigosuccess
+ilver=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
+printf "\n\nFound Illuminate Version:$ilver" >> /home/ubuntu/strigosuccess
+ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nDownload Version $ilver - result: $ilinst" >> /home/ubuntu/strigosuccess
+bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nInstallation Result: $bunact" >> /home/ubuntu/strigosuccess
 
 ## Update Docker Container with certs
 glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
@@ -114,3 +129,8 @@ sed -i '/^      GRAYLOG_SERVER_JAVA_OPTS: ${GLJAVAOPTS}.*/a\      GRAYLOG_TELEME
 echo "Running Docker Compose to update GL environment with new information" >> /home/ubuntu/strigosuccess
 docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
 pwsh -c 'write-host "loaded PS!"'
+
+
+#Cleanup
+sed -i '/export apitoken=/d' /etc/profile
+sed -i '/export authemail=/d' /etc/profile
