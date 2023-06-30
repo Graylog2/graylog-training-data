@@ -86,18 +86,18 @@ update-ca-certificates
 
 #Wait for GL before changes
 while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
-	printf "\n\nWaiting for GL to come online to add content\n"
+	printf "\n\nWaiting for GL to come online to add content\n" >> /home/ubuntu/strigosuccess
     sleep 5
 done
 
 #Setup Illuminate using API
 printf "\n\nInstalling Illuminate" >> /home/ubuntu/strigosuccess
 ilver=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
-printf "\n\nFound Illuminate Version:$ilver" >> /home/ubuntu/strigosuccess
+printf "\n\nFound Illuminate Version:$ilver\n" >> /home/ubuntu/strigosuccess
 ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
-printf "\n\nDownload Version $ilver - result: $ilinst" >> /home/ubuntu/strigosuccess
+printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigosuccess
 bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
-printf "\n\nInstallation Result: $bunact" >> /home/ubuntu/strigosuccess
+printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
 
 ## Update Docker Container with certs
 glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
@@ -132,5 +132,10 @@ pwsh -c 'write-host "loaded PS!"'
 
 
 #Cleanup
+echo "Cleaning up" >> /home/ubuntu/strigosuccess
 sed -i '/export apitoken=/d' /etc/profile
 sed -i '/export authemail=/d' /etc/profile
+rm -r /certs
+rm -r /$STRIGO_CLASS_ID
+
+echo "Complete!" >> /home/ubuntu/strigosuccess
