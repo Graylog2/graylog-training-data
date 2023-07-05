@@ -72,9 +72,6 @@ cp /certs/cacerts /etc/graylog/cacerts
 chown root.root /etc/graylog/*.pem
 chmod 600 /etc/graylog/*.pem
 
-#Update OS and keystore with chain
-#keytool -importcert -alias letsencryptca -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
-
 echo "Updating Keystore" >> /home/ubuntu/strigosuccess
 keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt >> /home/ubuntu/strigosuccess
 
@@ -176,12 +173,12 @@ sed -i "s/ZZZZZGRAYLOGIPZZZZZ/$graylog_ip/" /$STRIGO_CLASS_IDscripts/multivac_co
 #echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
 echo "172.18.10.10 multivac" >> /etc/hosts
 # start multivac!
-lxc start multivac
+echo "Starting the Graybeard LXC" >> /home/ubuntu/strigosuccess
+lxc start multivac >> /home/ubuntu/strigosuccess
 # execute multivac config script
 sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/64820c50d55a8e608878168a/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
 sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" /$STRIGO_CLASS_IDscripts/multivac_config.sh
 lxc exec multivac -- bash -c "$(cat /$STRIGO_CLASS_IDscripts/multivac_config.sh)"
-
 
 #Add GL inputs
 echo "Adding inputs to Graylog via API" >> /home/ubuntu/strigosuccess
@@ -189,15 +186,15 @@ curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" 
 curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.syslog.tcp.SyslogTCPInput","configuration":{"bind_address":"0.0.0.0","port":1514,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":false,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8"},"title":"Syslog Data","global":true,"node":"93f01a3f-d051-436f-9bab-0c11f22cd55c"}'
 
 #Move Log Data
-mv "/Graylog - CTFd/log_data/" /etc/graylog/
+mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
 
 #Move Log Generating Scripts
-mv "/Graylog - CTFd/scripts/nerdy_log_gen.sh" /etc/graylog/log_data
+mv "/$STRIGO_CLASS_ID/scripts/nerdy_log_gen.sh" /etc/graylog/log_data
 chmod +x /etc/graylog/log_data/nerdy_log_gen.sh
 
 #Update OT Config 
 echo "Updating OT" >> /home/ubuntu/strigosuccess
-mv "/Graylog - CTFd/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
+mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
 
 #Add course CPs
