@@ -209,6 +209,15 @@ do
   curl -k -u'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}'
 done
 
+#Setup Illuminate using API
+printf "\n\nInstalling Illuminate" >> /home/ubuntu/strigosuccess
+ilver=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
+printf "\n\nFound Illuminate Version:$ilver\n" >> /home/ubuntu/strigosuccess
+ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigosuccess
+bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
+
 #Cleanup this folder so noones cheaters
 echo "Cleanup" >> /home/ubuntu/strigosuccess
 sed -i '/export apitoken=/d' /etc/profile
