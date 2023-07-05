@@ -79,7 +79,7 @@ if [[ "STRIGO_RESOURCE_3_NAME" == "Proxy" ]]; then
     mkdir -p /etc/systemd/system/traefik.service.d
     
     # Add the file
-    cat <<EOF>> /etc/systemd/system/traefik.service.d/override.conf
+    cat <<EOF >> /etc/systemd/system/traefik.service.d/override.conf
     [Service]
     Environment="STRIGO_PUBLIC_DNS=$STRIGO_PUBLIC_DNS"
     Environment="STRIGO_RESOURCE_0_DNS={{ .STRIGO_RESOURCE_0_DNS }}"
