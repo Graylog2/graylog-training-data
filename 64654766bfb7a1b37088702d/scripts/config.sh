@@ -152,6 +152,10 @@ printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigos
 bunact=$(curl -u 'admin:yabba dabba doo' -k -XPOST "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
 printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
 
+#Move Log Data
+echo "Moving Log Data" >> /home/ubuntu/strigosuccess
+mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
+
 #Cleanup
 echo "Cleaning up" >> /home/ubuntu/strigosuccess
 sed -i '/export apitoken=/d' /etc/profile
