@@ -212,22 +212,22 @@ systemctl restart OliveTin.service
 #Add course CPs
 for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
 do
-  printf "\n\nInstalling Content Package: $entry\n"
+  printf "\n\nInstalling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
   id=$(cat "$entry" | jq -r '.id')
   ver=$(cat "$entry" | jq -r '.rev')
-  printf "\n\nID:$entry and Version: $ver\n"
+  printf "\n\nID:$entry and Version: $ver\n" >> /home/ubuntu/strigosuccess
   curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs"  -H 'Content-Type: application/json' -H 'X-Requested-By: PS_Packer' -d @"$entry"
-  printf "\n\nEnabling Content Package: $entry\n"
+  printf "\n\nEnabling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
   curl -k -u'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}'
 done
 
 #Setup Illuminate using API
 printf "\n\nInstalling Illuminate" >> /home/ubuntu/strigosuccess
-ilver=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
+ilver=$(curl -u 'admin:yabba dabba doo' -k -XGET 'https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
 printf "\n\nFound Illuminate Version:$ilver\n" >> /home/ubuntu/strigosuccess
-ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+ilinst=$(curl -u 'admin:yabba dabba doo' -k -XPOST "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
 printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigosuccess
-bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+bunact=$(curl -u 'admin:yabba dabba doo' -k -XPOST "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
 printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
 
 #Cleanup this folder so noones cheaters
