@@ -9,7 +9,7 @@ showNewVersions: false
 actions:   
 - title: PFSense Logs
   shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | ncat -w 1 localhost 1514
-  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/Graylog%20-%20CTFd/images/pfsense-logo.png" width = "48px"/>'
+  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
   timeout: 900
 
 - title: We Book
@@ -29,17 +29,17 @@ actions:
 
 - title: Kingons on the starboard bow
   shell: /etc/graylog/log_data/nerdy_log_gen.sh kl
-  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/Graylog%20-%20CTFd/images/IKS_TOng21.png" width = "48px"/>'
+  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/IKS_TOng21.png" width = "48px"/>'
   timeout: 900
 
 - title: R3S1S74nc3 12 PhU71l3
   shell: /etc/graylog/log_data/nerdy_log_gen.sh
-  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/Graylog%20-%20CTFd/images/Borg_Cube21.png" width = "48px"/>'
+  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/Borg_Cube21.png" width = "48px"/>'
   timeout: 900
   
 - title: Starbase 12
   shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/s_r_i.log
-  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/Graylog%20-%20CTFd/images/The_Valdore21.png" width = "48px"/>'
+  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/The_Valdore21.png" width = "48px"/>'
   timeout: 900
 
 
