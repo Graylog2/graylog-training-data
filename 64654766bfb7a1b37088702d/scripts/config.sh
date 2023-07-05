@@ -110,7 +110,7 @@ sudo apt install ncat -y >> /home/ubuntu/strigosuccess
 
 #Update OT Config
 echo "Updating OT configuration" >> /home/ubuntu/strigosuccess
-mv /$STRIGO_CLASS_ID/GIM/configs/olivetin/config.yaml /OliveTin-linux-amd64/config.yaml
+mv /$STRIGO_CLASS_ID/configs/olivetin/config.yaml /OliveTin-linux-amd64/config.yaml
 sudo systemctl restart OliveTin.service >> /home/ubuntu/strigosuccess
 
 #Update Docker Config for new OT Port
@@ -132,7 +132,7 @@ echo "Adding required inputs to GL" >> /home/ubuntu/strigosuccess
 curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.raw.tcp.RawTCPInput","configuration":{"bind_address":"0.0.0.0","port":5555,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":false,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8"},"title":"PiHole Data","global":true,"node":"93f01a3f-d051-436f-9bab-0c11f22cd55c"}'
 
 #Add course CPs
-for entry in /$STRIGO_CLASS_ID/GIM/configs/content_packs/*
+for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
 do
   printf "\n\nInstalling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
   id=$(cat $entry | jq -r '.id')
@@ -142,6 +142,15 @@ do
   printf "\n\nEnabling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
   curl -k -u'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}'
 done
+
+#Setup Illuminate using API
+printf "\n\nInstalling Illuminate" >> /home/ubuntu/strigosuccess
+ilver=$(curl -u 'admin:yabba dabba doo' -k -XGET 'https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
+printf "\n\nFound Illuminate Version:$ilver\n" >> /home/ubuntu/strigosuccess
+ilinst=$(curl -u 'admin:yabba dabba doo' -k -XPOST "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigosuccess
+bunact=$(curl -u 'admin:yabba dabba doo' -k -XPOST "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
+printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
 
 #Cleanup
 echo "Cleaning up" >> /home/ubuntu/strigosuccess
