@@ -42,7 +42,7 @@ cp "/Securing Graylog with TLS/configs/jvm.options" /etc/opensearch/
 echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Add mongodb node resolution:
-echo "127.0.0.1 $dns_mg $dns_os" | sudo tee -a /etc/hosts
+echo "127.0.0.1 $dns_os" | sudo tee -a /etc/hosts
 
 # Start services:
 systemctl enable --now mongod.service graylog-server.service opensearch.service
