@@ -181,7 +181,7 @@ network:
 EOF
 # setup hosts file resolution for graylog container in multivac
 graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.graylog_default.IPAddress }}' graylog-graylog-1)
-sed -i "s/ZZZZZGRAYLOGIPZZZZZ/$graylog_ip/" /$STRIGO_CLASS_IDscripts/multivac_config.sh
+sed -i "s/ZZZZZGRAYLOGIPZZZZZ/$graylog_ip/" /$STRIGO_CLASS_ID/scripts/multivac_config.sh
 #echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
 echo "172.18.10.10 multivac" >> /etc/hosts
 # start multivac!
@@ -189,8 +189,8 @@ echo "Starting the Graybeard LXC" >> /home/ubuntu/strigosuccess
 lxc start multivac >> /home/ubuntu/strigosuccess
 # execute multivac config script
 sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/64820c50d55a8e608878168a/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
-sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" /$STRIGO_CLASS_IDscripts/multivac_config.sh
-lxc exec multivac -- bash -c "$(cat /$STRIGO_CLASS_IDscripts/multivac_config.sh)"
+sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" /$STRIGO_CLASS_ID/scripts/multivac_config.sh
+lxc exec multivac -- bash -c "$(cat /$STRIGO_CLASS_ID/scripts/multivac_config.sh)"
 
 #Add GL inputs
 echo "Adding inputs to Graylog via API" >> /home/ubuntu/strigosuccess
