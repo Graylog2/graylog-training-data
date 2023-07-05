@@ -122,9 +122,6 @@ echo "GLBINDADDR=\"0.0.0.0:443\"" >> /etc/graylog/strigo-graylog-training-change
 echo "GLTLS=true" >> /etc/graylog/strigo-graylog-training-changes.env
 echo "GLEURI=https://$dns.logfather.org/" >> /etc/graylog/strigo-graylog-training-changes.env
 
-#Post Hog API Key
-sed -i '/^      GRAYLOG_SERVER_JAVA_OPTS: ${GLJAVAOPTS}.*/a\      GRAYLOG_TELEMETRY_API_KEY: "phc_8LAbITO87JuBOZXXGsKGdFH7HWNK585n0dMF1c4KlcF"' /etc/graylog/docker-compose-glservices.yml
-
 #Launch Docker to load changes in env file
 echo "Running Docker Compose to update GL environment with new information" >> /home/ubuntu/strigosuccess
 docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
