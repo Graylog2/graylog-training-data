@@ -117,6 +117,10 @@ gnefstreamid=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/
 printf "\n\nPausing Stream\n"
 curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/streams/$gnefstreamid/pause" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome'
 
+#Disable Whitelist
+printf "\n\nDisable Whitelisting\n" >> /home/ubuntu/strigosuccess
+curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/urlwhitelist" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"entries":[],"disabled":true}' >> /home/ubuntu/strigosuccess
+
 ## Update Docker Container with certs
 glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
 docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
