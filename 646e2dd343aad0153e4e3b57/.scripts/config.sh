@@ -2,6 +2,7 @@
 source /etc/profile
 
 #Set useful scripts to the home directory
+echo "Set symlinks" >> /root/logfather.dns.log
 ln -s /$STRIGO_CLASS_ID/.scripts/node_install.sh /home/admin/node_install.sh
 ln -s /$STRIGO_CLASS_ID/.scripts/cheat.sh /home/admin/cheat.sh
 
@@ -133,7 +134,8 @@ EOF
     sudo systemctl enable traefik.service
 
 else
-    #Setup non-proxy  
+    #Setup non-proxy
+    echo "Not the proxy box running (if) any node steps" >> /root/logfather.dns.log
 fi
 
 #Cleanup
