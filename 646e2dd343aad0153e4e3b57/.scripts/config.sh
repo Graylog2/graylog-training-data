@@ -90,6 +90,7 @@ if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
 EOF
 
     # Install Traefik
+    echo "Installing Traefik" >> /root/logfather.dns.log
     sudo apt-get install wget -y
     wget https://github.com/traefik/traefik/releases/download/v2.10.1/traefik_v2.10.1_linux_amd64.tar.gz -P /tmp/
     tar -xzvf /tmp/traefik_v2.10.1_linux_amd64.tar.gz
@@ -110,6 +111,7 @@ EOF
     sudo chown -R traefik:traefik /var/log/traefik
 
     #Certs
+    echo "Grabbing Certs" >> /root/logfather.dns.log
     apt install git-svn -y
     git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
 
@@ -125,6 +127,7 @@ EOF
     sudo chmod 644 /etc/traefik/traefik.yml
 
     ## copy traefik service file once created
+    echo "updating and starting Traefik" >> /root/logfather.dns.log
     sudo cp /$STRIGO_CLASS_ID/.configs/traefik.service /etc/systemd/system/
     sudo chown root:root /etc/systemd/system/traefik.service
     sudo chmod 644 /etc/systemd/system/traefik.service
