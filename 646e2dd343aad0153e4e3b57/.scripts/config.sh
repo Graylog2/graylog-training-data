@@ -1,6 +1,9 @@
 #!/bin/bash
 source /etc/profile
 
+echo "Sleeping for random time up to 30 seconds to prevent DNS records from being over-written in cases of multiple labs starting at once" >> /home/ubuntu/strigosuccess
+sleep $(( ( RANDOM % 30 )  + 1 ))
+
 #Set useful scripts to the home directory
 echo "Set symlinks" >> /root/logfather.dns.log
 ln -s /$STRIGO_CLASS_ID/.scripts/node_install.sh /home/admin/node_install.sh
