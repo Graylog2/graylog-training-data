@@ -9,7 +9,7 @@ ln -s /$STRIGO_CLASS_ID/.scripts/cheat.sh /home/admin/cheat.sh
 chown -R 1000:1000 /$STRIGO_CLASS_ID/
 
 
-if [[ "STRIGO_RESOURCE_3_NAME" == "Proxy" ]]; then
+if [[ -z "$dns" ]]; then
     ##Setup proxy
     echo "Setting up Proxy box" >> /root/logfather.dns.log
     #Install OT
@@ -86,7 +86,7 @@ if [[ "STRIGO_RESOURCE_3_NAME" == "Proxy" ]]; then
     Environment="STRIGO_RESOURCE_1_DNS={{ .STRIGO_RESOURCE_1_DNS }}"
     Environment="STRIGO_RESOURCE_2_DNS={{ .STRIGO_RESOURCE_2_DNS }}"
     Environment="STRIGO_RESOURCE_3_DNS={{ .STRIGO_RESOURCE_3_DNS }}"
-    EOF
+EOF
 
     # Install Traefik
     sudo apt-get install wget -y
