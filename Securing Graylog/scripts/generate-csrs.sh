@@ -1,21 +1,21 @@
 #!/bin/bash
 
-while true
-do
-    read -p "Hostname of Graylog server: " i
-    [ ! $i == "$publicdns" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $publicdns!)"
-    [[ $i == "$publicdns" ]] && break
-done
+# while true
+# do
+#     read -p "Hostname of Graylog server: " i
+#     [ ! $i == "$publicdns" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $publicdns!)"
+#     [[ $i == "$publicdns" ]] && break
+# done
 
-while true
-do
-    read -p "Hostname of Opensearch server: " i
-    [ ! $i == "$dns_os" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns_os!)"
-    [[ $i == "$dns_os" ]] && break
-done
+# while true
+# do
+#     read -p "Hostname of Opensearch server: " i
+#     [ ! $i == "$dns_os" ] && echo "Please make sure this name matches the full domain name of your lab instance! (Hint: it's $dns_os!)"
+#     [[ $i == "$dns_os" ]] && break
+# done
 
 
-echo "=== Generating CSR's from provided info..."
+echo "=== Generating CSR's..."
 sleep 2
 echo "=== Submitting CSR's to CA for signing..."
 sleep 4
