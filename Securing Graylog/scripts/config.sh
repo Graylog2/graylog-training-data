@@ -1,4 +1,4 @@
-# Securing Graylog with TLS Course setup script
+# Securing Graylog Course setup script
 
 # Setup GPG keyring:
 apt install -y gnupg
@@ -29,14 +29,14 @@ sudo chmod g+w -R /etc/graylog
 sudo usermod -aG graylog admin
 
 # Modify server.conf:
-cp "/Securing Graylog with TLS/configs/server.conf" /etc/graylog/server
+cp "/Securing Graylog/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS_GL/$publicdns/" /etc/graylog/server/server.conf
 sed -i "s/PUBLICDNS_OS/$dns_os/" /etc/graylog/server/server.conf
 
 # Modify opensearch.yml:
-cp "/Securing Graylog with TLS/configs/opensearch.yml" /etc/opensearch/
+cp "/Securing Graylog/configs/opensearch.yml" /etc/opensearch/
 # sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
-cp "/Securing Graylog with TLS/configs/jvm.options" /etc/opensearch/
+cp "/Securing Graylog/configs/jvm.options" /etc/opensearch/
 
 # Set java path for use by Opensearch Security plugin:
 echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
@@ -48,7 +48,7 @@ echo "127.0.0.1 $dns_os" | sudo tee -a /etc/hosts
 systemctl enable --now mongod.service graylog-server.service opensearch.service
 
 # Import CSR generator script:
-cp "/Securing Graylog with TLS/scripts/generate-csrs.sh" /home/admin/generate-csrs.sh
+cp "/Securing Graylog/scripts/generate-csrs.sh" /home/admin/generate-csrs.sh
 chmod +x /home/admin/generate-csrs.sh
 
 # Import certs & keys to /certs:
@@ -63,5 +63,5 @@ sudo rm /.pwd
 printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 
 # Cleanup corse content & create file for lab to finally appear
-sudo rm -rf "/Securing Graylog with TLS" /certs/*.enc
+sudo rm -rf "/Securing Graylog" /certs/*.enc
 touch /home/admin/gogogo
