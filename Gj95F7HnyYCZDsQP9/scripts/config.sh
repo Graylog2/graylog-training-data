@@ -99,6 +99,24 @@ printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/ubuntu/strigos
 bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -k -H 'X-Requested-By: PS_TeamAwesome')
 printf "\n\nInstallation Result: $bunact\n" >> /home/ubuntu/strigosuccess
 
+#Add course CPs
+for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
+do
+  printf "\n\nInstalling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
+  id=$(cat "$entry" | jq -r '.id')
+  ver=$(cat "$entry" | jq -r '.rev')
+  printf "\n\nID:$entry and Version: $ver\n" >> /home/ubuntu/strigosuccess
+  curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs"  -H 'Content-Type: application/json' -H 'X-Requested-By: PS_Packer' -d @"$entry" >> /home/ubuntu/strigosuccess
+  printf "\n\nEnabling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
+  curl -k -u'admin:yabba dabba doo' -XPOST "https://localhost/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}' >> /home/ubuntu/strigosuccess
+done
+
+#Pausing Endpoint Firewalls Stream
+printf "\n\nRetrieve Endpoint Firewalls Stream ID\n"
+gnefstreamid=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/streams/paginated?page=1&per_page=50&query=Endpoint%20Firewalls&sort=title&order=asc' | jq -r '.elements[].id')
+printf "\n\nPausing Stream\n"
+curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/streams/$gnefstreamid/pause" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome'
+
 ## Update Docker Container with certs
 glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
 docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
