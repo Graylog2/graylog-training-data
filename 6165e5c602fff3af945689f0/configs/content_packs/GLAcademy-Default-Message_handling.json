@@ -1,0 +1,103 @@
+{
+  "v": 1,
+  "id": "9ab89f62-5d80-4a5f-b05d-2fab9e7ca215",
+  "rev": 1,
+  "name": "GL Academy - Default Message Handling",
+  "summary": "Handling of the Default Messages - Routed via Rules",
+  "description": "",
+  "vendor": "GL-Academy",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "102f462a-5e63-4f76-9d9e-33a47460f296",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MacOS"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MacOS\"\nwhen\n    from_input(\n        name: \"MacOS Logs\")\nthen\n    route_to_stream(\n        name: \"Desktop Firewall Events\", \n        remove_from_default: true\n    );\n\n// Additional field to identify this rule\nset_field(\"message_route\",\"Desktop Firewall - MacOS\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "60d0978e-1e51-48f5-bed7-79d1f507aa32",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Message Routing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Message Routing\"\nstage 0 match either\nrule \"Route - Desktop Firewall - MS Logs\"\nrule \"Route - Desktop Firewall - MacOS\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "ffdfb235-ca1a-44b1-8072-7a0383169b47",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MS Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n    from_input(\n        name: \"MS Logs\")\nthen\n    route_to_stream(\n        name: \"Endpoint Firewalls\", \n        remove_from_default: true\n    );\n\n// Additional field to identify this rule\nset_field(\"abe_route\",\"Endpoint Firewalls\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    }
+  ]
+}
