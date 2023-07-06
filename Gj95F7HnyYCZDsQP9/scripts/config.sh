@@ -2,6 +2,9 @@
 #load Vars from Strigo
 source /etc/profile
 
+echo "Sleeping for random time up to 30 seconds to prevent DNS records from being over-written in cases of multiple labs starting at once" >> /home/ubuntu/strigosuccess
+sleep $(( ( RANDOM % 30 )  + 1 ))
+
 echo "The present working directory is $(pwd)" >> /home/ubuntu/strigosuccess
 echo "Running DNS Registration Steps" >> /home/ubuntu/strigosuccess
 dnscount=0
