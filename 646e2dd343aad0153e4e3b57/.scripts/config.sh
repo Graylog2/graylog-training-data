@@ -9,7 +9,7 @@ ln -s /$STRIGO_CLASS_ID/.scripts/cheat.sh /home/admin/cheat.sh
 chown -R 1000:1000 /$STRIGO_CLASS_ID/
 
 
-if [[ -z "$dns" ]]; then
+if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
     ##Setup proxy
     echo "Setting up Proxy box" >> /root/logfather.dns.log
     #Install OT
