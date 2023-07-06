@@ -39,7 +39,7 @@ cp "/Securing Graylog/configs/opensearch.yml" /etc/opensearch/
 cp "/Securing Graylog/configs/jvm.options" /etc/opensearch/
 
 # Set java path for use by Opensearch Security plugin:
-echo "export JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
+echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Add mongodb node resolution:
 echo "127.0.0.1 $dns_os" | sudo tee -a /etc/hosts
@@ -53,15 +53,14 @@ chmod +x /home/admin/generate-csrs.sh
 
 # Import certs & keys to /certs:
 sudo git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
-sudo openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /certs/privkey.pem
-sudo openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /certs/cert.pem
-# Remove sensitive pwd file:
-sudo rm /.pwd
+for i in /certs/*.enc
+do
+    sudo openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > "${i%.enc}"
+done
 
 # Minor vim behavior tweak to fix undesireable pasting behavior:
-
 printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 
 # Cleanup corse content & create file for lab to finally appear
-sudo rm -rf "/Securing Graylog" /certs/*.enc
+sudo rm -rf "/Securing Graylog" /certs/*.enc /.pwd
 touch /home/admin/gogogo
