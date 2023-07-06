@@ -1,0 +1,4515 @@
+{
+  "v": 1,
+  "id": "1907df02-415b-4f58-b9f6-10bf26026170",
+  "rev": 1,
+  "name": "GL Academy - Threat Hunter",
+  "summary": "Bulk content for Threat Hunter Course",
+  "description": "",
+  "vendor": "GL-Academy",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "2a67e1de-76ec-48be-be8c-28d104912d08",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "d20d08e2-782c-43d7-b6b3-0e01817b5db1"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "0dad3c6f-9002-4c9e-83f7-433dca5e9489"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3f644bbd-8fc6-4440-9515-32819aa6004e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Firewall - Incoming"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Firewall - Incoming\"\nwhen\n    has_field(\"destination_ip\") && \n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        ) \n    ) AND \n       has_field(\"source_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        )  OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        )\n    ) \nthen\nset_field(\"network_destination\",\"internal\");\nset_field(\"network_source\",\"external\");\nset_field(\"network_direction\",\"incoming\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "db5088b8-6568-4149-a543-9dd2867515ad",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Firewall - Unknown"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Firewall - Unknown\"\nwhen\n    has_field(\"destination_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        )  \n    ) AND \n       has_field(\"source_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        ) \n    ) \nthen\nset_field(\"network_destination\",\"external\");\nset_field(\"network_source\",\"external\");\n//set_field(\"network_direction\",\"unknown\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "a3a2b3a1-d721-4f47-a14f-96b3679e13df",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Global GELF"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12201
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "decompress_size_limit": {
+            "@type": "integer",
+            "@value": 8388608
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.gelf.tcp.GELFTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "33a2640a-5bf3-46e4-8323-5f97bd58b52e",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "8ea430fc-694f-4208-8d14-1ed0c717bd30",
+              "timerange": {
+                "type": "relative",
+                "from": 60
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+              },
+              "search_types": [
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 1800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "219c5f5e-6cbc-4fce-b3a4-3519e793f24a",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 1800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_parent_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "71a740ff-0337-4f2a-8df7-e69730579169",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "size": 100,
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": null,
+                  "timerange": {
+                    "type": "relative",
+                    "from": 60
+                  },
+                  "streams": [],
+                  "filter": null,
+                  "fields": [
+                    "winlogbeat_event_action",
+                    "winlogbeat_process_parent_name",
+                    "source",
+                    "winlogbeat_user_name",
+                    "timestamp",
+                    "winlogbeat_event_category",
+                    "winlogbeat_process_pe_original_file_name"
+                  ],
+                  "type": "logs",
+                  "id": "cc5f25e0-b91f-4244-9ff2-7b78511fdf90",
+                  "after": null,
+                  "tie_breaker": null,
+                  "sort": "DESC"
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 1800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_parent_command_line",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "1f6080ca-1396-48f8-a622-ac246ff2fb7b",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 1800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "22e83e9b-ff1c-44e7-ad26-867c1e7549ef",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 28800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "time",
+                      "field": "timestamp",
+                      "interval": {
+                        "type": "auto",
+                        "scaling": 1
+                      }
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "49de7059-8549-45aa-a9fd-92f51870b833",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe NOT winlogbeat_process_name:cvtres.exe AND NOT winlogbeat_process_name:HOSTNAME.EXE"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "from": 1800
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "8b9c07e2-1780-48d9-b92c-bd15457c88bc",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-08T16:19:45.773Z"
+        },
+        "created_at": "2021-10-04T17:08:37.889Z",
+        "requires": {},
+        "state": {
+          "8ea430fc-694f-4208-8d14-1ed0c717bd30": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "72e704c7-ec7c-4597-a28f-07417246cdd9": "Activity Summary (Past 8 hours)",
+                "3b9215da-82c0-41f9-953d-24dbd86ccebc": "Log Viewer",
+                "badefa27-3742-40d4-8935-37fae726b531": "Parent Processes",
+                "05b840a0-bf7b-40a6-857d-09250c248801": "Process",
+                "da01ff67-8f16-48b3-a7c1-e37fab6a2b10": "Field Statistics for vendor_event_category",
+                "5b7b335e-ee13-4af3-8470-e484afa573f7": "Event",
+                "7c765af2-b4d2-4066-a49e-523fa742274d": "Full Launch Command",
+                "f42e28eb-1d47-4db3-bc2c-2fec24e27527": "Full Script Text Blocks"
+              },
+              "tab": {
+                "title": "Execution Summary"
+              }
+            },
+            "widgets": [
+              {
+                "id": "3b9215da-82c0-41f9-953d-24dbd86ccebc",
+                "type": "logs",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 60
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "winlogbeat_event_action",
+                    "winlogbeat_event_category",
+                    "winlogbeat_user_name",
+                    "winlogbeat_process_parent_name",
+                    "winlogbeat_process_pe_original_file_name"
+                  ],
+                  "size": 100,
+                  "after": null,
+                  "sort": "DESC",
+                  "tie_breaker": null
+                }
+              },
+              {
+                "id": "05b840a0-bf7b-40a6-857d-09250c248801",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe NOT winlogbeat_process_name:cvtres.exe AND NOT winlogbeat_process_name:HOSTNAME.EXE"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "f42e28eb-1d47-4db3-bc2c-2fec24e27527",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "badefa27-3742-40d4-8935-37fae726b531",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_parent_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "5b7b335e-ee13-4af3-8470-e484afa573f7",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "File created (rule: FileCreate)",
+                        "chart_color": "#b71c1c"
+                      },
+                      {
+                        "field_name": "Registry value set (rule: RegistryEvent)",
+                        "chart_color": "#f17837"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "72e704c7-ec7c-4597-a28f-07417246cdd9",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 28800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "timestamp",
+                      "type": "time",
+                      "config": {
+                        "interval": {
+                          "type": "auto",
+                          "scaling": 1
+                        }
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "7c765af2-b4d2-4066-a49e-523fa742274d",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_parent_command_line",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": [
+                "49de7059-8549-45aa-a9fd-92f51870b833"
+              ],
+              "05b840a0-bf7b-40a6-857d-09250c248801": [
+                "8b9c07e2-1780-48d9-b92c-bd15457c88bc"
+              ],
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": [
+                "219c5f5e-6cbc-4fce-b3a4-3519e793f24a"
+              ],
+              "7c765af2-b4d2-4066-a49e-523fa742274d": [
+                "1f6080ca-1396-48f8-a622-ac246ff2fb7b"
+              ],
+              "badefa27-3742-40d4-8935-37fae726b531": [
+                "71a740ff-0337-4f2a-8df7-e69730579169"
+              ],
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": [
+                "cc5f25e0-b91f-4244-9ff2-7b78511fdf90"
+              ],
+              "f42e28eb-1d47-4db3-bc2c-2fec24e27527": [
+                "22e83e9b-ff1c-44e7-ad26-867c1e7549ef"
+              ]
+            },
+            "positions": {
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": {
+                "col": 1,
+                "row": 7,
+                "height": 2,
+                "width": 6
+              },
+              "05b840a0-bf7b-40a6-857d-09250c248801": {
+                "col": 4,
+                "row": 4,
+                "height": 3,
+                "width": 3
+              },
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": {
+                "col": 7,
+                "row": 4,
+                "height": 5,
+                "width": 6
+              },
+              "7c765af2-b4d2-4066-a49e-523fa742274d": {
+                "col": 1,
+                "row": 9,
+                "height": 3,
+                "width": "Infinity"
+              },
+              "badefa27-3742-40d4-8935-37fae726b531": {
+                "col": 1,
+                "row": 4,
+                "height": 3,
+                "width": 3
+              },
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": {
+                "col": 1,
+                "row": 15,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "f42e28eb-1d47-4db3-bc2c-2fec24e27527": {
+                "col": 1,
+                "row": 12,
+                "height": 3,
+                "width": "Infinity"
+              }
+            },
+            "formatting": {
+              "highlighting": [
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "pwsh.exe",
+                  "color": {
+                    "color": "#ee6dd8",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                },
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "powershell.exe",
+                  "color": {
+                    "color": "#e9f8c0",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                },
+                {
+                  "field": "winlogbeat_process_name",
+                  "value": "powershell.exe",
+                  "color": {
+                    "color": "#8ee0e8",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                },
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "cmd.exe",
+                  "color": {
+                    "color": "#ff006c",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                }
+              ]
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Command Execution Monitoring"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "44d5297b-dd54-4665-bf3c-70b219f7b45b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MacOS"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MacOS\"\nwhen\n    from_input(\n        name: \"MacOS Logs\")\nthen\n    route_to_stream(\n        name: \"Desktop Firewall Events\", \n        remove_from_default: true\n    );\n\n// Additional field to identify this rule\nset_field(\"message_route\",\"Desktop Firewall - MacOS\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "2bc742b7-f377-45dd-9a09-2527194da48e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Asset Management\"\nwhen\n    has_field(\"source_ip\") && \n    to_string($message.network_source) == \"internal\"\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.source_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"source_\");\nset_field(\"lookup\",\"[Source - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "d20d08e2-782c-43d7-b6b3-0e01817b5db1",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip-maxmind-databases-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "search",
+        "version": "1"
+      },
+      "id": "4441bb75-2822-40e6-974c-0eef2574d330",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "651d1f7a-5ced-4a8c-a4c8-fecc1899c221",
+              "timerange": {
+                "type": "relative",
+                "from": 172800
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "application_name:microsoft_defender AND alert_severity_level:>1"
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "36719051-1fca-406f-b541-6f5a48d9bc39",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "event_log_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "3f913fa7-4214-485c-82f2-ba2cf2ebb47b",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "9d152125-cbe6-49b8-8541-e315e32e701c",
+                  "limit": 150
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "alert_severity_level",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "2c7040f7-2690-4faf-9206-001082172baa",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "30342f24-4638-4cae-881a-62e40a2cfa68",
+                  "limit": 150
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "application_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "7ee2c940-c6f5-4c68-9ceb-edfcea1d7de9",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-05T15:48:56.898Z"
+        },
+        "created_at": "2021-10-05T15:26:52.259Z",
+        "requires": {},
+        "state": {
+          "651d1f7a-5ced-4a8c-a4c8-fecc1899c221": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "a66f1ace-6ad5-41ec-b408-efa5ba3f9b08": "Message Count",
+                "0922d1e4-30c7-4ea4-8f1f-410dc13c1e0e": "All Messages",
+                "7c5ebab6-9d84-4697-bc32-6523ca8bde8d": "Log Sources",
+                "f758686a-7c01-4378-81a4-9c63b52984a2": "Application Name",
+                "779061f0-95fa-4752-8492-b70aac470b91": "Malware Detections",
+                "f64b4e70-03cb-4aa4-ab64-9fd10c4e4c7d": "Aggregating count() by process_path",
+                "9354a0c8-5d17-412b-8e11-27f15bff4f42": "Total Events",
+                "6cba0401-c9fa-46e9-8bb4-6677b38835d3": "Alert Severity"
+              }
+            },
+            "widgets": [
+              {
+                "id": "0922d1e4-30c7-4ea4-8f1f-410dc13c1e0e",
+                "type": "messages",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source"
+                  ],
+                  "show_message_row": true,
+                  "show_summary": true,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "f758686a-7c01-4378-81a4-9c63b52984a2",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "application_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "microsoft_defender",
+                        "chart_color": "#004d40"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "6cba0401-c9fa-46e9-8bb4-6677b38835d3",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "alert_severity_level",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "5",
+                        "chart_color": "#311b92"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "779061f0-95fa-4752-8492-b70aac470b91",
+                "type": "messages",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "alert_signature",
+                    "alert_severity_level",
+                    "gim_event_type",
+                    "process_path"
+                  ],
+                  "show_message_row": false,
+                  "show_summary": false,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "9354a0c8-5d17-412b-8e11-27f15bff4f42",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "numeric",
+                  "event_annotation": false,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message Count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "7c5ebab6-9d84-4697-bc32-6523ca8bde8d",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "event_log_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "microsoft-windows-windows defender/operational",
+                        "chart_color": "#bf360c"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "6cba0401-c9fa-46e9-8bb4-6677b38835d3": [
+                "2c7040f7-2690-4faf-9206-001082172baa"
+              ],
+              "779061f0-95fa-4752-8492-b70aac470b91": [
+                "9d152125-cbe6-49b8-8541-e315e32e701c"
+              ],
+              "7c5ebab6-9d84-4697-bc32-6523ca8bde8d": [
+                "3f913fa7-4214-485c-82f2-ba2cf2ebb47b"
+              ],
+              "0922d1e4-30c7-4ea4-8f1f-410dc13c1e0e": [
+                "30342f24-4638-4cae-881a-62e40a2cfa68"
+              ],
+              "f758686a-7c01-4378-81a4-9c63b52984a2": [
+                "7ee2c940-c6f5-4c68-9ceb-edfcea1d7de9"
+              ],
+              "9354a0c8-5d17-412b-8e11-27f15bff4f42": [
+                "36719051-1fca-406f-b541-6f5a48d9bc39"
+              ]
+            },
+            "positions": {
+              "9354a0c8-5d17-412b-8e11-27f15bff4f42": {
+                "col": 11,
+                "row": 2,
+                "height": 3,
+                "width": 2
+              },
+              "f758686a-7c01-4378-81a4-9c63b52984a2": {
+                "col": 5,
+                "row": 4,
+                "height": 4,
+                "width": 4
+              },
+              "0922d1e4-30c7-4ea4-8f1f-410dc13c1e0e": {
+                "col": 1,
+                "row": 9,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "7c5ebab6-9d84-4697-bc32-6523ca8bde8d": {
+                "col": 9,
+                "row": 5,
+                "height": 4,
+                "width": 4
+              },
+              "779061f0-95fa-4752-8492-b70aac470b91": {
+                "col": 1,
+                "row": 1,
+                "height": 3,
+                "width": 10
+              },
+              "6cba0401-c9fa-46e9-8bb4-6677b38835d3": {
+                "col": 1,
+                "row": 4,
+                "height": 4,
+                "width": 4
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Malware Search"
+        },
+        "type": "SEARCH",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "371586c8-8891-4b06-919d-31c024e23e56",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "49686318-6827-4416-a9bb-aef7b7519dfc",
+              "timerange": {
+                "type": "relative",
+                "from": 1800
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "_exists_:event_type"
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "registry_value",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "3d732083-081e-4087-9c31-5f73f8402c41",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "b4315119-0bd3-40e0-9260-a19692d106b7",
+                  "limit": 150
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "2fdded44-445d-4419-9ea9-160cd73eeae0",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "registry_path",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "a5313145-e923-42a7-9bb8-ebf5f1579832",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "eee6b5bd-369c-447e-90ef-1fbce6d8864a",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2022-03-09T23:59:38.534Z"
+        },
+        "created_at": "2022-03-09T23:57:20.181Z",
+        "requires": {},
+        "state": {
+          "49686318-6827-4416-a9bb-aef7b7519dfc": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "714fdcdf-d930-4ccc-b8d3-c8b36438ca7a": "Message Count",
+                "ba1ba4fd-b742-43c1-be62-36582390ee8b": "All Messages"
+              },
+              "tab": {
+                "title": "Registry Watching is the Love of my Life"
+              }
+            },
+            "widgets": [
+              {
+                "id": "63b81a95-24a1-4bb8-b872-6669749ba0ee",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "_exists_:event_type"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "registry_path",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "ba1ba4fd-b742-43c1-be62-36582390ee8b",
+                "type": "messages",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "_exists_:event_type"
+                },
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source"
+                  ],
+                  "show_message_row": true,
+                  "show_summary": true,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "4626072f-758b-4ed7-bfdf-cc117c6a784b",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "_exists_:event_type"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "5e52e120-7247-43ca-a95b-5536ec050403",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "_exists_:event_type"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "registry_value",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "1db4047b-a81a-4fb5-8aaa-eda2b227425b",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "from": 1800
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "_exists_:event_type"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "ba1ba4fd-b742-43c1-be62-36582390ee8b": [
+                "b4315119-0bd3-40e0-9260-a19692d106b7"
+              ],
+              "1db4047b-a81a-4fb5-8aaa-eda2b227425b": [
+                "2fdded44-445d-4419-9ea9-160cd73eeae0"
+              ],
+              "63b81a95-24a1-4bb8-b872-6669749ba0ee": [
+                "a5313145-e923-42a7-9bb8-ebf5f1579832"
+              ],
+              "5e52e120-7247-43ca-a95b-5536ec050403": [
+                "3d732083-081e-4087-9c31-5f73f8402c41"
+              ],
+              "4626072f-758b-4ed7-bfdf-cc117c6a784b": [
+                "eee6b5bd-369c-447e-90ef-1fbce6d8864a"
+              ]
+            },
+            "positions": {
+              "ba1ba4fd-b742-43c1-be62-36582390ee8b": {
+                "col": 1,
+                "row": 12,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "1db4047b-a81a-4fb5-8aaa-eda2b227425b": {
+                "col": 1,
+                "row": 6,
+                "height": 4,
+                "width": 4
+              },
+              "63b81a95-24a1-4bb8-b872-6669749ba0ee": {
+                "col": 5,
+                "row": 6,
+                "height": 4,
+                "width": 8
+              },
+              "5e52e120-7247-43ca-a95b-5536ec050403": {
+                "col": 1,
+                "row": 2,
+                "height": 4,
+                "width": 8
+              },
+              "4626072f-758b-4ed7-bfdf-cc117c6a784b": {
+                "col": 9,
+                "row": 2,
+                "height": 4,
+                "width": 4
+              }
+            },
+            "formatting": null,
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Registry Monitor"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "search",
+        "version": "1"
+      },
+      "id": "9da37263-cd28-48c7-8f54-26f3de0fe741",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "8ea430fc-694f-4208-8d14-1ed0c717bd30",
+              "timerange": {
+                "type": "relative",
+                "from": 300
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe"
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "time",
+                      "field": "timestamp",
+                      "interval": {
+                        "type": "auto",
+                        "scaling": 1
+                      }
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "803bf67f-acbc-415d-8747-1f342f496ccc",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_parent_command_line",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "42d6ff93-e93c-4c42-8a0d-03c827157497",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "size": 100,
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "streams": [],
+                  "filter": null,
+                  "fields": [
+                    "winlogbeat_event_action",
+                    "winlogbeat_process_parent_name",
+                    "source",
+                    "winlogbeat_user_name",
+                    "timestamp",
+                    "winlogbeat_event_category",
+                    "winlogbeat_process_pe_original_file_name"
+                  ],
+                  "type": "logs",
+                  "id": "68c0e820-747e-4dc1-84a2-950fc950626e",
+                  "after": null,
+                  "tie_breaker": null,
+                  "sort": "DESC"
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "de38a32e-bf79-468c-8aa8-872f089c2f94",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_parent_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "f1b9b637-e5e6-4e12-850c-10680b24b35e",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "4614ad76-8111-4630-b075-90fe31ffeaf9",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-13T18:31:21.974Z"
+        },
+        "created_at": "2021-10-04T17:08:37.889Z",
+        "requires": {},
+        "state": {
+          "8ea430fc-694f-4208-8d14-1ed0c717bd30": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "72e704c7-ec7c-4597-a28f-07417246cdd9": "Messages",
+                "3b9215da-82c0-41f9-953d-24dbd86ccebc": "Log Viewer",
+                "badefa27-3742-40d4-8935-37fae726b531": "Parent Processes",
+                "05b840a0-bf7b-40a6-857d-09250c248801": "Process",
+                "da01ff67-8f16-48b3-a7c1-e37fab6a2b10": "Field Statistics for vendor_event_category",
+                "5b7b335e-ee13-4af3-8470-e484afa573f7": "Event",
+                "7c765af2-b4d2-4066-a49e-523fa742274d": "Full Launch Command"
+              }
+            },
+            "widgets": [
+              {
+                "id": "72e704c7-ec7c-4597-a28f-07417246cdd9",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "timestamp",
+                      "type": "time",
+                      "config": {
+                        "interval": {
+                          "type": "auto",
+                          "scaling": 1
+                        }
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "05b840a0-bf7b-40a6-857d-09250c248801",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "3b9215da-82c0-41f9-953d-24dbd86ccebc",
+                "type": "logs",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "winlogbeat_event_action",
+                    "winlogbeat_event_category",
+                    "winlogbeat_user_name",
+                    "winlogbeat_process_parent_name",
+                    "winlogbeat_process_pe_original_file_name"
+                  ],
+                  "size": 100,
+                  "after": null,
+                  "sort": "DESC",
+                  "tie_breaker": null
+                }
+              },
+              {
+                "id": "badefa27-3742-40d4-8935-37fae726b531",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_parent_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "5b7b335e-ee13-4af3-8470-e484afa573f7",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "File created (rule: FileCreate)",
+                        "chart_color": "#b71c1c"
+                      },
+                      {
+                        "field_name": "Registry value set (rule: RegistryEvent)",
+                        "chart_color": "#f17837"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "7c765af2-b4d2-4066-a49e-523fa742274d",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_parent_command_line",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": [
+                "803bf67f-acbc-415d-8747-1f342f496ccc"
+              ],
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": [
+                "68c0e820-747e-4dc1-84a2-950fc950626e"
+              ],
+              "badefa27-3742-40d4-8935-37fae726b531": [
+                "f1b9b637-e5e6-4e12-850c-10680b24b35e"
+              ],
+              "05b840a0-bf7b-40a6-857d-09250c248801": [
+                "de38a32e-bf79-468c-8aa8-872f089c2f94"
+              ],
+              "7c765af2-b4d2-4066-a49e-523fa742274d": [
+                "42d6ff93-e93c-4c42-8a0d-03c827157497"
+              ],
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": [
+                "4614ad76-8111-4630-b075-90fe31ffeaf9"
+              ]
+            },
+            "positions": {
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": {
+                "col": 7,
+                "row": 1,
+                "height": 5,
+                "width": 6
+              },
+              "7c765af2-b4d2-4066-a49e-523fa742274d": {
+                "col": 1,
+                "row": 6,
+                "height": 4,
+                "width": "Infinity"
+              },
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": {
+                "col": 1,
+                "row": 10,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "badefa27-3742-40d4-8935-37fae726b531": {
+                "col": 1,
+                "row": 1,
+                "height": 3,
+                "width": 3
+              },
+              "05b840a0-bf7b-40a6-857d-09250c248801": {
+                "col": 4,
+                "row": 1,
+                "height": 3,
+                "width": 3
+              },
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": {
+                "col": 1,
+                "row": 4,
+                "height": 2,
+                "width": 6
+              }
+            },
+            "formatting": {
+              "highlighting": [
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "pwsh.exe",
+                  "color": {
+                    "color": "#ee6dd8",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                },
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "cmd.exe",
+                  "color": {
+                    "color": "#ff006c",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                }
+              ]
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Command Execution Monitoring"
+        },
+        "type": "SEARCH",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "27e0e7a3-5245-4395-92db-3894b761d862",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Training"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Training\"\nwhen\n    has_field(\"log_pack\")\nthen\n    route_to_stream(\n        name: \"Training Logs\"\n        );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d82f964c-a380-46eb-afd0-b3be6c07d47c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Asset Management\"\nwhen\n    has_field(\"destination_ip\") && \n    to_string($message.network_destination) == \"internal\"\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.destination_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"destination_\");\nset_field(\"lookup\",\"[Destination - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "search",
+        "version": "1"
+      },
+      "id": "2389b667-f7ba-4bd5-a255-cbb8b3677ce8",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "6704e256-af2a-4b27-bfad-570741caeeff",
+              "timerange": {
+                "type": "relative",
+                "from": 60
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_winlog_task",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "1fd17c50-61cf-4b4f-a99f-fe67fdb0d910",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_file_path",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "078d8531-45cd-4dcf-9475-da759d910598",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "522d6676-927b-4872-b280-a66f3dcd3004",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "eed3e604-66f6-4fd6-ae53-ebaf6188cc7f",
+                  "limit": 150
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-05T18:43:02.285Z"
+        },
+        "created_at": "2021-10-04T22:57:18.484Z",
+        "requires": {},
+        "state": {
+          "6704e256-af2a-4b27-bfad-570741caeeff": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "2dc61151-5ac3-4649-98e9-539ad9571513": "Message Count",
+                "23ee63ff-6f7c-4670-b791-075ba5de806a": "Message History",
+                "da65ba62-833b-4a0a-a451-ef9c46c8df47": "Shell Usage",
+                "4685b8c1-93a6-43a9-908c-40c1db4ebe28": "Recent Executions",
+                "2407b53b-d22a-4d87-924a-ad4b15618772": "Executed Script Paths"
+              }
+            },
+            "widgets": [
+              {
+                "id": "23ee63ff-6f7c-4670-b791-075ba5de806a",
+                "type": "messages",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "winlogbeat_event_action",
+                    "winlogbeat_event_module",
+                    "winlogbeat_powershell_command_invocation_details_0_type",
+                    "winlogbeat_process_title",
+                    "winlogbeat_winlog_task",
+                    "winlogbeat_winlog_user_name",
+                    "winlogbeat_winlog_user_type"
+                  ],
+                  "show_message_row": false,
+                  "show_summary": false,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2407b53b-d22a-4d87-924a-ad4b15618772",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_file_path",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "da65ba62-833b-4a0a-a451-ef9c46c8df47",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_winlog_task",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "Execute a Remote Command",
+                        "chart_color": "#b71c1c"
+                      },
+                      {
+                        "field_name": "Executing Pipeline",
+                        "chart_color": "#880e4f"
+                      },
+                      {
+                        "field_name": "Provider Lifecycle",
+                        "chart_color": "#758085"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "4685b8c1-93a6-43a9-908c-40c1db4ebe28",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "da65ba62-833b-4a0a-a451-ef9c46c8df47": [
+                "1fd17c50-61cf-4b4f-a99f-fe67fdb0d910"
+              ],
+              "4685b8c1-93a6-43a9-908c-40c1db4ebe28": [
+                "522d6676-927b-4872-b280-a66f3dcd3004"
+              ],
+              "23ee63ff-6f7c-4670-b791-075ba5de806a": [
+                "eed3e604-66f6-4fd6-ae53-ebaf6188cc7f"
+              ],
+              "2407b53b-d22a-4d87-924a-ad4b15618772": [
+                "078d8531-45cd-4dcf-9475-da759d910598"
+              ]
+            },
+            "positions": {
+              "da65ba62-833b-4a0a-a451-ef9c46c8df47": {
+                "col": 8,
+                "row": 4,
+                "height": 3,
+                "width": 5
+              },
+              "4685b8c1-93a6-43a9-908c-40c1db4ebe28": {
+                "col": 1,
+                "row": 4,
+                "height": 5,
+                "width": 7
+              },
+              "23ee63ff-6f7c-4670-b791-075ba5de806a": {
+                "col": 1,
+                "row": 9,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "2407b53b-d22a-4d87-924a-ad4b15618772": {
+                "col": 8,
+                "row": 7,
+                "height": 2,
+                "width": 5
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Shell History"
+        },
+        "type": "SEARCH",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "f6d86ba6-777b-42ea-a67d-4619f30c5fcd",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Threat Intelligence\"\nwhen\n    has_field(\"source_ip\") && \n    to_string($message.network_source) == \"external\"\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.source_ip)\n);\n\n//Set fields with enriched details\nset_field(\"source_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"source_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"source_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"Source - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.source_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "73a00a87-df32-49ae-926a-d643ed6eeb2e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Firewall - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Firewall - GROK\"\nwhen\n    // Use routing message to select messages\n    to_string($message.abe_route) == \"Endpoint Firewalls\"\nthen\nlet pf = grok(\n    pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n    value: to_string($message.message),\n    only_named_captures: true\n);\nset_fields(pf);\n// Add Parse field for easier message tracing\nset_field(\"abe_parse\",\"Parse - Firewall - GROK\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "ea48c736-48bd-4aab-9f93-8245075510c4",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "WinLogBeats"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5044
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "no_beats_prefix": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog.plugins.beats.Beats2Input"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d2a27395-2675-4abc-ae57-60bbcf17aefe",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Apache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Apache\"\nwhen\n    has_field(\"log_pack\") &&\n    to_string($message.log_pack) == \"002-gl.json\"\nthen\n let parsegrok = grok(\n        pattern: \"%{COMBINEDAPACHELOG}\",\n        value: to_string($message.message), \n        only_named_captures: true\n        ); \n set_fields(parsegrok); \n    set_field(\n        field: \"parser\", \n        value: \"apache_grok\"\n    );\nset_field(\n    field: \"timestamp\",\n    value: now()\n    );\nset_field(\n    field: \"cluster_node\",\n    value: to_string($message.filebeat_host_name)\n    );\n    remove_field(\"filebeat_@timestamp\");\n    remove_field(\"filebeat_@timestamp\");\n    remove_field(\"filebeat_@metadata_beat\");\nremove_field(\"filebeat_@metadata_pipeline\");\nremove_field(\"filebeat_@metadata_type\");\nremove_field(\"filebeat_@metadata_version\");\nremove_field(\"filebeat_@timestamp\");\nremove_field(\"filebeat_agent_ephemeral_id\");\nremove_field(\"filebeat_agent_hostname\");\nremove_field(\"filebeat_agent_id\");\nremove_field(\"filebeat_agent_name\");\nremove_field(\"filebeat_agent_type\");\nremove_field(\"filebeat_agent_version\");\nremove_field(\"filebeat_ecs_version\");\nremove_field(\"filebeat_event_dataset\");\nremove_field(\"filebeat_event_module\");\nremove_field(\"filebeat_fileset_name\");\nremove_field(\"filebeat_host_architecture\");\nremove_field(\"filebeat_host_hostname\");\nremove_field(\"filebeat_host_id\");\n    \n    \nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "0dad3c6f-9002-4c9e-83f7-433dca5e9489",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip-maxmind"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "maxmind_geoip"
+          },
+          "path": {
+            "@type": "string",
+            "@value": "/usr/share/graylog/data/config/GeoLite2-City.mmdb"
+          },
+          "database_type": {
+            "@type": "string",
+            "@value": "MAXMIND_CITY"
+          },
+          "check_interval": {
+            "@type": "long",
+            "@value": 1
+          },
+          "check_interval_unit": {
+            "@type": "string",
+            "@value": "MINUTES"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "b2886f05-18af-4135-bbab-c7591f5aa4a6",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Firewall - Lateral"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Firewall - Lateral\"\nwhen\n    has_field(\"destination_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        )\n    ) AND \n       has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        )\n    ) \nthen\nset_field(\"network_destination\",\"internal\");\nset_field(\"network_source\",\"internal\");\nset_field(\"network_direction\",\"lateral\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "a6ffb196-87d5-4875-83af-6cac126ec8fb",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Endpoint Firewalls"
+        },
+        "stream_rules": [],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Firewalls from Windows endpoints"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "34aceaa2-3387-4c06-8a76-d62f397485aa",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Destination\"\nwhen\n    $message.threat_classification == \"malicious\" &&\n    $message.network_destination == \"external\"\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.destination_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "9e66b934-2cd3-4d11-96e4-b4c6789df81f",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Destination\"\nwhen\n    has_field(\"destination_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "88f5f940-789e-4cf9-bc22-f6c150d6a798",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Source\"\nwhen\n    has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3019fa86-8dd5-4d77-b38c-29617e062991",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MS Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n    from_input(\n        name: \"MS Logs\")\nthen\n    route_to_stream(\n        name: \"Endpoint Firewalls\", \n        remove_from_default: true\n    );\n\n// Additional field to identify this rule\nset_field(\"abe_route\",\"Endpoint Firewalls\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "308cbd46-7d66-45ea-b9c6-534110994613",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Endpoints"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Endpoints\"\nstage 10 match either\nrule \"Context - Firewall - Incoming\"\nrule \"Context - Firewall - Lateral\"\nrule \"Context - Firewall - Unknown\"\nrule \"Context - Firewall - Outgoing\"\nstage 20 match either\nrule \"Enrich - Source - Threat Intelligence\"\nrule \"Enrich - Destination - Asset Management\"\nrule \"Enrich - Destination - Threat Intelligence\"\nrule \"Enrich - Source - Asset Management\"\nstage 30 match either\nrule \"Context - Threat Info - Destination\"\nrule \"Context - Threat Info - Source\"\nstage 0 match either\nrule \"Parse - Firewall - GROK\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "a6ffb196-87d5-4875-83af-6cac126ec8fb"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "7552484a-5dab-46b6-b788-779ef11262f9",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Source\"\nwhen\n    $message.threat_classification == \"malicious\" && \n    $message.network_source == \"external\"\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.source_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "28bc1fb7-0a30-45d3-b05e-9c38f6fc8c3b",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Training Logs"
+        },
+        "stream_rules": [],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Used for parsing out logs specifically for building labs"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "search",
+        "version": "1"
+      },
+      "id": "0499ea48-70fe-4a4c-b056-8c9ce6a058a3",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "8ea430fc-694f-4208-8d14-1ed0c717bd30",
+              "timerange": {
+                "type": "relative",
+                "from": 120
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "NOT winlogbeat_process_parent_name:ssm\\-document\\-worker.exe AND NOT winlogbeat_process_parent_name:svchost.exe AND (winlogbeat_event_action:\"Registry value set (rule: RegistryEvent)\" OR winlogbeat_event_action:\"Registry object added or deleted (rule: RegistryEvent)\")"
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_name",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "68eb04e5-7378-4156-a747-6727c8736a42",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "registry_path",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "cbbf8857-35c2-45ec-9f09-a4cca9bf3586",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "time",
+                      "field": "timestamp",
+                      "interval": {
+                        "type": "auto",
+                        "scaling": 1
+                      }
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "c81c0024-4d36-42c1-b4f3-65684d271e82",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "fd3a599e-41c6-44c6-b3af-47b6e9293eab",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "size": 100,
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "streams": [],
+                  "filter": null,
+                  "fields": [
+                    "winlogbeat_event_action",
+                    "source",
+                    "timestamp",
+                    "winlogbeat_event_category"
+                  ],
+                  "type": "logs",
+                  "id": "415a64f5-2e22-43ae-9443-5c8e01e827ae",
+                  "after": null,
+                  "tie_breaker": null,
+                  "sort": "DESC"
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "e2b3b370-135e-45dd-843a-cb014328fbb2",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-05T16:35:38.604Z"
+        },
+        "created_at": "2021-10-04T17:08:37.889Z",
+        "requires": {},
+        "state": {
+          "8ea430fc-694f-4208-8d14-1ed0c717bd30": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "05b840a0-bf7b-40a6-857d-09250c248801": "Process",
+                "0b61de4f-a5e5-43a9-a0ff-5fa7640b6ccc": "Field Statistics for winlogbeat_event_type",
+                "3b9215da-82c0-41f9-953d-24dbd86ccebc": "Log Viewer",
+                "7f2fc765-65b6-45bd-996f-fb625f0aee51": "Registry Edit Processes",
+                "6335b9d2-abbd-49a6-b4cf-56f1bc1d48ad": "Aggregating count() by winlogbeat_event_type",
+                "badefa27-3742-40d4-8935-37fae726b531": "Parent Processes",
+                "72e704c7-ec7c-4597-a28f-07417246cdd9": "Messages",
+                "da01ff67-8f16-48b3-a7c1-e37fab6a2b10": "Field Statistics for vendor_event_category",
+                "859966c6-b54f-4741-bcb6-844b12d80396": "Event (copy)",
+                "7c765af2-b4d2-4066-a49e-523fa742274d": "Full Launch Command",
+                "5b7b335e-ee13-4af3-8470-e484afa573f7": "Event"
+              }
+            },
+            "widgets": [
+              {
+                "id": "72e704c7-ec7c-4597-a28f-07417246cdd9",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "timestamp",
+                      "type": "time",
+                      "config": {
+                        "interval": {
+                          "type": "auto",
+                          "scaling": 1
+                        }
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "7f2fc765-65b6-45bd-996f-fb625f0aee51",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_name",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "barmode": "group"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "894e2439-503f-402e-b98b-093dda1f52a3",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "registry_path",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "3b9215da-82c0-41f9-953d-24dbd86ccebc",
+                "type": "logs",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "winlogbeat_event_action",
+                    "winlogbeat_event_category"
+                  ],
+                  "size": 100,
+                  "after": null,
+                  "sort": "DESC",
+                  "tie_breaker": null
+                }
+              },
+              {
+                "id": "859966c6-b54f-4741-bcb6-844b12d80396",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "File created (rule: FileCreate)",
+                        "chart_color": "#b71c1c"
+                      },
+                      {
+                        "field_name": "Registry value set (rule: RegistryEvent)",
+                        "chart_color": "#f17837"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              },
+              {
+                "id": "5b7b335e-ee13-4af3-8470-e484afa573f7",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": {
+                    "chart_colors": [
+                      {
+                        "field_name": "File created (rule: FileCreate)",
+                        "chart_color": "#b71c1c"
+                      },
+                      {
+                        "field_name": "Registry value set (rule: RegistryEvent)",
+                        "chart_color": "#f17837"
+                      }
+                    ]
+                  },
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": [
+                "c81c0024-4d36-42c1-b4f3-65684d271e82"
+              ],
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": [
+                "e2b3b370-135e-45dd-843a-cb014328fbb2"
+              ],
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": [
+                "415a64f5-2e22-43ae-9443-5c8e01e827ae"
+              ],
+              "894e2439-503f-402e-b98b-093dda1f52a3": [
+                "cbbf8857-35c2-45ec-9f09-a4cca9bf3586"
+              ],
+              "7f2fc765-65b6-45bd-996f-fb625f0aee51": [
+                "68eb04e5-7378-4156-a747-6727c8736a42"
+              ],
+              "859966c6-b54f-4741-bcb6-844b12d80396": [
+                "fd3a599e-41c6-44c6-b3af-47b6e9293eab"
+              ]
+            },
+            "positions": {
+              "72e704c7-ec7c-4597-a28f-07417246cdd9": {
+                "col": 1,
+                "row": 10,
+                "height": 2,
+                "width": "Infinity"
+              },
+              "5b7b335e-ee13-4af3-8470-e484afa573f7": {
+                "col": 10,
+                "row": 3,
+                "height": 4,
+                "width": 3
+              },
+              "3b9215da-82c0-41f9-953d-24dbd86ccebc": {
+                "col": 1,
+                "row": 12,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "894e2439-503f-402e-b98b-093dda1f52a3": {
+                "col": 1,
+                "row": 7,
+                "height": 3,
+                "width": "Infinity"
+              },
+              "7f2fc765-65b6-45bd-996f-fb625f0aee51": {
+                "col": 1,
+                "row": 3,
+                "height": 4,
+                "width": 6
+              },
+              "859966c6-b54f-4741-bcb6-844b12d80396": {
+                "col": 7,
+                "row": 3,
+                "height": 4,
+                "width": 3
+              }
+            },
+            "formatting": {
+              "highlighting": [
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "pwsh.exe",
+                  "color": {
+                    "color": "#ee6dd8",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                },
+                {
+                  "field": "winlogbeat_process_parent_name",
+                  "value": "cmd.exe",
+                  "color": {
+                    "color": "#ff006c",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                }
+              ]
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Registry Events"
+        },
+        "type": "SEARCH",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "search",
+        "version": "1"
+      },
+      "id": "28ee05ed-0e28-4b61-be29-5fbffb407da3",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": ""
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "c88251e8-dcb7-446e-8da6-a7b0f8e4a37b",
+              "timerange": {
+                "type": "relative",
+                "from": 900
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": "winlogbeat_event_action:\"Process Create (rule: ProcessCreate)\" OR winlogbeat_event_action:created\\-process OR winlogbeat_event_action:\"Execute a Remote Command\""
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_host_hostname",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "8afc9b66-969f-40f8-bf64-47efe3995886",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "cb7057b9-c86c-42e5-b993-47624b036a41",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "37961631-1027-47ce-b877-0fc8d9ff0969",
+                  "limit": 150
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_event_action",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "3f6a8e6f-91c1-4b45-8064-3e6b08683f81",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": null,
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "winlogbeat_process_executable",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "7646f96f-d632-4927-9f7d-3283cf0d690f",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2021-10-08T16:01:02.574Z"
+        },
+        "created_at": "2021-10-08T15:35:43.448Z",
+        "requires": {},
+        "state": {
+          "c88251e8-dcb7-446e-8da6-a7b0f8e4a37b": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "5b06a993-7fdc-4069-bbc7-4926f9397faf": "Message Count",
+                "60d9a2bf-b67b-45a7-8265-afdc13418a50": "All Messages",
+                "f7c742f0-dc40-43e2-95a9-9918a4e60638": "Executing Actions",
+                "65347b06-5532-4d94-bade-51c8aab57b28": "Scripts being Ran",
+                "7e747961-d86a-4bdb-8f91-574b197b7180": "Executed Processes",
+                "4b9e7800-87d2-4d6b-aa92-7ae6f21aa231": "Source Computers"
+              }
+            },
+            "widgets": [
+              {
+                "id": "f7c742f0-dc40-43e2-95a9-9918a4e60638",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_event_action",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "7e747961-d86a-4bdb-8f91-574b197b7180",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_process_executable",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "4b9e7800-87d2-4d6b-aa92-7ae6f21aa231",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_host_hostname",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "60d9a2bf-b67b-45a7-8265-afdc13418a50",
+                "type": "messages",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "event_log_name",
+                    "file_description",
+                    "winlogbeat_host_os_version",
+                    "winlogbeat_process_executable",
+                    "winlogbeat_process_parent_command_line"
+                  ],
+                  "show_message_row": false,
+                  "show_summary": false,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "65347b06-5532-4d94-bade-51c8aab57b28",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "winlogbeat_powershell_file_script_block_text",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "60d9a2bf-b67b-45a7-8265-afdc13418a50": [
+                "37961631-1027-47ce-b877-0fc8d9ff0969"
+              ],
+              "f7c742f0-dc40-43e2-95a9-9918a4e60638": [
+                "3f6a8e6f-91c1-4b45-8064-3e6b08683f81"
+              ],
+              "7e747961-d86a-4bdb-8f91-574b197b7180": [
+                "7646f96f-d632-4927-9f7d-3283cf0d690f"
+              ],
+              "65347b06-5532-4d94-bade-51c8aab57b28": [
+                "cb7057b9-c86c-42e5-b993-47624b036a41"
+              ],
+              "4b9e7800-87d2-4d6b-aa92-7ae6f21aa231": [
+                "8afc9b66-969f-40f8-bf64-47efe3995886"
+              ]
+            },
+            "positions": {
+              "4b9e7800-87d2-4d6b-aa92-7ae6f21aa231": {
+                "col": 1,
+                "row": 1,
+                "height": 3,
+                "width": 4
+              },
+              "65347b06-5532-4d94-bade-51c8aab57b28": {
+                "col": 5,
+                "row": 1,
+                "height": 3,
+                "width": 8
+              },
+              "7e747961-d86a-4bdb-8f91-574b197b7180": {
+                "col": 5,
+                "row": 4,
+                "height": 3,
+                "width": 8
+              },
+              "f7c742f0-dc40-43e2-95a9-9918a4e60638": {
+                "col": 1,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              },
+              "60d9a2bf-b67b-45a7-8265-afdc13418a50": {
+                "col": 1,
+                "row": 7,
+                "height": 6,
+                "width": "Infinity"
+              }
+            },
+            "formatting": {
+              "highlighting": [
+                {
+                  "field": "winlogbeat_process_executable",
+                  "value": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                  "color": {
+                    "color": "#90ee90",
+                    "type": "static"
+                  },
+                  "condition": "equal"
+                }
+              ]
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Executions"
+        },
+        "type": "SEARCH",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "132a2911-f510-4a3f-8743-aee45714e1db",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Threat Intelligence\"\nwhen\n    has_field(\"destination_ip\") && \n    to_string($message.network_destination) == \"external\"\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.destination_ip)\n);\n\n//Set fields with enriched details\nset_field(\"destination_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"destination_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"destination_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"destination - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.destination_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "345e025d-86f7-4c7b-9461-2080be7f84d4",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MS Logs"
+        },
+        "configuration": {
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1500
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.udp.RawUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "74502b8c-53ca-42fc-bf62-9e6c2599e2ec",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - MacFW - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - MacFW - GROK\"\nwhen\n    to_string($message.message_route) == \"Desktop Firewall - MacOS\"\nthen\nlet pf = grok(\n    pattern: \"tcp%{INT:ip_stack} %{IP:source_ip}:%{INT:source_port}<->%{IP:destination_ip}:%{INT:destination_port},%{DATA:interface},%{INT:sent_bytes},%{INT:recv_bytes},%{NUMBER:average_rtt} %{WORD:average_rtt_unit},\",\n    value: to_string($message.message),\n    only_named_captures: true\n);\nset_fields(pf);\n// Add Parse field for easier message tracing\nset_field(\"parse\",\"Parse - MacFW - GROK\");\nset_field(\"host_operating_system\",\"MacOS\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d75ffe17-b2ed-4727-8d78-89750615fbe9",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Firewall - Outgoing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Firewall - Outgoing\"\nwhen\n    has_field(\"destination_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        )  \n    ) AND \n       has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"224.0.0.0/4\", \n        ip: to_ip($message.source_ip)\n        ) \n    ) \nthen\nset_field(\"network_destination\",\"external\");\nset_field(\"network_source\",\"internal\");\nset_field(\"network_direction\",\"outgoing\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "7f9d80c4-670b-4c5a-a25c-2d0deb7e2cbb",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MacOS Logs"
+        },
+        "configuration": {
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1501
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.udp.RawUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "0aa2766f-1d3d-4a6e-b3de-530bba23f685",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - UTM-KV"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - UTM-KV\"\nwhen\n    to_string($message.log_category) == \"UTM\"\nthen\n    let parsekv = key_value(\n        value: to_string($message.message),\n        trim_value_chars: '\"', \n        ignore_empty_values: true\n        );\n    set_fields(parsekv);\n    set_field(\n        field: \"parser\", \n        value: \"Parse - UTM-KV\"\n    );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d985602c-8987-4418-859d-e650f40768de",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Sample - Pipeline Demo"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "// This pipeline is modified as part of the Pipeline Introduction Lab\nrule \"Sample - Pipeline Demo\"\n\nwhen\n    // This is where your logic goes\n    // to determine which messages this rule applies to \n    // WITHIN the assigned Pipeline Stage\n    \n    // This sample message simply passes the value true, \n    // which means it will be processed on any message that it is assigned\n    true\n\nthen\n\n    // This is where the actions to be taken within this rule are created\n    // These actions are performed using the functions, \n    // listed and explained on the right\n    \n    // The most common pitfalls in pipeline rule creation are:\n    //   1.  Omitting Escape characters \n    //      (C:\\Windows instead of C:\\\\Windows)\n    \n    //   2.  Data types (Objects instead of Strings is VERY common)\n    //      For example, to set the username field to lowercase:\n    //          lowercase($message.username); is INVALID\n    //          lowercase(to_string($message.username)); is VALID\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    }
+  ]
+}
