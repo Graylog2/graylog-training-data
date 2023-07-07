@@ -16,13 +16,14 @@
 
 
 echo "=== Generating CSR's..."
-/common/certs.sh
+sleep 2
 echo "=== Submitting CSR's to CA for signing..."
 sleep 4
 
 mkdir $HOME/ssl
 cd $HOME/ssl
-cp /certs/*.pem .
+cp /etc/graylog/*.pem $HOME/ssl
+rm /etc/graylog/*.pem
 sudo chown $LUSER.$LUSER -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem opensearch.pem
