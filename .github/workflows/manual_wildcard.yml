@@ -26,10 +26,14 @@ jobs:
         run: |
           sudo apt update && sudo apt install python3-certbot certbot python3-certbot-nginx python3-certbot-dns-cloudflare python3-cloudflare -y
           sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "*.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos
+          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "osadmin.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos
           echo "${{ secrets.CERT_ENC_PWD }}" > .pwd
           privkey=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/privkey.pem) && sudo openssl enc -in $privkey -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/privkey.pem.enc
           cert=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/cert.pem) && sudo openssl enc -in $cert -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/cert.pem.enc
           cachain=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/fullchain.pem) && sudo openssl enc -in $cachain -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/fullchain.pem.enc
+          osadmin_privkey=$(sudo readlink -f /etc/letsencrypt/live/osadmin.logfather.org/privkey.pem) && sudo openssl enc -in osadmin_$privkey -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/osadmin_privkey.pem.enc
+          osadmin_cert=$(sudo readlink -f /etc/letsencrypt/live/osadmin.logfather.org/cert.pem) && sudo openssl enc -in osadmin_$cert -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/osadmin_cert.pem.enc
+          osadmin_cachain=$(sudo readlink -f /etc/letsencrypt/live/osadmin.logfather.org/fullchain.pem) && sudo openssl enc -in osadmin_$cachain -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/osadmin_fullchain.pem.enc
           sudo rm .pwd
           git config user.name github-actions
           git config user.email github-actions@github.com
