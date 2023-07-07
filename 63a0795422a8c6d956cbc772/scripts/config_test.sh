@@ -9,39 +9,32 @@ git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >
 chmod +x /common/*.sh
 
 #DNS
-./common/dns.sh
+./common/dns.sh >> /home/ubuntu/strigosuccess
 
 #Cert Update
-./common/certs.sh
+./common/certs.sh >> /home/ubuntu/strigosuccess
 
 #Illuminate Install
-./common/inst_illuminate.sh
+./common/inst_illuminate.sh >> /home/ubuntu/strigosuccess
 
 #Course Settings
-./common/course_settings.sh
+./common/course_settings.sh >> /home/ubuntu/strigosuccess
 
 #Add course CPs
-for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
-do
-  printf "\n\nInstalling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
-  id=$(cat "$entry" | jq -r '.id')
-  ver=$(cat "$entry" | jq -r '.rev')
-  printf "\n\nID:$entry and Version: $ver\n" >> /home/ubuntu/strigosuccess
-  curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/content_packs"  -H 'Content-Type: application/json' -H 'X-Requested-By: PS_Packer' -d @"$entry" >> /home/ubuntu/strigosuccess
-  printf "\n\nEnabling Content Package: $entry\n" >> /home/ubuntu/strigosuccess
-  curl -u'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}' >> /home/ubuntu/strigosuccess
-done
+./common/cp_inst.sh >> /home/ubuntu/strigosuccess
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
-./common/docker_chg.sh
+./common/docker_chg.sh >> /home/ubuntu/strigosuccess
 
 #Launch Docker to load changes in env file
 echo "Running Docker Compose to update GL environment with new information" >> /home/ubuntu/strigosuccess
 docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
+
+#Run this to speed up first run with OliveTin
 pwsh -c 'write-host "loaded PS!"'
 
 #Cleanup
-./common/cleanup.sh
+./common/cleanup.sh >> /home/ubuntu/strigosuccess
 
 echo "Complete!" >> /home/ubuntu/strigosuccess
