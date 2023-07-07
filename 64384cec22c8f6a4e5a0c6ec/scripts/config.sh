@@ -42,6 +42,5 @@ chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
 
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
-rm -rf ./common
 
 echo "All setup complete!" >> /home/$LUSER/strigosuccess

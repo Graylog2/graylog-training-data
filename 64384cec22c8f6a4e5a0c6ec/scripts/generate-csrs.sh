@@ -16,7 +16,7 @@
 
 
 echo "=== Generating CSR's..."
-sleep 2
+/common/certs.sh
 echo "=== Submitting CSR's to CA for signing..."
 sleep 4
 
