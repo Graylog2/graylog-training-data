@@ -8,6 +8,9 @@ apt install git-svn -y
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
 
+# Create /etc/graylog so certs.sh works right:
+mkdir /etc/graylog
+
 # Comment out all sections below that are not relevant to your specific course:
 
 #DNS
