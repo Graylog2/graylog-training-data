@@ -36,10 +36,11 @@ chmod +x /common/*.sh
 #Run this to speed up first run with OliveTin
 pwsh -c 'write-host "loaded PS!"'
 
+# Import course-specific setup script:
+chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
+./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess
+
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
 echo "Complete!" >> /home/$LUSER/strigosuccess
-
-# Run course-specific setup script:
-./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess

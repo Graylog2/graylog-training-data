@@ -29,13 +29,13 @@ sudo chmod g+w -R /etc/graylog
 sudo usermod -aG graylog $LUSER
 
 # Modify server.conf:
-cp "/Securing Graylog/configs/server.conf" /etc/graylog/server
+cp "/$STRIGO_CLASS_ID/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 # Modify opensearch.yml:
-cp "/Securing Graylog/configs/opensearch.yml" /etc/opensearch/
+cp "/$STRIGO_CLASS_ID/configs/opensearch.yml" /etc/opensearch/
 # sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
-cp "/Securing Graylog/configs/jvm.options" /etc/opensearch/
+cp "/$STRIGO_CLASS_ID/configs/jvm.options" /etc/opensearch/
 
 # Set java path for use by Opensearch Security plugin:
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
@@ -47,7 +47,7 @@ echo "127.0.0.1 opensearch01.logfather.org" | sudo tee -a /etc/hosts
 systemctl enable --now mongod.service graylog-server.service opensearch.service
 
 # Import CSR generator script:
-cp "/Securing Graylog/scripts/generate-csrs.sh" /home/$LUSER/generate-csrs.sh
+cp "/$STRIGO_CLASS_ID/scripts/generate-csrs.sh" /home/$LUSER/generate-csrs.sh
 chmod +x /home/$LUSER/generate-csrs.sh
 
 # Minor vim behavior tweak to fix undesireable pasting behavior:
