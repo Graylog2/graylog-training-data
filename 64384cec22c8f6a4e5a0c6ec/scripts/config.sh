@@ -40,3 +40,6 @@ pwsh -c 'write-host "loaded PS!"'
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
 echo "Complete!" >> /home/$LUSER/strigosuccess
+
+# Run course-specific setup script:
+./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess
