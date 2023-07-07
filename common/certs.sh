@@ -49,3 +49,5 @@ if [ $(which docker) ]; then
     docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/fullchain.pem
     docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cacerts
 fi
+
+echo "Cert install complete!" >> /home/$LUSER/strigosuccess

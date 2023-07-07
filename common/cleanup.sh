@@ -9,4 +9,4 @@ sed -i '/export authemail=/d' /etc/profile
 rm -r /certs
 rm -r /$STRIGO_CLASS_ID
 
-echo "Complete!" >> /home/$LUSER/strigosuccess
+echo "Cleanup complete!" >> /home/$LUSER/strigosuccess
