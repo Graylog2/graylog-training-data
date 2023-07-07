@@ -38,4 +38,4 @@ echo "=== Opensearch server cert  : $HOME/ssl/opensearch.pem"
 echo "=== Opensearch server key   : $HOME/ssl/opensearch.key"
 echo "=== Intermediate CA cert    : $HOME/ssl/intermediate-ca.pem"
 echo "=== Root CA cert            : $HOME/ssl/root-ca.pem"
-echo "=== Full certificate chain  : $HOME/ssl/fullchain.pem"`
+echo "=== Full certificate chain  : $HOME/ssl/fullchain.pem"
