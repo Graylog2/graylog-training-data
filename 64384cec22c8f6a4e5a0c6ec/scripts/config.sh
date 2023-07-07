@@ -2,164 +2,41 @@
 #load Vars from Strigo
 source /etc/profile
 
-echo "The present working directory is $(pwd)" >> /home/$USER/strigosuccess
-echo "Running DNS Registration Steps" >> /home/$USER/strigosuccess
-dnscount=0
-DNSMatch=false
-#Check for Existing DNS Record
-echo "Checking for existing record, result:" >> /home/$USER/strigosuccess
-DNSCheck=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?type=CNAME&name=$dns.logfather.org&match=all" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" | jq -r '.result[]')
-echo $DNSCheck >> /home/$USER/strigosuccess
-if [ ! -z "$DNSCheck" ]; then
-    #Check it's CName to see if it matches existing DNS Record
-    echo "Checking if CNAME is the same, result:" >> /home/$USER/strigosuccess
-    CName=$(echo $DNSCheck | jq -r '.content')
-    echo "$CName vs $LAB" >> /home/$USER/strigosuccess
-    if [[ ! "$CName" == "$LAB" ]]; then
-        #No Match - new DNS record but also need to check for more numbers
-        #Loop through numbers and check for existing  DNS Records
-        echo "Not a match, looping to find unused DNS record" >> /home/$USER/strigosuccess
-        until [[ -z "$DNSCheck" ]];
-        do
-            #Add one to dnscount and check if that record exists. This will loop until null OR a matched CName is found in cases of paused labs THIS causes issues so lets fix it!
-            ((dnscount++))
-            DNSCheck=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?type=CNAME&name=$dns$dnscount.logfather.org&match=all" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" | jq -r '.result[]')
-            CName=$(echo $DNSCheck | jq -r '.content')
-            echo "Comparing new DNS record's CNAME (if there is one), result" >> /home/$USER/strigosuccess
-            echo $CName >> /home/$USER/strigosuccess
-            if [[ "$CName" == "$LAB" ]]; then
-                echo "$CName compared to $LAB is true..." 
-                #If these match, ever, at all, exit the loop and set the DNS record below
-                DNSMatch="true"
-                break
-            fi
-        done
-    fi
-fi
-#ONLY Update DNS Name IF there IS a count. Otherwise everyone is a zero. We don't like that.
-if [ $dnscount -gt 0 ]; then
-    dns="$dns$dnscount"
-fi
-
-#Only create a new DNS record if there isn't one already with a matching CName
-if [[ ! "$DNSMatch" == "true" ]]; then
-    #Create DNS Record
-    echo "Creating DNS Record for: $dns" >> /home/$USER/strigosuccess
-    cdata="{\"type\":\"CNAME\",\"name\":\"$dns\",\"content\":\"$LAB\",\"ttl\":3600,\"priority\":10,\"proxied\":false}"
-    createcname=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" --data $cdata)
-    result=$(echo $createcname | jq '.success')
-    echo "Result: $result" >> /home/$USER/strigosuccess
-fi
-echo $dns >> /home/$USER/DNSSuccess
-echo "Registered DNS record: $dns" >> /home/$USER/strigosuccess
-sed -i '/export dns=/d' /etc/profile
-echo "export dns=$dns" >> /etc/profile
-
-
-###Cert Update
-echo "Grabbing Certs" >> /home/$USER/strigosuccess
+echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
 apt install git-svn -y
 #Certs
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$USER/strigosuccess
-echo "The present working directory is $(pwd)" >> /home/$USER/strigosuccess
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
+chmod +x /common/*.sh
 
-## Copy Certs and Decode
-echo "Decoding Certs" >> /home/$USER/strigosuccess
-openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
-openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
-openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
-rm /.pwd
-cp /certs/cacerts /etc/graylog/cacerts 
+# Comment out all sections below that are not relevant to your specific course:
 
-#Cert Permissions
-chown root.root /etc/graylog/*.pem
-chmod 600 /etc/graylog/*.pem
+#DNS
+./common/dns.sh >> /home/$LUSER/strigosuccess
 
-#Update OS and keystore with chain
-#keytool -importcert -alias letsencryptca -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
+#Cert Update
+./common/certs.sh >> /home/$LUSER/strigosuccess
 
-echo "Updating Keystore" >> /home/$USER/strigosuccess
-keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt >> /home/$USER/strigosuccess
+#Illuminate Install
+#./common/inst_illuminate.sh >> /home/$LUSER/strigosuccess
 
-cp /etc/graylog/fullchain.pem /usr/local/share/ca-certificates/fullchain.crt
-update-ca-certificates
-
-#Wait for GL before changes
-while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
-	printf "\n\nWaiting for GL to come online to add content\n" >> /home/$USER/strigosuccess
-    sleep 5
-done
-
-#Setup Illuminate using API
-printf "\n\nInstalling Illuminate" >> /home/$USER/strigosuccess
-ilver=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
-printf "\n\nFound Illuminate Version:$ilver\n" >> /home/$USER/strigosuccess
-ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/hub/$ilver" -H 'X-Requested-By: PS_TeamAwesome')
-printf "\n\nDownload Version $ilver - result: $ilinst\n" >> /home/$USER/strigosuccess
-bunact=$(curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -H 'X-Requested-By: PS_TeamAwesome')
-printf "\n\nInstallation Result: $bunact\n" >> /home/$USER/strigosuccess
+#Course Settings
+#./common/course_settings.sh >> /home/$LUSER/strigosuccess
 
 #Add course CPs
-for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
-do
-  printf "\n\nInstalling Content Package: $entry\n" >> /home/$USER/strigosuccess
-  id=$(cat "$entry" | jq -r '.id')
-  ver=$(cat "$entry" | jq -r '.rev')
-  printf "\n\nID:$entry and Version: $ver\n" >> /home/$USER/strigosuccess
-  curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/content_packs"  -H 'Content-Type: application/json' -H 'X-Requested-By: PS_Packer' -d @"$entry" >> /home/$USER/strigosuccess
-  printf "\n\nEnabling Content Package: $entry\n" >> /home/$USER/strigosuccess
-  curl -u'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/content_packs/$id/$ver/installations" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"parameters":{},"comment":""}' >> /home/$USER/strigosuccess
-done
-
-#Update MaxMind DA with updated DB Path
-echo "Updating MaxMind DA" >> /home/$USER/strigosuccess
-id=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/system/lookup/adapters?page=1&per_page=50&sort=title&order=desc&query=Geo' | jq -r '.data_adapters[].id')
-curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/lookup/adapters/$id" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d "{\"id\":\"$id\",\"title\":\"Geo IP - MaxMind™ Databases\",\"description\":\"Geo IP - MaxMind™ Databases\",\"name\":\"geo-ip-maxmind\",\"custom_error_ttl_enabled\":false,\"custom_error_ttl\":null,\"custom_error_ttl_unit\":null,\"config\":{\"type\":\"maxmind_geoip\",\"path\":\"/usr/share/graylog/data/config/GeoLite2-City.mmdb\",\"database_type\":\"MAXMIND_CITY\",\"check_interval\":1,\"check_interval_unit\":\"MINUTES\"}}" >> /home/$USER/strigosuccess
-
-#Pausing Endpoint Firewalls Stream
-printf "\n\nRetrieve Endpoint Firewalls Stream ID\n" >> /home/$USER/strigosuccess
-gnefstreamid=$(curl -u 'admin:yabba dabba doo' -XGET 'http://localhost:9000/api/streams/paginated?page=1&per_page=50&query=Endpoint%20Firewalls&sort=title&order=asc' | jq -r '.elements[].id')
-printf "\n\nPausing Stream\n"
-curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/streams/$gnefstreamid/pause" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' >> /home/$USER/strigosuccess
-
-#Disable Whitelist
-printf "\n\nDisable Whitelisting\n" >> /home/$USER/strigosuccess
-curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/urlwhitelist" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"entries":[],"disabled":true}' >> /home/$USER/strigosuccess
-
-## Update Docker Container with certs
-glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
-docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
-docker cp /etc/graylog/privkey.pem $glc:/usr/share/graylog/data/config/privkey.pem
-docker cp /etc/graylog/fullchain.pem $glc:/usr/share/graylog/data/config/fullchain.pem
-docker cp /etc/graylog/cacerts $glc:/usr/share/graylog/data/config/cacerts
-
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cert.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/privkey.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/fullchain.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cacerts
+#./common/cp_inst.sh >> /home/$LUSER/strigosuccess
 
 #Update GL Docker Environment
-echo "Removing old variables" >> /home/$USER/strigosuccess
-sed -i '/GLEURI=/d' /etc/graylog/strigo-graylog-training-changes.env
-sed -i '/GLBINDADDR=/d' /etc/graylog/strigo-graylog-training-changes.env
-sed -i '/GLTLS=/d' /etc/graylog/strigo-graylog-training-changes.env
-
-echo "Adding updated variables" >> /home/$USER/strigosuccess
-echo "GLBINDADDR=\"0.0.0.0:443\"" >> /etc/graylog/strigo-graylog-training-changes.env
-echo "GLTLS=true" >> /etc/graylog/strigo-graylog-training-changes.env
-echo "GLEURI=https://$dns.logfather.org/" >> /etc/graylog/strigo-graylog-training-changes.env
+## After this point everything will be HTTPS
+#./common/docker_chg.sh >> /home/$LUSER/strigosuccess
 
 #Launch Docker to load changes in env file
-echo "Running Docker Compose to update GL environment with new information" >> /home/$USER/strigosuccess
-docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
+#echo "Running Docker Compose to update GL environment with new information" >> /home/$LUSER/strigosuccess
+#docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
+
+#Run this to speed up first run with OliveTin
 pwsh -c 'write-host "loaded PS!"'
 
-
 #Cleanup
-echo "Cleaning up" >> /home/$USER/strigosuccess
-sed -i '/export apitoken=/d' /etc/profile
-sed -i '/export authemail=/d' /etc/profile
-rm -r /certs
-rm -r /$STRIGO_CLASS_ID
+./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
-echo "Complete!" >> /home/$USER/strigosuccess
+echo "Complete!" >> /home/$LUSER/strigosuccess
