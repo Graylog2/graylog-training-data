@@ -22,14 +22,14 @@ sleep 4
 
 mkdir $HOME/ssl
 cd $HOME/ssl
-cp /etc/graylog/*.pem $HOME/ssl
-rm /etc/graylog/*.pem
+sudo cp /etc/graylog/*.pem $HOME/ssl
+sudo rm /etc/graylog/*.pem
 sudo chown $LUSER.$LUSER -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem opensearch.pem
 cp privkey.pem graylog.key
 cp privkey.pem opensearch.key
-chmod 0400 ./*
+chmod 0600 ./*
 rm cert.pem privkey.pem
 echo "=== Certificates signature succeeded!"
 echo "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:"
