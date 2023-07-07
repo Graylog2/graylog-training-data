@@ -47,8 +47,8 @@ echo "127.0.0.1 opensearch01.logfather.org" | sudo tee -a /etc/hosts
 systemctl enable --now mongod.service graylog-server.service opensearch.service
 
 # Import CSR generator script:
-cp "/$STRIGO_CLASS_ID/scripts/generate-csrs.sh" /home/$LUSER/generate-csrs.sh
-chmod +x /home/$LUSER/generate-csrs.sh
+cp "/$STRIGO_CLASS_ID/scripts/generate_certs.sh" /home/$LUSER/generate_certs.sh
+chmod +x /home/$LUSER/generate_certs.sh
 
 # Minor vim behavior tweak to fix undesireable pasting behavior:
 printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
