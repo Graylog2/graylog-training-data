@@ -22,14 +22,14 @@ sleep 4
 
 mkdir $HOME/ssl
 cd $HOME/ssl
-cp /certs/*.pem .
-sudo rm -rf /certs
-sudo chown admin.admin -R $HOME/ssl
+sudo cp /etc/graylog/*.pem $HOME/ssl
+sudo rm /etc/graylog/*.pem
+sudo chown $LUSER.$LUSER -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem opensearch.pem
 cp privkey.pem graylog.key
 cp privkey.pem opensearch.key
-chmod 0400 ./*.key
+chmod 0600 ./*
 rm cert.pem privkey.pem
 echo "=== Certificates signature succeeded!"
 echo "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:"
@@ -39,3 +39,4 @@ echo "=== Opensearch server cert  : $HOME/ssl/opensearch.pem"
 echo "=== Opensearch server key   : $HOME/ssl/opensearch.key"
 echo "=== Intermediate CA cert    : $HOME/ssl/intermediate-ca.pem"
 echo "=== Root CA cert            : $HOME/ssl/root-ca.pem"
+echo "=== Full certificate chain  : $HOME/ssl/fullchain.pem"

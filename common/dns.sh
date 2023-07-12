@@ -58,3 +58,4 @@ echo "Registered DNS record: $dns" >> /home/$LUSER/strigosuccess
 sed -i '/export dns=/d' /etc/profile
 echo "export dns=$dns" >> /etc/profile
 
+echo "DNS setup complete!" >> /home/$LUSER/strigosuccess
