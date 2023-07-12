@@ -27,12 +27,28 @@ chmod +x /common/*.sh
 ## After this point everything will be HTTPS
 ./common/docker_chg.sh >> /home/$LUSER/strigosuccess
 
-#Launch Docker to load changes in env file
-echo "Running Docker Compose to update GL environment with new information" >> /home/$LUSER/strigosuccess
-docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
 
-#Run this to speed up first run with OliveTin
-pwsh -c 'write-host "loaded PS!"'
+#NCAT handles UDP better
+sudo apt install ncat -y >> /home/$LUSER/strigosuccess
+
+#Update OT Config
+echo "Updating OT configuration" >> /home/$LUSER/strigosuccess
+mv /$STRIGO_CLASS_ID/configs/olivetin/config.yaml /OliveTin-linux-amd64/config.yaml
+sudo systemctl restart OliveTin.service >> /home/$LUSER/strigosuccess
+
+#Update Docker Config for new OT Port
+echo "Adding required inputs to GL DC" >> /home/$LUSER/strigosuccess
+sed -i '/^      - "12201:12201\/udp" # GELF UDP.*/a\      - "5555:5555\/tcp"   # Raw TCP' /etc/graylog/docker-compose-glservices.yml
+
+#Update Graylog Container
+echo "Restarting GL Docker to reflect changes" >> /home/$LUSER/strigosuccess
+docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d >> /home/$LUSER/strigosuccess
+
+#Wait for GL before api calls
+while ! curl -s -k -u 'admin:yabba dabba doo' https://localhost/api/system/cluster/nodes; do
+	printf "\n\nWaiting for GL to come online to add content\n" >> /home/$LUSER/strigosuccess
+    sleep 5
+done
 
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
