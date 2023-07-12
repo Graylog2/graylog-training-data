@@ -31,19 +31,23 @@ cp /etc/graylog/fullchain.pem /usr/local/share/ca-certificates/fullchain.crt
 update-ca-certificates
 
 #Wait for GL before changes
-while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
-	printf "\n\nWaiting for GL to come online to add content\n" >> /home/$LUSER/strigosuccess
-    sleep 5
-done
+if [ $(which docker) ]; then
+    while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+        printf "\n\nWaiting for GL to come online to add content\n" >> /home/$LUSER/strigosuccess
+        sleep 5
+    done
 
-## Update Docker Container with certs
-glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
-docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
-docker cp /etc/graylog/privkey.pem $glc:/usr/share/graylog/data/config/privkey.pem
-docker cp /etc/graylog/fullchain.pem $glc:/usr/share/graylog/data/config/fullchain.pem
-docker cp /etc/graylog/cacerts $glc:/usr/share/graylog/data/config/cacerts
+    ## Update Docker Container with certs
+    glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
+    docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
+    docker cp /etc/graylog/privkey.pem $glc:/usr/share/graylog/data/config/privkey.pem
+    docker cp /etc/graylog/fullchain.pem $glc:/usr/share/graylog/data/config/fullchain.pem
+    docker cp /etc/graylog/cacerts $glc:/usr/share/graylog/data/config/cacerts
 
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cert.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/privkey.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/fullchain.pem
-docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cacerts
+    docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cert.pem
+    docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/privkey.pem
+    docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/fullchain.pem
+    docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cacerts
+fi
+
+echo "Cert install complete!" >> /home/$LUSER/strigosuccess
