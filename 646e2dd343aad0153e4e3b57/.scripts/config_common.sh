@@ -28,7 +28,10 @@ if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
     mkdir -p /etc/OliveTin; ln -s /$STRIGO_CLASS_ID/.configs/config.yaml /etc/OliveTin
 
     #DNS
-    ./common/dns.sh >> /home/$LUSER/strigosuccess    
+    ./common/dns.sh >> /home/$LUSER/strigosuccess
+    #Update DNS file
+    source /etc/profile
+    echo "${dns}.logfather.org" > /home/$LUSER/DNSSuccess    
     
     ## Setting up Traefik Environment Variable overrides
     # Create Service override (service isn't installed yet)
