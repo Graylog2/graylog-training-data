@@ -10,7 +10,7 @@ echo "Running DNS Registration Steps" >> /home/$LUSER/strigosuccess
 dnscount=0
 DNSMatch=false
 #Check for Existing DNS Record
-echo "Checking for existing record, result:" >> /home/$LUSER/strigosuccess
+echo "Checking for existing record, $dns.logfather.org, result:" >> /home/$LUSER/strigosuccess
 DNSCheck=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?type=CNAME&name=$dns.logfather.org&match=all" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" | jq -r '.result[]')
 echo $DNSCheck >> /home/$LUSER/strigosuccess
 if [ ! -z "$DNSCheck" ]; then
