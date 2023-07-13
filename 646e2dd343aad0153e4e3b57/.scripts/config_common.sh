@@ -11,7 +11,7 @@ ln -s /$STRIGO_CLASS_ID/.scripts/cheat.sh /home/admin/cheat.sh
 chown -R 1000:1000 /$STRIGO_CLASS_ID/
 
 echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
+apt install git-svn jq -y
 #Certs
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
@@ -68,8 +68,16 @@ EOF
     sudo mkdir -p /var/log/traefik
     sudo chown -R traefik:traefik /var/log/traefik
 
-    #Cert Update
-    ./common/certs.sh >> /home/$LUSER/strigosuccess
+    #Certs
+    echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
+    apt install git-svn -y
+    git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
+
+    ## Copy Certs and Decode
+    sudo openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:.pwd > /etc/traefik/certs/privkey.pem
+    sudo openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:.pwd > /etc/traefik/certs/cert.pem
+    sudo openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:.pwd > /etc/traefik/certs/fullchain.pem
+    rm .pwd
     
     ## copy configs
     sudo cp /$STRIGO_CLASS_ID/.configs/traefik*.yml /etc/traefik/
@@ -90,5 +98,9 @@ else
     #Setup non-proxy
     echo "Not the proxy box running (if) any node steps" >> /home/$LUSER/strigosuccess
 fi
+
+sed -i '/export apitoken=/d' /etc/profile
+sed -i '/export authemail=/d' /etc/profile
+rm -r /certs
 
 echo "Complete!" >> /home/$LUSER/strigosuccess
