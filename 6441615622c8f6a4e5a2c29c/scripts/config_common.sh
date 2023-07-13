@@ -3,7 +3,7 @@
 source /etc/profile
 
 echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
+apt install git-svn -y >> /home/$LUSER/strigosuccess
 #Certs
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
@@ -46,9 +46,9 @@ docker run -p 8080:8080 -d --restart always tarampampam/webhook-tester >> /home/
 #Rick's Sysadmin stuffs!
 echo "Setup The Graybeard" >> /home/$LUSER/strigosuccess
 # Add a flag to the home directory passwords.txt
-echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Security' > /home/ubuntu/passwords.txt
-echo 'root@multivac - AlexanderAdell' >> /home/ubuntu/passwords.txt
-chown ubuntu:ubuntu /home/ubuntu/passwords.txt
+echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Security' > /home/$LUSER/passwords.txt
+echo 'root@multivac - AlexanderAdell' >> /home/$LUSER/passwords.txt
+chown ubuntu:ubuntu /home/$LUSER/passwords.txt
 # get the docker bridge so we can add the lxc container to it, pretty sure this is illegal in 12 states
 docker_bridge="br-"$(docker network list | grep 'graylog_default' | cut -f 1 -d ' ')
 # init LXD with a config
@@ -131,5 +131,5 @@ systemctl restart OliveTin.service
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
-touch /home/ubuntu/gogogo
+touch /home/$LUSER/gogogo
 echo "Complete!" >> /home/$LUSER/strigosuccess
