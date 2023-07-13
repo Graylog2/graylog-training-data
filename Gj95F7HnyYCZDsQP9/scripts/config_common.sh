@@ -27,13 +27,6 @@ chmod +x /common/*.sh
 ## After this point everything will be HTTPS
 ./common/docker_chg.sh >> /home/$LUSER/strigosuccess
 
-#Launch Docker to load changes in env file
-echo "Running Docker Compose to update GL environment with new information" >> /home/$LUSER/strigosuccess
-docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
-
-#Run this to speed up first run with OliveTin
-pwsh -c 'write-host "loaded PS!"'
-
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
