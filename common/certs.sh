@@ -14,7 +14,6 @@ echo "Decoding Certs" >> /home/$LUSER/strigosuccess
 openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
 openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
 openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
-rm /.pwd
 cp /certs/cacerts /etc/graylog/cacerts 
 
 #Cert Permissions
