@@ -23,7 +23,6 @@ sleep 4
 mkdir $HOME/ssl
 cd $HOME/ssl
 cp /certs/*.pem .
-sudo rm -rf /certs
 sudo chown admin.admin -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem opensearch.pem
