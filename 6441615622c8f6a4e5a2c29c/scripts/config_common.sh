@@ -101,7 +101,8 @@ echo "172.18.10.10 multivac" >> /etc/hosts
 echo "Starting the Graybeard LXC" >> /home/$LUSER/strigosuccess
 lxc start multivac >> /home/$LUSER/strigosuccess
 # execute multivac config script
-sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/64820c50d55a8e608878168a/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
+sidecar_user=$(curl -s -k -u 'admin:yabba dabba doo' "https://localhost/api/users?include_permissions=false&include_sessions=false" | jq -r '.users[] | select (.username=="graylog-sidecar") | .id')
+sidecar_api=$(curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/users/$sidecar_user/tokens/ctf" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' | jq -r .token)
 sed -i "s/ZZZZZTOKENTOKENZZZZZ/$sidecar_api/" /$STRIGO_CLASS_ID/scripts/multivac_config.sh
 lxc exec multivac -- bash -c "$(cat /$STRIGO_CLASS_ID/scripts/multivac_config.sh)"
 
