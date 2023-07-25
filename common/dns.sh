@@ -2,6 +2,9 @@
 #load Vars from Strigo
 source /etc/profile
 
+# Install dependency jq:
+apt install jq -y 
+
 echo "Sleeping for random time up to 30 seconds to prevent DNS records from being over-written in cases of multiple labs starting at once" >> /home/$LUSER/strigosuccess
 sleep $(( ( RANDOM % 30 )  + 1 ))
 
