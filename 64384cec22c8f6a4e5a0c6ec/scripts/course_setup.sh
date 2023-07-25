@@ -1,5 +1,20 @@
 # Securing Graylog Course setup script
 
+# Create course motd banner:
+source /etc/profile
+cat <<EOF >> /home/$LUSER/.bashrc
+printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
+printf "\e[37m██╔════╝ ██╔══██╗██╔══██╗╚██╗ ██╔╝\e[31m██║     ██╔═══██╗██╔════╝ \n";
+printf "\e[37m██║  ███╗██████╔╝███████║ ╚████╔╝ \e[31m██║     ██║   ██║██║  ███╗\n";
+printf "\e[37m██║   ██║██╔══██╗██╔══██║  ╚██╔╝  \e[31m██║     ██║   ██║██║   ██║\n";
+printf "\e[37m╚██████╔╝██║  ██║██║  ██║   ██║   \e[31m███████╗╚██████╔╝╚██████╔╝\n";
+printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
+printf "                                                            \n";
+printf "\e[39m Hi ${STRIGO_USER_NAME},\n Welcome to ${STRIGO_CLASS_NAME}\n\n";
+printf "\e[39m Your Graylog server can be reached at the following URL:\n\n"
+printf "\t\e[93mhttp://$dns.logfather.org:9000/\n\n\e[39m";
+EOF
+
 # Setup GPG keyring:
 apt install -y gnupg
 
