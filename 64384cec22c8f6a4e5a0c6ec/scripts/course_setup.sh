@@ -25,6 +25,8 @@ printf "                                                            \n";
 printf "\e[39m Hi ${STRIGO_USER_NAME},\n Welcome to ${STRIGO_CLASS_NAME}\n\n";
 printf "\e[39m Your Graylog server can be reached at the following URL:\n\n"
 printf "\t\e[93mhttp://$dns.logfather.org:9000/\n\n\e[39m";
+
+PATH=$PATH:/usr/share/graylog-server/jvm/bin
 EOF
 
 # Setup GPG keyring:
