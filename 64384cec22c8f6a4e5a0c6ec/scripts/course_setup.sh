@@ -1,14 +1,16 @@
 # Securing Graylog Course setup script
 
 # Special cert setup section bc this class can't use the common certs.sh as-is and I cant put this in the generate_certs.sh bc the .pwd file for decoding the cert files is deleted in cleanup.sh and we don't want students seeing that super secret password and it's too close to the CTF launch to change the common certs so I'll get to it later ok geez:
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" $HOME/.ssl
-cd $HOME/.ssl
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /.ssl
+cd /.ssl
 # Import & decode cert files:
 for i in ./*.enc
 do
     openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > "${i%.enc}"
     echo "Decoded ${i%.pem.enc}"
 done
+# Delete unneded files:
+rm /.ssl/*.enc /.ssl/cacerts /.ssl/root-ca.pem /.ssl/intermediate-ca.pem
 
 # Create course motd banner:
 source /etc/profile
@@ -37,6 +39,7 @@ echo "deb [signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg] http://repo.
 ### Install Graylog:
 wget https://packages.graylog2.org/repo/packages/graylog-5.1-repository_latest.deb
 dpkg -i graylog-5.1-repository_latest.deb
+rm graylog-5.1-repository_latest.deb
 
 ### Install Opensearch:
 # Download GPG key:
