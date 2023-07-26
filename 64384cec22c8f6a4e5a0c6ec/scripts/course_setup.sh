@@ -47,16 +47,6 @@ sudo usermod -aG graylog $LUSER
 cp "/$STRIGO_CLASS_ID/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
-# Import Opensearch admin cert files:
-echo "Decoding Opensearch Admin Certs" >> /home/$LUSER/strigosuccess
-for i in /certs/osadmin_*.enc
-do
-    openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /certs/"${i%.enc}"
-done
-
-# Move Graylog cert files back to /certs:
-mv /etc/graylog/*.pem /certs/
-
 # Modify opensearch.yml:
 cp "/$STRIGO_CLASS_ID/configs/opensearch.yml" /etc/opensearch/
 # sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml

@@ -17,7 +17,7 @@ mkdir /etc/graylog
 ./common/dns.sh >> /home/$LUSER/strigosuccess
 
 #Cert Update
-./common/certs.sh >> /home/$LUSER/strigosuccess
+#./common/certs.sh >> /home/$LUSER/strigosuccess
 
 #Illuminate Install
 #./common/inst_illuminate.sh >> /home/$LUSER/strigosuccess

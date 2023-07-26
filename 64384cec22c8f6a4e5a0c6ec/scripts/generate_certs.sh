@@ -16,26 +16,40 @@
 
 
 echo "=== Generating CSR's..."
-sleep 2
-echo "=== Submitting CSR's to CA for signing..."
-sleep 4
 
+# Clone certs from repo:
 mkdir $HOME/ssl
 cd $HOME/ssl
-cp /certs/*.pem .
-sudo chown admin.admin -R $HOME/ssl
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> $HOME/strigosuccess
+
+echo "=== Submitting CSR's to CA for signing..."
+
+# Import & decode cert files:
+for i in ./*.enc
+do
+    openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/"${i%.enc}"
+    echo "Decoded ${i%.pem.enc}" >> $HOME/strigosuccess
+done
+
+sudo chown $LUSER.$LUSER -R $HOME/ssl
 cp cert.pem graylog.pem
 cp cert.pem opensearch.pem
 cp privkey.pem graylog.key
 cp privkey.pem opensearch.key
+cp fullchain.pem servers_fullchain.pem
+cp osadmin_cert.pem osadmin.pem
+cp osadmin_privkey.pem osadmin.key
 chmod 0400 ./*.key
-rm cert.pem privkey.pem
+rm cert.pem privkey.pem cacerts
 
-printf "=== Certificates signature succeeded!\n"
-printf "=== Your CA certificates, server certificates, and private keys have been uploaded to $HOME/ssl:\n"
-printf "=== Graylog server cert     :\e[0;32m $HOME/ssl/graylog.pem\e[0;37m\n"
-printf "=== Graylog server key      :\e[1;32m $HOME/ssl/graylog.key\e[0;37m\n"
-printf "=== Opensearch server cert  :\e[0;33m $HOME/ssl/opensearch.pem\e[0;37m\n"
-printf "=== Opensearch server key   :\e[1;33m $HOME/ssl/opensearch.key\e[0;37m\n"
-printf "=== Intermediate CA cert    :\e[0;36m $HOME/ssl/intermediate-ca.pem\e[0;37m\n"
-printf "=== Root CA cert            :\e[1;36m $HOME/ssl/root-ca.pem\e[0;37m\n"
+printf "=== Certificates signed successfully!\n"
+printf "=== Your server certificates, private keys, and certificate chain have been uploaded to $HOME/ssl:\n"
+printf "=== Graylog server cert         :\e[0;31m $HOME/ssl/graylog.pem\e[0;37m\n"
+printf "=== Graylog server key          :\e[0;31m $HOME/ssl/graylog.key\e[0;37m\n"
+printf "=== Opensearch server cert      :\e[0;34m $HOME/ssl/opensearch.pem\e[0;37m\n"
+printf "=== Opensearch server key       :\e[0;34m $HOME/ssl/opensearch.key\e[0;37m\n"
+printf "=== Servers full cert chain     :\e[1;33m $HOME/ssl/servers_fullchain.pem\e[0;37m\n"
+printf "=== Your Opensearch admin user certificate, key, and certificate chain have also been uploaded to $HOME/ssl:\n"
+printf "=== Opensearch admin user cert  :\e[0;36m $HOME/ssl/osadmin.pem\e[0;37m\n"
+printf "=== Opensearch admin user key   :\e[0;36m $HOME/ssl/osadmin.key\e[0;37m\n"
+printf "=== Opensearch admin fullchain  :\e[1;36m $HOME/ssl/osadmin_fullchain.pem\e[0;37m\n"
