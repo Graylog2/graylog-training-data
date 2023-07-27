@@ -55,6 +55,9 @@ curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /
 # Add repo:
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
 
+# Delete demo files:
+rm /etc/opensearch/*.pem
+
 # Install GL stack:
 apt update && apt install -y mongodb-org graylog-enterprise opensearch
 
