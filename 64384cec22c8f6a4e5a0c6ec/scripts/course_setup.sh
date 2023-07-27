@@ -9,6 +9,12 @@ do
     openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > "${i%.enc}"
     echo "Decoded ${i%.pem.enc}"
 done
+
+# Add logfather.org cert chain to host CA trust store
+# to avoid having to use -k flag in curl commands:
+openssl x509 -inform PEM -in fullchain.pem -out /usr/local/share/ca-certificates/fullchain.crt
+update-ca-certificates
+
 # Delete unneded files:
 rm /.ssl/*.enc /.ssl/cacerts /.ssl/root-ca.pem /.ssl/intermediate-ca.pem
 
