@@ -77,7 +77,7 @@ cp "/$STRIGO_CLASS_ID/configs/jvm.options" /etc/opensearch/
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Add opensearch node resolution:
-sudo -- bash -c 'echo "127.0.0.1 opensearch01.logfather.org" >> /etc/hosts'
+echo "127.0.0.1 $dns.logfather.org" | sudo tee -a /etc/hosts
 
 # Start services:
 systemctl enable --now mongod.service opensearch.service
