@@ -91,6 +91,13 @@ do
 done > /dev/null
 systemctl enable --now graylog-server.service
 
+# Wait for Graylog web to be available before creating Input:
+until curl -s localhost:9000
+do
+    sleep 1
+done > /dev/null
+curl -k -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.gelf.tcp.GELFTCPInput","configuration":{"bind_address":"0.0.0.0","port":12201,"recv_buffer_size":1048576,"number_worker_threads":1,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":true,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8","decompress_size_limit":8388608},"title":"GELF TCP","global":true}'
+
 # Import CSR generator script:
 cp "/$STRIGO_CLASS_ID/scripts/generate_certs.sh" /home/$LUSER/generate_certs.sh
 chmod +x /home/$LUSER/generate_certs.sh
