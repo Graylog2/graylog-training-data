@@ -79,9 +79,6 @@ cp "/$STRIGO_CLASS_ID/configs/jvm.options" /etc/opensearch/
 # Set java path for use by Opensearch Security plugin:
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
-# Add DNS resolution for Opensearch and to persist after reboots:
-echo $dns.logfather.org 127.0.0.1 | sudo tee -a /etc/cloud/templates/hosts.debian.tmpl
-
 # Start services:
 systemctl enable --now mongod.service opensearch.service
 echo "Waiting for Opensearch service to be ready before launching Graylog..." 
