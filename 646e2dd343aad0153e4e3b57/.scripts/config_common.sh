@@ -99,8 +99,8 @@ else
     echo "Not the proxy box running (if) any node steps" >> /home/$LUSER/strigosuccess
 fi
 
-#OT Theme
-./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
+#OT Theme IF we use it
+#./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
 
 sed -i '/export apitoken=/d' /etc/profile
 sed -i '/export authemail=/d' /etc/profile

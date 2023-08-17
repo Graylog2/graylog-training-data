@@ -19,5 +19,5 @@ fi
 
 #Update OT Config 
 echo "Updating OT" >> /home/$LUSER/strigosuccess
-mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yml" /etc/OliveTin/config.yaml
+mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
