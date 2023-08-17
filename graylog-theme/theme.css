@@ -1,0 +1,249 @@
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+      local('DM Sans Regular'),
+      local('DMSans-Regular'),
+      url('./DMSans-Regular.ttf')
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+      local('Source Sans Pro Regular'),
+      local('SourceSansPro-Regular'),
+      url('./SourceSans3-Regular.ttf')
+}
+
+body, button {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+button {
+  color: inherit;
+}
+
+main {
+  padding: 0
+}
+
+fieldset#section-switcher {
+  position: relative;
+}
+
+fieldset#section-switcher::before {
+  content: ' ';
+  left: 10px;
+  top: 12px;
+  position: absolute;
+  background-size: contain;
+  height: 26px;
+  width: 90px;
+}
+
+fieldset#section-switcher::after {
+  content: '– Logcenter';
+  left: 85px;
+  top: 12px;
+  font-size: 1.2rem;
+  position: absolute;
+  background-size: contain;
+  height: 26px;
+  width: 110px;
+}
+
+fieldset#section-switcher button {
+  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.937rem;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+  position: relative;
+}
+
+fieldset#section-switcher button:focus {
+  outline: none;
+}
+
+fieldset#section-switcher button.activeSection::before {
+  content: '';
+  border-bottom: 1px solid;
+  width: calc(100% - 30px);
+  position: absolute;
+  left: 15px;
+  bottom: 12px;
+}
+
+#contentActions, #contentLogs {
+  padding: 1rem;
+}
+
+#contentLogs table {
+  box-shadow: none;
+}
+
+#contentActions button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid;
+  border-radius: 0.75em;
+  transform-style: preserve-3d;
+  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
+  animation-delay: 500ms;
+  outline: none;
+  box-shadow: none;
+}
+
+#contentActions button:hover {
+  box-shadow: none;
+}
+
+#contentActions button::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  transform: translate3d(0, 0.75em, -1em);
+  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+
+#contentActions button:active {
+  transform: translate(0em, 0.75em);
+}
+
+#contentActions button:active::before {
+  transform: translate3d(0, 0, -1em);
+  box-shadow: none;
+}
+
+#contentActions button p {
+  margin: 5px 0 5px 0;
+  font-size: 1.2rem;
+}
+
+@media (prefers-color-scheme: light) {
+  @keyframes kf-action-success {
+    0% { background-color: #d0ffd2; }
+    100% { background-color: #d0ffd2; }
+  }
+
+  @keyframes kf-action-nonzero-exit {
+    0% { background-color: #ffdf94; }
+    100% { background-color: #ffdf94; }
+  }
+
+  @keyframes kf-action-failed {
+    0% { background-color: #ffaaaa; }
+    100% { background-color: #ffaaaa; }
+  }
+
+  body {
+    background-color: #eeeff2;
+    color: #3e434c;
+  }
+
+  fieldset#section-switcher {
+    background-color: #fff;
+  }
+
+  fieldset#section-switcher::before {
+    background: url('./logo-dark.svg') no-repeat;
+  }
+
+  fieldset#section-switcher button.activeSection::before {
+    border-color: #94979c;
+  }
+
+  #contentLogs table tr:hover td {
+    background-color: #f6f6f6;
+  }
+
+  #contentActions button {
+    border-color: #b8b8b8;
+    background-color: #fff;
+  }
+
+  #contentActions button:hover {
+    background-color: #f6f6f6;
+  }
+
+  #contentActions button::before {
+    background-color: #cfcfcf;
+    box-shadow: 0 0 0 2px #c0c0c0, 0 0.625em 0 0 #e6e6e6;
+  }
+
+  .title.temporary-status-message {
+    color: #3e434c;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @keyframes kf-action-success {
+    0% { background-color: #116914; }
+    100% { background-color: #116914; }
+  }
+
+  @keyframes kf-action-nonzero-exit {
+    0% { background-color: #9d6e00; }
+    100% { background-color: #9d6e00; }
+  }
+
+  @keyframes kf-action-failed {
+    0% { background-color: #970000; }
+    100% { background-color: #970000; }
+  }
+
+  body {
+    background-color: #1e0c0c;
+  }
+
+  fieldset#section-switcher {
+    background-color: #303030;
+  }
+
+  fieldset#section-switcher::before {
+    background: url('./logo-light.svg') no-repeat;
+  }
+
+  fieldset#section-switcher button.activeSection::before {
+    border-color: #cacaca;
+  }
+
+  #contentLogs table tr:hover td {
+    background-color: #414040;
+  }
+
+  #contentActions button {
+    border-color: #494949;
+    background-color: #303030;
+    color: #fff;
+  }
+
+  #contentActions button:hover {
+    background-color: #393939;
+  }
+
+  #contentActions button::before {
+    background-color: #404040;
+    box-shadow: 0 0 0 2px #565656, 0 0.625em 0 0 #242424;
+  }
+
+  .title.temporary-status-message {
+    color: #fff;
+  }
+}
