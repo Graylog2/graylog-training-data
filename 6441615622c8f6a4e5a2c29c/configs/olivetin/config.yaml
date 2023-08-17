@@ -5,6 +5,7 @@ listenAddressSingleHTTPFrontend: 0.0.0.0:1337
 logLevel: "DEBUG"
 showFooter: false
 showNewVersions: false
+themeName: graylog-theme
 
 actions:   
 - title: PFSense Logs
