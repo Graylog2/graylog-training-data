@@ -131,6 +131,9 @@ echo "Updating OT" >> /home/$LUSER/strigosuccess
 mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
 systemctl restart OliveTin.service
 
+#OT Theme
+./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
+
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
