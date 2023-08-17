@@ -27,6 +27,9 @@ chmod +x /common/*.sh
 ## After this point everything will be HTTPS
 ./common/docker_chg.sh >> /home/$LUSER/strigosuccess
 
+#OT Theme
+./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
+
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 

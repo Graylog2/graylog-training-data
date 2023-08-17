@@ -17,4 +17,7 @@ if [ -d "$DIR" ]; then
     mv ./common/graylog-theme/ $DIR
 fi
 
- 
+#Update OT Config 
+echo "Updating OT" >> /home/$LUSER/strigosuccess
+mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
+systemctl restart OliveTin.service

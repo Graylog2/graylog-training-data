@@ -43,6 +43,9 @@ pwsh -c 'write-host "loaded PS!"'
 chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
 ./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess
 
+#OT Theme
+./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
+
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 

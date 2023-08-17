@@ -58,6 +58,9 @@ curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" 
 echo "Moving Log Data" >> /home/$LUSER/strigosuccess
 mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
 
+#OT Theme
+./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
+
 #Cleanup
 ./common/cleanup.sh >> /home/$LUSER/strigosuccess
 
