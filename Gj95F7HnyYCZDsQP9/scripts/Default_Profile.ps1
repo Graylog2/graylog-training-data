@@ -1,8 +1,8 @@
-Set-Location '/home/ubuntu/powershell'
-$env:GLRoot = '/home/ubuntu/powershell'
+Set-Location '/root/powershell'
+$env:GLRoot = '/root/powershell'
 $env:GLServer = "localhost"
 
-if (!(Test-Path '/home/ubuntu/powershell/PSGELF')){
+if (!(Test-Path '/root/powershell/PSGELF')){
     git clone https://github.com/jeremymcgee73/PSGELF.git
 }
 Import-Module ./PSGELF/PSGELF/PSGelf.psm1
