@@ -9,18 +9,16 @@ themeName: graylog-theme
 
 actions:   
 - title: Windows Firewall Logs
-  shell: cat /etc/graylog/log_data/pihole_combined.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5555
   icon: backup
   timeout: 900
 
-actions:   
 - title: Open/PFSense Firewall Logs
-  shell: cat /etc/graylog/log_data/pihole_combined.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/002-ofw.log | ncat -w 1 localhost 5555
   icon: backup
   timeout: 900
 
-actions:   
 - title: PiHole Firewall Logs
-  shell: cat /etc/graylog/log_data/pihole_combined.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/004-phe.log | ncat -w 1 localhost 5555
   icon: backup
   timeout: 900
