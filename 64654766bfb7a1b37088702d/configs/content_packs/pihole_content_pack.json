@@ -1,0 +1,3975 @@
+{
+  "v": 1,
+  "id": "35039e87-b86e-4e4b-acdd-663da3d64b6d",
+  "rev": 1,
+  "name": "GIM Lab",
+  "summary": "Lab to teach you how the GIM schema and normalization work",
+  "description": "",
+  "vendor": "graylog",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "a114c56c-2dcf-41c5-948d-d85aca96261c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Lab"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5555
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 8
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {
+          "tag": {
+            "@type": "string",
+            "@value": "Pi-hole"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.tcp.RawTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "144345b2-b320-4e41-8127-877e557c0778",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Lab"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All processing related to the Pi-hole Lab"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Pi-hole Lab\"\nstage 0 match either\nstage 5 match pass\nrule \"05 - Parse - Pi-hole Lab- Split message into initial fields\"\nstage 10 match pass\nrule \"10 - Parse - Pi-hole Lab - Split message into additional fields\"\nstage 20 match pass\nstage 15 match pass\nrule \"Parse - Pi-hole Unattached - Drop irrelevant messages\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "522de598-1c3a-49eb-9f17-83f2c7cadd1a"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "206fa625-7060-445f-b998-74cd903e26fe",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Firewall Events Lab"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "MATCH_INPUT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "value": {
+              "@type": "string",
+              "@value": "64e297688094227442558294"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Events related to firewalls"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "8e387aa9-3bf9-4cb3-b97e-a97060068692",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "Info about firewalls"
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "2dddd6ab-20c9-4236-b490-21743f67f2d1",
+              "timerange": {
+                "range": 0,
+                "type": "relative"
+              },
+              "filter": {
+                "type": "or",
+                "filters": [
+                  {
+                    "type": "stream",
+                    "id": "206fa625-7060-445f-b998-74cd903e26fe"
+                  }
+                ]
+              },
+              "filters": [],
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "protoname"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "4638340b-1d45-4c04-9311-1b77cc732501",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": null,
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "offset": 0,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "146ce5c4-04a1-4cdf-98e1-531998b7958d",
+                  "limit": 150,
+                  "filters": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": false,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "eb4ad7fe-9860-405f-8229-250ac79b74f9",
+                  "filters": [],
+                  "column_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "destination_ip"
+                      ],
+                      "limit": 5,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": false,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "e652812d-afb3-47f8-8d7b-ca829951d793",
+                  "filters": [],
+                  "column_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "destination_port"
+                      ],
+                      "limit": 5,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "source_ip"
+                      ],
+                      "limit": 5,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "01edfda0-3581-48c9-9ce9-fbd2c09b4178",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [
+                    "206fa625-7060-445f-b998-74cd903e26fe"
+                  ],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "destination_ip"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "6496c80b-8a84-4ce8-bf04-11f20c41b491",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "example-user",
+          "created_at": "2023-08-21T23:20:05.586Z"
+        },
+        "created_at": "2023-08-20T23:33:26.038Z",
+        "requires": {},
+        "state": {
+          "2dddd6ab-20c9-4236-b490-21743f67f2d1": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "8f4c918c-1328-4cd7-88f0-f08d84c4e530": "Top 5 IPs by Source",
+                "118ce115-ae11-408a-bfcd-7422af51af9b": "All Events by Source Port",
+                "db443dd2-d426-446e-bf86-bd3501945d22": "Top 5 Protocols",
+                "5e424e6e-de16-4ba3-9b3c-5fb67116a967": "All Events by Destination Port",
+                "352dde7a-17e2-4aac-a0d4-017cd0e738ab": "Total Events by Destination IP",
+                "6c385c8e-2370-4e72-9b53-b1685d54fe85": "All Messages",
+                "3c8325c2-5c79-4c3b-9f91-e2fe94bebbe0": "Top Actions",
+                "c91aca34-8fea-4e38-9a05-4c52fc1a7fe6": "Message Count",
+                "139e0931-64a9-4557-91df-787c40f91291": "Top 5 Port Destinations by Event Count",
+                "9342e809-6600-4960-b859-d9519bb43c8b": "Top 5 IP Destinations by Event Count"
+              }
+            },
+            "widgets": [
+              {
+                "id": "139e0931-64a9-4557-91df-787c40f91291",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "visualization": "bar",
+                  "column_limit": 5,
+                  "event_annotation": false,
+                  "row_limit": null,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [
+                    {
+                      "fields": [
+                        "destination_port"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 5,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "visualization_config": {
+                    "barmode": "group",
+                    "axis_type": "linear"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "9342e809-6600-4960-b859-d9519bb43c8b",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "visualization": "bar",
+                  "column_limit": 5,
+                  "event_annotation": false,
+                  "row_limit": null,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [
+                    {
+                      "fields": [
+                        "destination_ip"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 5,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "visualization_config": {
+                    "barmode": "group",
+                    "axis_type": "linear"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "8f4c918c-1328-4cd7-88f0-f08d84c4e530",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "visualization": "pie",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 5,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "source_ip"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 5,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "6c385c8e-2370-4e72-9b53-b1685d54fe85",
+                "type": "messages",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "protoname",
+                    "action",
+                    "source_ip",
+                    "destination_ip"
+                  ],
+                  "show_message_row": true,
+                  "show_summary": true,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "db443dd2-d426-446e-bf86-bd3501945d22",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "protoname"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "352dde7a-17e2-4aac-a0d4-017cd0e738ab",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "206fa625-7060-445f-b998-74cd903e26fe"
+                ],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "destination_ip"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "db443dd2-d426-446e-bf86-bd3501945d22": [
+                "4638340b-1d45-4c04-9311-1b77cc732501"
+              ],
+              "8f4c918c-1328-4cd7-88f0-f08d84c4e530": [
+                "01edfda0-3581-48c9-9ce9-fbd2c09b4178"
+              ],
+              "139e0931-64a9-4557-91df-787c40f91291": [
+                "e652812d-afb3-47f8-8d7b-ca829951d793"
+              ],
+              "6c385c8e-2370-4e72-9b53-b1685d54fe85": [
+                "146ce5c4-04a1-4cdf-98e1-531998b7958d"
+              ],
+              "352dde7a-17e2-4aac-a0d4-017cd0e738ab": [
+                "6496c80b-8a84-4ce8-bf04-11f20c41b491"
+              ],
+              "9342e809-6600-4960-b859-d9519bb43c8b": [
+                "eb4ad7fe-9860-405f-8229-250ac79b74f9"
+              ]
+            },
+            "positions": {
+              "6c385c8e-2370-4e72-9b53-b1685d54fe85": {
+                "col": 1,
+                "row": 7,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "db443dd2-d426-446e-bf86-bd3501945d22": {
+                "col": 9,
+                "row": 1,
+                "height": 3,
+                "width": 4
+              },
+              "139e0931-64a9-4557-91df-787c40f91291": {
+                "col": 1,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              },
+              "3c8325c2-5c79-4c3b-9f91-e2fe94bebbe0": {
+                "col": 9,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              },
+              "8f4c918c-1328-4cd7-88f0-f08d84c4e530": {
+                "col": 5,
+                "row": 1,
+                "height": 3,
+                "width": 4
+              },
+              "9342e809-6600-4960-b859-d9519bb43c8b": {
+                "col": 1,
+                "row": 1,
+                "height": 3,
+                "width": 4
+              },
+              "352dde7a-17e2-4aac-a0d4-017cd0e738ab": {
+                "col": 5,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "example-user",
+        "title": {
+          "@type": "string",
+          "@value": "Normalization - Firewall Events lab"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": "Displays info related to normalization of OPNsense and Windows desktop firewalls"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "47e06e78-cd02-4ca6-9927-d7bf08fb64e3",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "FW/NML - Lab"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5140
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "timezone": {
+            "@type": "string",
+            "@value": "NotSet"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 8
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "fd076744-7ccd-46b7-8621-2103a47f69f0",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - FW/Unattached - Normalize action field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - FW/Unattached - Normalize action field\"\n\nwhen\n    has_field(\"action\")\nthen\n    let my_new_field = lowercase(to_string($message.action));\n    set_field(\"action\", my_new_field);\n    set_field(\"parse\", \"NML - FW/Unattached - Normalize action field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "e45f01d8-6198-4264-ade7-40bf89db06da",
+      "data": {
+        "name": "FWLAB",
+        "pattern": "%{INT:rulenr},,,%{WORD:label},%{WORD:interface},%{WORD:reason},%{WORD:action},%{WORD:dir},%{INT:ipversion},%{WORD:tos},,%{INT:ttl},%{INT:id},%{INT:offset},%{WORD:flags},%{INT:protonum},%{WORD:protoname},%{INT:length},%{IP:source_ip},%{IP:destination_ip},%{POSINT:source_port},%{POSINT:destination_port},%{GREEDYDATA:additional_context}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "5e8644d9-858f-4ce4-b067-9e2730d3861c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Enhanced"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All messages related to Pi-hole Enhanced"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Pi-hole Enhanced\"\nstage 3 match pass\nrule \"Parse - Pi-hole Enhanced - Split messages into initial fields\"\nstage 6 match pass\nrule \"Parse - Pi-hole Enhanced - Splitting into additional fields\"\nstage 9 match pass\nrule \"Parse - Pi-hole Enhanced - Parsing pihole_result field\"\nstage 12 match pass\nrule \"NML - Pi-hole Enhanced - Normalize pihole_action field\"\nstage 15 match pass\nrule \"Parse - Pi-hole Enhanced - Parse pihole_response field\"\nstage 18 match pass\nrule \"Parse - Pi-hole Enhanced - Parsing pihole_action field\"\nstage 21 match pass\nrule \"Parse - Pi-hole Enhanced - Parsing for 'query' in pihole_action\"\nrule \"Parse - Pi-hole Enhanced - Parse pihole_response field for IPORHOST\"\nrule \"Parse - Pi-hole Enhanced - Gravity tracking\"\nrule \"Parse - Pi-hole Enhanced - Parsing pihole_action for additional fields\"\nstage 24 match pass\nrule \"Parse - Pi-hole Enhanced - Parse for additional fields in query_action\"\nrule \"Parse - Pi-hole Enhanced - Parse for destination_ip\"\nrule \"GeoIP lookup: external ip\"\nstage 27 match pass\nrule \"NML - Pi-hole Enhanced - NML for pihole_action again\"\nrule \"NML - Pi-hole Enhanced - NML pihole_action one last time\"\nstage 30 match pass\nrule \"Parse - Pi-hole Enhanced - Parse for internal_ip\"\nrule \"Parse - Pi-hole Enhanced - Parse for internal_ip again\"\nstage 33 match pass\nrule \"Parse - Pi-hole Enhanced - Parse IP one last time\"\nrule \"GeoIP lookup: external ip\"\nstage 40 match pass\nrule \"Parse - Pi-hole Unattached - Drop irrelevant messages\"\nstage 0 match pass\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "90dad69b-1b8c-41ee-9c08-6f364d49554d"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "2829c765-8be0-4615-949b-3793b3bdd6c1",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "Searches related to the Pi-hole Lab"
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "3fdfddea-fa24-4980-9c0f-ae05b9112cdd",
+              "timerange": {
+                "range": 0,
+                "type": "relative"
+              },
+              "filters": [],
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "application_name"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "1b707e41-d361-43b0-98f1-ee5e603c3f15",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": null,
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "41ce9a3e-20ca-4d40-a44d-30caa09b08f8",
+                  "limit": 150,
+                  "filters": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "time",
+                      "fields": [
+                        "timestamp"
+                      ],
+                      "interval": {
+                        "type": "auto",
+                        "scaling": 1
+                      }
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "65c83d4e-87bd-480d-9315-45a4b41e9be5",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "parse"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "0b13082f-5c53-4a52-854e-206ea830116d",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "range": 0,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "IP"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "0b63a9a1-1fd5-41d7-890a-4a78341ce40f",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "example-user",
+          "created_at": "2023-08-20T04:25:38.974Z"
+        },
+        "created_at": "2023-08-19T21:55:28.551Z",
+        "requires": {},
+        "state": {
+          "3fdfddea-fa24-4980-9c0f-ae05b9112cdd": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "f0ffd12c-b2a1-4c0a-9f26-906520c5f851": "Message Count",
+                "fe54691d-d183-4232-a37b-9cc12f0b151e": "All Messages"
+              }
+            },
+            "widgets": [
+              {
+                "id": "fe54691d-d183-4232-a37b-9cc12f0b151e",
+                "type": "messages",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "application_name",
+                    "process_id",
+                    "message",
+                    "pihole_action",
+                    "query_result_iporhost",
+                    "IP",
+                    "IPV6",
+                    "pihole_context",
+                    "pihole_result"
+                  ],
+                  "show_message_row": true,
+                  "show_summary": true,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "43fdbec2-8eac-4185-9d1f-77b177108aa2",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "parse"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "804900d0-0b13-4b56-8fef-e3df2fb36729",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "IP"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "a2ee627c-0975-4dad-b83e-dddd733a0113",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "application_name"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "f0ffd12c-b2a1-4c0a-9f26-906520c5f851",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "range": 0,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": null,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "timestamp"
+                      ],
+                      "type": "time",
+                      "config": {
+                        "interval": {
+                          "type": "auto",
+                          "scaling": 1
+                        }
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "fe54691d-d183-4232-a37b-9cc12f0b151e": [
+                "41ce9a3e-20ca-4d40-a44d-30caa09b08f8"
+              ],
+              "43fdbec2-8eac-4185-9d1f-77b177108aa2": [
+                "0b13082f-5c53-4a52-854e-206ea830116d"
+              ],
+              "a2ee627c-0975-4dad-b83e-dddd733a0113": [
+                "1b707e41-d361-43b0-98f1-ee5e603c3f15"
+              ],
+              "f0ffd12c-b2a1-4c0a-9f26-906520c5f851": [
+                "65c83d4e-87bd-480d-9315-45a4b41e9be5"
+              ],
+              "804900d0-0b13-4b56-8fef-e3df2fb36729": [
+                "0b63a9a1-1fd5-41d7-890a-4a78341ce40f"
+              ]
+            },
+            "positions": {
+              "fe54691d-d183-4232-a37b-9cc12f0b151e": {
+                "col": 1,
+                "row": 11,
+                "height": 10,
+                "width": "Infinity"
+              },
+              "43fdbec2-8eac-4185-9d1f-77b177108aa2": {
+                "col": 9,
+                "row": 1,
+                "height": 4,
+                "width": 4
+              },
+              "a2ee627c-0975-4dad-b83e-dddd733a0113": {
+                "col": 1,
+                "row": 5,
+                "height": 4,
+                "width": 4
+              },
+              "f0ffd12c-b2a1-4c0a-9f26-906520c5f851": {
+                "col": 1,
+                "row": 9,
+                "height": 2,
+                "width": "Infinity"
+              },
+              "804900d0-0b13-4b56-8fef-e3df2fb36729": {
+                "col": 1,
+                "row": 1,
+                "height": 4,
+                "width": 4
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "example-user",
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Lab"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5d7fc018-325a-45a9-b580-4137e2b032d8",
+      "data": {
+        "name": "PIHOLEQUERYTYPE",
+        "pattern": "query\\[%{NOTSPACE:query_record_type}\\]"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3ca5b351-743a-45a1-be21-68096ede1f2c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - FW/WFW - Normalize 'ALLOW' in action field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - FW/WFW - Normalize 'ALLOW' in action field\"\n\nwhen\n    $message.action == \"ALLOW\"\nthen\n    set_field(\"action\",\"pass\");\n    set_field(\"parse\", \"NML - FW/WFW - Normalize 'ALLOW' in action field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a014f553-3f20-4a7f-a2a0-36a7c608324c",
+      "data": {
+        "name": "PIHOLELAB",
+        "pattern": "%{NOTSPACE:pihole_action} %{HOSTNAME:query_request} %{WORD:pihole_result} %{IPORHOST}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "879de13a-4212-4815-b416-e98c2f178b8d",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Unattached - Parse pihole_action field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Unattached - Parse pihole_action field\"\nwhen\n    has_field(\"pihole_action\") && grok (pattern: \"%{PIHOLEACTION}\",\n         value: to_string($message.pihole_action)\n         ).matches == true\nthen\n//    set_field(\"pihole_action\", \"reply\");\n//    set_field(\"match_type\", \"custom-list\");\n    set_field(\"parse\", \"Parse - Pi-hole Unattached - Parse pihole_action field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "fcf7b10b-9d84-41cf-8545-85c930a2813b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - FW/OPN - Normalize protoname field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - FW/OPN - Normalize protoname field\"\nwhen\n    has_field(\"protoname\")\nthen\n    let my_new_field = lowercase(to_string($message.protoname));\n    set_field(\"protoname\",my_new_field);\n    set_field(\"parse\", \"NML - FW/OPN - Normalize protoname field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "aa823c94-0937-4706-ae2b-b18e37f16d1c",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "A dashboard displaying info about Pi-hole"
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "05ada122-4bd0-4621-ac68-aeaa2c48ac6a",
+              "timerange": {
+                "from": 86400,
+                "type": "relative"
+              },
+              "filters": [],
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "internal_ip:false"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "IP"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "0fdf41b9-a81b-485b-b2d6-64ed1efe1971",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "source_ip"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "baea14f0-e119-49a8-91e6-f00a3349f08c",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": null,
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "f99bf27b-e0a9-40bc-ba79-5837e66a5ff2",
+                  "limit": 150,
+                  "filters": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "pihole_action:blocked OR pihole_action:blacklisted"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "19ad952b-e2b0-402f-8507-58226a510af8",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "ip_geo_location"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "e9dfbf51-31eb-4b4c-bb87-c902e3711025",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "pihole_action"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "94bc8135-bcb2-4e13-a937-a59cd73c0577",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count(ip_geo_country)",
+                      "field": "ip_geo_country"
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "ip_geo_country"
+                      ],
+                      "limit": 5,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "358bd50c-268f-46fa-9575-ed6c7c2755f5",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "pihole_action:blocked OR pihole_action:blacklisted"
+                  },
+                  "name": "trend",
+                  "timerange": {
+                    "source": "search_type",
+                    "id": "19ad952b-e2b0-402f-8507-58226a510af8",
+                    "offset": "1i",
+                    "type": "offset"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "5f9897d4-dd97-4955-b279-1eed43fd65d5",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": "pihole_action:blocked OR pihole_action:blacklisted"
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "HOSTNAME"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": false
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "e1904e96-2eb1-4a27-a2bd-bdddabd302df",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "trend",
+                  "timerange": {
+                    "source": "search_type",
+                    "id": "853f01cf-4ba8-4558-a77a-d8e26b68be3d",
+                    "offset": "1i",
+                    "type": "offset"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "06a3c740-0adc-4d97-b6ca-0446f98e5332",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "853f01cf-4ba8-4558-a77a-d8e26b68be3d",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "from": 86400,
+                    "type": "relative"
+                  },
+                  "column_limit": null,
+                  "streams": [],
+                  "row_limit": null,
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "fields": [
+                        "query_request"
+                      ],
+                      "limit": 15,
+                      "skip_empty_values": true
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "039d6d3f-8307-445c-89c3-dae1c570ad1f",
+                  "filters": [],
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "example-user",
+          "created_at": "2023-08-19T18:48:10.509Z"
+        },
+        "created_at": "2023-08-19T00:07:06.251Z",
+        "requires": {},
+        "state": {
+          "05ada122-4bd0-4621-ac68-aeaa2c48ac6a": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "b9e6c21c-a465-4fad-82ea-6d48e8600d92": "Top 10 IPs by Source",
+                "b7f74908-a8b7-464f-b9b5-2e5fdbf6bc29": "All Messages",
+                "490c1a05-30de-4ea0-8a8b-71edf11bb16c": "Blocked or Blacklisted Queries",
+                "188e28da-db79-4d1e-9f53-6275210943dc": "DNS/Pi-hole Actions",
+                "fe7fbaf1-975b-49af-88a8-558cb224dca6": "GeoIP Info for Ext. Requests",
+                "009673db-c512-4af5-b7ec-dbf2a3969dbd": "Top Blocked or Blacklisted Hosts",
+                "58b65c7f-5abe-4b7b-adfc-275150f5edf2": "Total Queries",
+                "3e701772-7545-4b72-80aa-9363a1df3d85": "Top 10 Requests by Ext. IP",
+                "1940babb-7be3-432e-9837-702b321d34dd": "All Requested Hosts",
+                "e470a2a7-250c-4993-a9c1-12902a01a608": "Top 5 Countries",
+                "2613abc0-c3f9-4251-90e1-e47a54666148": "Message Count"
+              }
+            },
+            "widgets": [
+              {
+                "id": "009673db-c512-4af5-b7ec-dbf2a3969dbd",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "pihole_action:blocked OR pihole_action:blacklisted"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "HOSTNAME"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "58b65c7f-5abe-4b7b-adfc-275150f5edf2",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "numeric",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": null,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message Count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "trend": true,
+                    "trend_preference": "HIGHER"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "fe7fbaf1-975b-49af-88a8-558cb224dca6",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "map",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "ip_geo_location"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "series": [],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "viewport": {
+                      "zoom": 1,
+                      "center_x": 0,
+                      "center_y": 0
+                    }
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "e470a2a7-250c-4993-a9c1-12902a01a608",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 5,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "ip_geo_country"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 5,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count(ip_geo_country)"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "3e701772-7545-4b72-80aa-9363a1df3d85",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "internal_ip:false"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "IP"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "series": [],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "pinned_columns": []
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "490c1a05-30de-4ea0-8a8b-71edf11bb16c",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": "pihole_action:blocked OR pihole_action:blacklisted"
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "numeric",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": null,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message Count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "trend": true,
+                    "trend_preference": "HIGHER"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "1940babb-7be3-432e-9837-702b321d34dd",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "query_request"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "pinned_columns": []
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "b9e6c21c-a465-4fad-82ea-6d48e8600d92",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "source_ip"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": true
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "pinned_columns": []
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "188e28da-db79-4d1e-9f53-6275210943dc",
+                "type": "aggregation",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "column_limit": null,
+                  "event_annotation": false,
+                  "row_limit": 15,
+                  "row_pivots": [
+                    {
+                      "fields": [
+                        "pihole_action"
+                      ],
+                      "type": "values",
+                      "config": {
+                        "limit": 15,
+                        "skip_empty_values": false
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": false,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "b7f74908-a8b7-464f-b9b5-2e5fdbf6bc29",
+                "type": "messages",
+                "filter": null,
+                "filters": [],
+                "timerange": {
+                  "from": 86400,
+                  "type": "relative"
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "source",
+                    "application_name",
+                    "process_id",
+                    "pihole_action",
+                    "destination_ip",
+                    "HOSTNAME",
+                    "source_ip",
+                    "IP",
+                    "pihole_response",
+                    "query_request",
+                    "query_record_type"
+                  ],
+                  "show_message_row": true,
+                  "show_summary": true,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              }
+            ],
+            "widget_mapping": {
+              "b9e6c21c-a465-4fad-82ea-6d48e8600d92": [
+                "baea14f0-e119-49a8-91e6-f00a3349f08c"
+              ],
+              "b7f74908-a8b7-464f-b9b5-2e5fdbf6bc29": [
+                "f99bf27b-e0a9-40bc-ba79-5837e66a5ff2"
+              ],
+              "490c1a05-30de-4ea0-8a8b-71edf11bb16c": [
+                "19ad952b-e2b0-402f-8507-58226a510af8",
+                "5f9897d4-dd97-4955-b279-1eed43fd65d5"
+              ],
+              "188e28da-db79-4d1e-9f53-6275210943dc": [
+                "94bc8135-bcb2-4e13-a937-a59cd73c0577"
+              ],
+              "fe7fbaf1-975b-49af-88a8-558cb224dca6": [
+                "e9dfbf51-31eb-4b4c-bb87-c902e3711025"
+              ],
+              "009673db-c512-4af5-b7ec-dbf2a3969dbd": [
+                "e1904e96-2eb1-4a27-a2bd-bdddabd302df"
+              ],
+              "58b65c7f-5abe-4b7b-adfc-275150f5edf2": [
+                "06a3c740-0adc-4d97-b6ca-0446f98e5332",
+                "853f01cf-4ba8-4558-a77a-d8e26b68be3d"
+              ],
+              "3e701772-7545-4b72-80aa-9363a1df3d85": [
+                "0fdf41b9-a81b-485b-b2d6-64ed1efe1971"
+              ],
+              "1940babb-7be3-432e-9837-702b321d34dd": [
+                "039d6d3f-8307-445c-89c3-dae1c570ad1f"
+              ],
+              "e470a2a7-250c-4993-a9c1-12902a01a608": [
+                "358bd50c-268f-46fa-9575-ed6c7c2755f5"
+              ]
+            },
+            "positions": {
+              "b9e6c21c-a465-4fad-82ea-6d48e8600d92": {
+                "col": 7,
+                "row": 4,
+                "height": 3,
+                "width": 3
+              },
+              "b7f74908-a8b7-464f-b9b5-2e5fdbf6bc29": {
+                "col": 1,
+                "row": 9,
+                "height": 6,
+                "width": "Infinity"
+              },
+              "490c1a05-30de-4ea0-8a8b-71edf11bb16c": {
+                "col": 4,
+                "row": 1,
+                "height": 2,
+                "width": 3
+              },
+              "188e28da-db79-4d1e-9f53-6275210943dc": {
+                "col": 7,
+                "row": 1,
+                "height": 3,
+                "width": 3
+              },
+              "fe7fbaf1-975b-49af-88a8-558cb224dca6": {
+                "col": 1,
+                "row": 3,
+                "height": 4,
+                "width": 6
+              },
+              "009673db-c512-4af5-b7ec-dbf2a3969dbd": {
+                "col": 7,
+                "row": 7,
+                "height": 2,
+                "width": 6
+              },
+              "58b65c7f-5abe-4b7b-adfc-275150f5edf2": {
+                "col": 1,
+                "row": 1,
+                "height": 2,
+                "width": 3
+              },
+              "3e701772-7545-4b72-80aa-9363a1df3d85": {
+                "col": 10,
+                "row": 4,
+                "height": 3,
+                "width": 3
+              },
+              "1940babb-7be3-432e-9837-702b321d34dd": {
+                "col": 1,
+                "row": 7,
+                "height": 2,
+                "width": 6
+              },
+              "e470a2a7-250c-4993-a9c1-12902a01a608": {
+                "col": 10,
+                "row": 1,
+                "height": 3,
+                "width": 3
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "example-user",
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Enhanced"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "90dad69b-1b8c-41ee-9c08-6f364d49554d",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Enhanced"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "tag"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "Pi-hole"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": "The tag must match 'Pi-hole' for the messages to be routed to this stream"
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All messages related to Pi-hole Enhanced"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "522de598-1c3a-49eb-9f17-83f2c7cadd1a",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Pi-hole Lab"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "tag"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "Pi-hole"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": "If the incoming message matches the specific tag then we route it to this Pi-hole Lab stream"
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All messages related to the Pi-hole Lab"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "85883d79-e77c-499d-bbb5-6c68c411716e",
+      "data": {
+        "name": "PIHOLE",
+        "pattern": "%{SYSLOGTIMESTAMP} %{WORD:application_name}\\[%{NONNEGINT:process_id}\\]\\:"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "866b6dda-78ef-4afc-bb19-eacf978e1fd1",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Unattached - Drop irrelevant messages"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Unattached - Drop irrelevant messages\"\n\nwhen\n    starts_with(to_string($message.pihole_message), \"read /etc/\") OR \n    starts_with(to_string($message.pihole_message), \"using only\") OR\n    starts_with(to_string($message.pihole_message), \"failed to load names\") OR\n    starts_with(to_string($message.pihole_message), \"using nameserver \") OR\n    starts_with(to_string($message.pihole_message), \"compile time options\") OR\n    starts_with(to_string($message.pihole_message), \"DNS service limited\") OR\n    starts_with(to_string($message.pihole_message), \"started, version \") OR\n    starts_with(to_string($message.pihole_message), \"exiting on receipt\")\nthen\n    set_field(\"parse\",\"Parse - Pi-hole Unattached - Drop irrelevant messages\");\n    drop_message();\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5ca6be7f-2e69-4f80-860f-8882e60126ba",
+      "data": {
+        "name": "PIHOLEACTION",
+        "pattern": "query|reply|forwarded|cached|config|%{PATH:UNWANTED}|exactly|gravity|regex"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f97496e8-8497-4112-a3cb-251675ee7ea0",
+      "data": {
+        "name": "PIHOLEMATCHTYPE",
+        "pattern": "(exactly|regex|gravity)\\s"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "d3b48fde-3f73-46ec-8180-efdffb6fa8c9",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Normalization - Firewall Events Lab"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All processing related to firewalls happens here"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Normalization - Firewall Events Lab\"\nstage 0 match either\nstage 3 match pass\nrule \"Parse - FW/OPN - Split into initial fields\"\nstage 6 match pass\nrule \"Parse - FW/WFW - Split into additional fields\"\nstage 9 match pass\nrule \"Route - Route messages to Firewall Events Lab stream\"\nstage 15 match pass\nstage 12 match pass\nend"
+        },
+        "connected_streams": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "77a50c05-fde7-425a-8825-56d63674b7fc",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "10 - Parse - Pi-hole Lab - Split message into additional fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This rule uses a custom grok pattern titled 'PIHOLELAB' and if  the pattern matches, it sets some additional fields."
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"10 - Parse - Pi-hole Lab - Split message into additional fields\"\nwhen\n    grok (pattern: \"%{PIHOLELAB}\",\n         value: to_string($message.message)\n         ).matches == true\n//In the event the value of the message field matches the custom PIHOLELAB grok pattern, we\n//run the following code below\nthen\n    let my_fields = grok(pattern: \"%{NOTSPACE:pihole_action} %{IPORHOST:query_result_iporhost} %{WORD:pihole_context} %{IPORHOST:pihole_result}\",\n        value: to_string($message.message),\n        only_named_captures: false);\n        set_fields(my_fields);\n    set_field(\"parse\", \"Parse - Pi-hole Lab - Split message into additional fields\");\n//We are using some built in grok patterns to help us parse the message and\n//split it into pihole_action, iporhost, pihole_context, and pihole_result fields\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "48ee11a9-3297-4ee9-b2af-6970144f7b3d",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "05 - Parse - Pi-hole Lab- Split message into initial fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This rules always executes since we want every one of our messages to have the pid (process id) and start with the beginnings of the pihole_action value in the message field. If a grok pattern matches syslog timestamp, a word, positive integer, and greedydata we set the initial fields of timestamp, application_name, pid, and message."
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"05 - Parse - Pi-hole Lab- Split message into initial fields\"\nwhen\n    true\nthen\n    let message_field = to_string($message.message);\n    let fields = grok(pattern: \"%{SYSLOGTIMESTAMP:timestamp} %{WORD:application_name}\\\\[%{POSINT:process_id}]\\\\: %{GREEDYDATA:message}\", \n        value: message_field, \n        only_named_captures: true);\n    set_fields(fields);\n    set_field(\"parse\", \"parse - Pi-hole - Split pihole message into fields\");\n    \n    //Fix the probably incorrect date formatted timestamp to make graylog happy\n    //Normally we do not need to use this flex_parse_date function, however\n    //sometimes it is required in limited exceptions where Graylog \n    //has something to say about unexpected timestamps\n    let new_date = flex_parse_date(to_string($message.timestamp));\n    set_field(\"timestamp\", new_date);\n    set_field(\"parse\", \"Parse - Pihole Lab - Split message into intial fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "6e6598f7-a5f3-404c-a782-418e9653498d",
+      "data": {
+        "name": "WORD",
+        "pattern": "\\b\\w+\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a20330a6-dca2-404e-a27e-5f65ae80a038",
+      "data": {
+        "name": "GREEDYDATA",
+        "pattern": ".*"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f2fb6461-72de-4b72-9f81-d9dc61a2a809",
+      "data": {
+        "name": "IP",
+        "pattern": "(?:%{IPV6}|%{IPV4})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "d388a069-58d7-4187-80ac-64e39a0be1bb",
+      "data": {
+        "name": "POSINT",
+        "pattern": "\\b(?:[1-9][0-9]*)\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "21495c43-ed6b-463d-ab2c-b7270846099b",
+      "data": {
+        "name": "INT",
+        "pattern": "(?:[+-]?(?:[0-9]+))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "6232981b-4a6a-4ea6-9e46-b0f4dd277ef2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "GeoIP lookup: external ip"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"GeoIP lookup: external ip\"\n\nwhen\n    $message.internal_ip == false\nthen\n    let geo = lookup(\"geoip\", to_string($message.IP));\n    set_field(\"ip_geo_location\", geo[\"coordinates\"]);\n    set_field(\"ip_geo_country\", geo[\"country\"].iso_code);\n    set_field(\"ip_geo_city\", geo[\"city\"].names.en);\n    set_field(\"parse\", \"GeoIP lookup: external ip\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "34e8f1cc-9e0d-4f85-928f-3c2586512d4b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Gravity tracking"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Gravity tracking\"\nwhen\n    $message.pihole_action == \"gravity\"\nthen\n//    let my_match_type = to_string($message.pihole_action);\n    let my_fields = grok(pattern: \"%{WORD:match_type} %{WORD:pihole_action}\",\n    value: to_string($message.pihole_message),\n    only_named_captures: true);\n    set_fields(my_fields);\n//    set_field(\"match_type\", my_match_type);\n    set_field(\"parse\", \"parse - Pi-hole Enhanced - Gravity tracking\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "37feebba-40c9-4ee9-9714-a7f5330cc43a",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parsing pihole_action for additional fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parsing pihole_action for additional fields\"\nwhen\n    $message.pihole_action == \"forwarded\" OR $message.pihole_action == \"reply\" OR $message.pihole_action == \"cached\"\nthen\n//    let my_match_type = to_string($message.pihole_action);\n    let my_fields = grok(pattern: \"%{IPORHOST} %{WORD:pihole_context} %{NOTSPACE:pihole_response}\",\n    value: to_string($message.pihole_result),\n    only_named_captures: true);\n    set_fields(my_fields);\n//    set_field(\"match_type\", my_match_type);\n    set_field(\"parse\", \"parse - Pi-hole Enhanced - Parsing pihole_action for additional fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "53f7914c-cd46-4c12-b269-374a4f6571ef",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parsing pihole_action field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parsing pihole_action field\"\nwhen\n    $message.pihole_action == \"exactly\" OR $message.pihole_action == \"regex\"\nthen\n//    let my_match_type = to_string($message.pihole_action);\n    let my_fields = grok(pattern: \"%{WORD:match_type} %{WORD:pihole_action} %{HOSTNAME} %{WORD:pihole_context} %{GREEDYDATA:pihole_response}\",\n    value: to_string($message.pihole_message),\n    only_named_captures: true);\n    set_fields(my_fields);\n//    set_field(\"match_type\", my_match_type);\n    set_field(\"parse\", \"Parse - Pi-hole Enhanced - Parsing pihole_action field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "f92bbee0-cb87-4f76-92bb-a3c2a8d19025",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - Pi-hole Enhanced - Normalize pihole_action field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - Pi-hole Enhanced - Normalize pihole_action field\"\nwhen\n    starts_with(to_string($message.pihole_action), \"query\")\nthen\n    let my_fields = grok(pattern: \"%{PIHOLEQUERYTYPE}\",\n    value: to_string($message.pihole_action),\n    only_named_captures: true);\n    set_fields(my_fields);\n    set_field(\"pihole_action\",\"query\");\n    set_field(\"parse\",\"NML - Pi-hole Enhanced - Normalize pihole_action field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d629f7c3-69d0-445a-be33-02473f1ac3a0",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse for destination_ip"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse for destination_ip\"\nwhen\n    $message.pihole_action == \"forwarded\" && has_field(\"IP\")\nthen\n    let clean_ip = to_ip($message.IP);\n    set_field(\"destination_ip\", clean_ip);\n    set_field(\"parse\", \"Parse - Pi-hole Enhanced - Parse for destination_ip\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "bdef94c3-4af7-4254-85ec-575efc9c2074",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse for internal_ip"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse for internal_ip\"\nwhen\n    cidr_match(\"192.168.0.0/16\", to_ip($message.IP)) ||\n    cidr_match(\"172.16.0.0/12\", to_ip($message.IP)) ||\n    cidr_match(\"10.0.0.0/8\", to_ip($message.IP))\nthen\n    set_field(\"internal_ip\", true);\n    set_field(\"parse\", \"Parse - Pi-hole Enhanced - Parse for internal_ip\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "b4966df9-7a67-4215-926f-f36ed7942c45",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parsing pihole_result field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parsing pihole_result field\"\nwhen\n    has_field(\"pihole_result\") &&\n    grok (pattern: \"%{WORD} %{IPORHOST} %{WORD:pihole_context} %{NOTSPACE:pihole_response}\",\n         value: to_string($message.message)\n         ).matches == true\nthen\n    let my_fields = grok (pattern: \"%{WORD} %{IPORHOST} %{WORD:pihole_context} %{NOTSPACE:pihole_response}\",\n    value: to_string($message.pihole_message),\n    only_named_captures: false);\n    set_fields(my_fields);\n//    set_field(\"match_type\", my_match_type);\n    set_field(\"parse\", \"parse - Pi-hole Enhanced - Parsing Parsing pihole_result field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "95036dba-b6e2-4f24-8dc7-bc82eeff5f00",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse pihole_response field for IPORHOST"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse pihole_response field for IPORHOST\"\nwhen\n    $message.pihole_action == \"query\"\nthen\n    let my_new_fields = grok(pattern: \"%{IPORHOST}\",\n    value: to_string($message.pihole_response),\n    only_named_captures: false);\n    set_fields(my_new_fields);\n    set_field(\"parse\",\"parse - Pi-hole Enhanced - Parse pihole_response field for IPORHOST\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "35cc60cf-a0dd-424e-9dcf-741aa3d4fcc3",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Splitting into additional fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Splitting into additional fields\"\nwhen\n    has_field(\"pihole_message\") &&\n    grok (pattern: \"%{WORD:match_type} %{WORD:pihole_action} %{GREEDYDATA:pihole_response}\",\n         value: to_string($message.pihole_message)\n         ).matches == true\n//In the event the field pihole_message is present and the grok pattern matches,\n//we run the following code below\nthen\n    let my_fields = grok(pattern: \"%{NOTSPACE:pihole_action} %{GREEDYDATA:pihole_result}\",\n    value: to_string($message.pihole_message),\n    only_named_captures: false);\n    set_fields(my_fields);\n    set_field(\"parse\", \"parse - Pi-hole Enhanced - Splitting into additional fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d34f024a-7eaa-4987-912c-d4971a0d6c47",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse IP one last time"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse IP one last time\"\nwhen\n    $message.internal_ip == false && $message.pihole_context == \"is\" && $message.pihole_action == \"blacklisted\" OR \n    $message.internal_ip == false && $message.pihole_context == \"is\" && $message.pihole_action == \"blocked\"\nthen\n    remove_field(\"internal_ip\");\n    set_field(\"parse\",\"Parse - Pi-hole Enhanced - Parse IP one last time\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a3f4bc80-3199-4a2f-85cb-db226bed40ee",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse for internal_ip again"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse for internal_ip again\"\nwhen\n    $message.pihole_context ==\"is\" && \n    grok (pattern: \"%{IP}\",\n         value: to_string($message.pihole_response)\n         ).matches == true && $message.IP != \"0.0.0.0\"\nthen\n    set_field(\"internal_ip\", false);\n    set_field(\"parse\",\"Parse - Pi-hole Enhanced - Parse for internal_ip again\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "570352aa-7a6c-4258-8459-28b38e6fc902",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse pihole_response field"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse pihole_response field\"\nwhen\n    has_field(\"pihole_response\") &&\n    grok (pattern: \"%{IP}\",\n         value: to_string($message.pihole_response)\n         ).matches == true\nthen\n    let my_new_ip = to_ip($message.pihole_response);\n    set_field(\"IP\", my_new_ip);\n    set_field(\"parse\",\"parse - Pi-hole Enhanced - Parse pihole_response field\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "22aae698-61cb-4247-8c24-a30c84468f61",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parsing for 'query' in pihole_action"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parsing for 'query' in pihole_action\"\nwhen\n    $message.pihole_action == \"query\"\nthen\n//    let my_match_type = to_string($message.pihole_action);\n    let my_fields = grok(pattern: \"%{NOTSPACE:query_request} %{WORD:pihole_context} %{IPORHOST:pihole_response}\",\n    value: to_string($message.pihole_result),\n    only_named_captures: true);\n    set_fields(my_fields);\n//    set_field(\"match_type\", my_match_type);\n    set_field(\"parse\", \"Parse - Pi-hole Enhanced - Parsing for 'query' in pihole_action\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "68e7d3a5-296d-4be7-bc09-c2cfae741721",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - Pi-hole Enhanced - NML pihole_action one last time"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - Pi-hole Enhanced - NML pihole_action one last time\"\nwhen\n    $message.pihole_action == \"config\"\nthen\n    set_field(\"pihole_action\", \"reply\");\n    set_field(\"match_type\", \"config\");\n    set_field(\"parse\", \"NML - Pi-hole Enhanced - NML pihole_action one last time\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "bf15c3aa-e28f-44f7-ae05-85c2f6e8975a",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Split messages into initial fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Split messages into initial fields\"\nwhen\n    grok(pattern: \"%{PIHOLE}\",\n    value: to_string($message.message)\n    ).matches == true\nthen\n    let my_fields = grok(pattern: \"%{PIHOLE} %{GREEDYDATA:pihole_message}\",\n    value: to_string($message.message),\n    only_named_captures: false);\n    \n    set_fields(my_fields);\n    set_field(\"parse\", \"parse - Pi-hole Enhanced - Setting initial fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "2053c25d-9673-40b1-bd69-32fd6b031b57",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Pi-hole Enhanced - Parse for additional fields in query_action"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Pi-hole Enhanced - Parse for additional fields in query_action\"\nwhen\n    $message.pihole_action == \"query\" && has_field(\"IP\")\nthen\n    let clean_ip = to_ip($message.IP);\n    set_field(\"source_ip\", clean_ip);\n    set_field(\"parse\", \"Parse - Pi-hole Enhanced- Parse for additional fields in query_action\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "0d44088b-cda8-40c5-8146-7ffde3e14d54",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NML - Pi-hole Enhanced - NML for pihole_action again"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"NML - Pi-hole Enhanced - NML for pihole_action again\"\nwhen\n    has_field(\"pihole_message\") && contains(to_string($message.pihole_message),\n    \"/etc/pihole/custom.list\")\nthen\n    set_field(\"pihole_action\", \"reply\");\n    set_field(\"match_type\", \"custom-list\");\n    set_field(\"parse\", \"NML - Pi-hole Enhanced - NML for pihole_action again\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b3f58ea2-f2de-45f3-b82d-6d33059ae6ae",
+      "data": {
+        "name": "NOTSPACE",
+        "pattern": "\\S+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "60384d71-59b0-47db-8730-9a314960f1ca",
+      "data": {
+        "name": "HOSTNAME",
+        "pattern": "\\b(?:[0-9A-Za-z][0-9A-Za-z-]{0,62})(?:\\.(?:[0-9A-Za-z][0-9A-Za-z-]{0,62}))*(\\.?|\\b)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "2a79c3a4-3821-4e0b-aab7-321b0b9b2635",
+      "data": {
+        "name": "IPORHOST",
+        "pattern": "(?:%{IP}|%{HOSTNAME})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "674d8ec2-2e3f-4f8b-ab4a-0bf1f24d2c6b",
+      "data": {
+        "name": "SYSLOGTIMESTAMP",
+        "pattern": "%{MONTH} +%{MONTHDAY} %{TIME}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b6d4dc2f-de77-422b-9129-dfb083cb0014",
+      "data": {
+        "name": "NONNEGINT",
+        "pattern": "\\b(?:[0-9]+)\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5fa6792f-b069-4b51-8ea3-877a80977ab5",
+      "data": {
+        "name": "PATH",
+        "pattern": "(?:%{UNIXPATH}|%{WINPATH})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "9e8278d5-835f-40c0-b532-3d957ffcd7b6",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - FW/WFW - Split into additional fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - FW/WFW - Split into additional fields\"\nwhen\n    grok (pattern: \"%{WINFWMATCH}\",\n         value: to_string($message.message)\n         ).matches == true\nthen\n    let my_fields = grok(pattern: \"%{WINFWMATCH}\",\n    value: to_string($message.message),\n    only_named_captures: true);\n    set_fields(my_fields);\n    route_to_stream(\"Firewall Events Lab\");\n    set_field(\"Parse\",\"Parse - FW/WFW - Split into additional fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3239a6f9-185e-4c6a-b6d1-b4f0e0c0a65e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Route messages to Firewall Events Lab stream"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Route messages to Firewall Events Lab stream\"\n\nwhen\n    has_field(\"tos\")\nthen\n    route_to_stream(\"Firewall Events Lab\");\n    set_field(\"parse\", \"Route - Route messages to Firewall Events Lab stream\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "67429584-34b4-4455-a048-abfd8d67db2c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - FW/OPN - Split into initial fields"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - FW/OPN - Split into initial fields\"\nwhen\n    grok (pattern: \"%{FWLAB}\",\n         value: to_string($message.message)\n         ).matches == true\nthen\n    let my_fields = grok(pattern: \"%{FWLAB}\",\n    value: to_string($message.message),\n    only_named_captures: true);\n    set_fields(my_fields);\n    set_field(\"parse\",\"Parse - FW/OPN - Split into initial fields\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "fa185d36-a43c-40c8-bed1-33aef1f0c21f",
+      "data": {
+        "name": "IPV6",
+        "pattern": "((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "88af5337-eb8a-47af-a3d9-0df079212564",
+      "data": {
+        "name": "IPV4",
+        "pattern": "(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8082cdd9-130c-4a55-9944-c3dc4fc5cfe6",
+      "data": {
+        "name": "MONTH",
+        "pattern": "\\b(?:Jan(?:uary|uar)?|Feb(?:ruary|ruar)?|M(?:a|ä)?r(?:ch|z)?|Apr(?:il)?|Ma(?:y|i)?|Jun(?:e|i)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|O(?:c|k)?t(?:ober)?|Nov(?:ember)?|De(?:c|z)(?:ember)?)\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "feb9727d-f0e7-4f83-916b-2f679d3f2388",
+      "data": {
+        "name": "TIME",
+        "pattern": "(?!<[0-9])%{HOUR}:%{MINUTE}(?::%{SECOND})(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "eaca11a8-ded1-46e9-923f-15f9b88f3a49",
+      "data": {
+        "name": "MONTHDAY",
+        "pattern": "(?:(?:0[1-9])|(?:[12][0-9])|(?:3[01])|[1-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1e57c93f-615f-4bd9-8c60-614b8d68501e",
+      "data": {
+        "name": "WINPATH",
+        "pattern": "(?>[A-Za-z]+:|\\\\)(?:\\\\[^\\\\?*]*)+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8eb785f0-e067-488e-a350-714b789e8712",
+      "data": {
+        "name": "UNIXPATH",
+        "pattern": "(/([\\w_%!$@:.,~-]+|\\\\.)*)+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "22821bcb-03f0-49fb-be86-15d9ffdc6dbd",
+      "data": {
+        "name": "HOUR",
+        "pattern": "(?:2[0123]|[01]?[0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "e8db2a60-5757-4535-b3c7-f91dac0d29ed",
+      "data": {
+        "name": "MINUTE",
+        "pattern": "(?:[0-5][0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "0eec4b84-367a-449e-9193-815225aff2de",
+      "data": {
+        "name": "SECOND",
+        "pattern": "(?:(?:[0-5]?[0-9]|60)(?:[:.,][0-9]+)?)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    }
+  ]
+}
