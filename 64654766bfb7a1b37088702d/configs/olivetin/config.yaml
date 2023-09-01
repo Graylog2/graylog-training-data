@@ -9,12 +9,12 @@ themeName: graylog-theme
 
 actions:   
 - title: Windows Firewall Logs
-  shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5140
   icon: backup
   timeout: 900
 
 - title: Open/PFSense Firewall Logs
-  shell: cat /etc/graylog/log_data/002-ofw.log | ncat -w 1 localhost 5555
+  shell: cat /etc/graylog/log_data/002-ofw.log | ncat -w 1 localhost 5140
   icon: backup
   timeout: 900
 
