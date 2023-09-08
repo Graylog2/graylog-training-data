@@ -18,14 +18,8 @@ mkdir /etc/graylog
 #Cert Update
 ./common/certs.sh >> /home/$LUSER/strigosuccess
 
-#Illuminate Install
-#./common/inst_illuminate.sh >> /home/$LUSER/strigosuccess
-
 #Course Settings
 #./common/course_settings.sh >> /home/$LUSER/strigosuccess
-
-#Add course CPs
-./common/cp_inst.sh >> /home/$LUSER/strigosuccess
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
@@ -41,6 +35,12 @@ pwsh -c 'write-host "loaded PS!"'
 # Import course-specific setup script:
 chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
 ./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess
+
+#Add course Content Packs:
+./common/cp_inst.sh >> /home/$LUSER/strigosuccess
+
+#Illuminate Install
+#./common/inst_illuminate.sh >> /home/$LUSER/strigosuccess
 
 #OT Theme
 ./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
