@@ -2,10 +2,14 @@
 #load Vars from Strigo
 source /etc/profile
 
-###Cert Update
+# Skip execution for TLS course:
+if [[ "$STRIGO_CLASS_ID" == "64384cec22c8f6a4e5a0c6ec" ]]; then
+  echo "Skipping execution of $(basename "$0") because this is the TLS course..." >> /home/$LUSER/strigosuccess
+  exit
+fi
+
+# Import certs:
 echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
-#Certs
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$LUSER/strigosuccess
 echo "The present working directory is $(pwd)" >> /home/$LUSER/strigosuccess
 
@@ -32,7 +36,7 @@ update-ca-certificates
 #Wait for GL before changes
 if [ $(which docker) ]; then
     while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
-        printf "\n\nWaiting for GL to come online to add content\n" >> /home/$LUSER/strigosuccess
+        printf "\n\nWaiting for GL to come online to add certs\n" >> /home/$LUSER/strigosuccess
         sleep 5
     done
 
