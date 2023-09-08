@@ -2,7 +2,7 @@
 #load Vars from Strigo
 source /etc/profile
 
-
+# Install each content pack in class folder:
 for entry in /$STRIGO_CLASS_ID/configs/content_packs/*
 do
   printf "\n\nInstalling Content Package: $entry\n" >> /home/$LUSER/strigosuccess
