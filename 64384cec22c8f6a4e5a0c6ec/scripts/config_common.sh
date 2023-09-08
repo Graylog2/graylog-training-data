@@ -2,8 +2,7 @@
 #load Vars from Strigo
 source /etc/profile
 
-echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
+echo "Importing common scripts" >> /home/$LUSER/strigosuccess
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
 
@@ -16,7 +15,7 @@ mkdir /etc/graylog
 ./common/dns.sh >> /home/$LUSER/strigosuccess
 
 #Cert Update
-./common/certs.sh >> /home/$LUSER/strigosuccess
+#./common/certs.sh >> /home/$LUSER/strigosuccess
 
 #Course Settings
 #./common/course_settings.sh >> /home/$LUSER/strigosuccess
