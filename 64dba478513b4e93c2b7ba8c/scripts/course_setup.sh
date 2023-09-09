@@ -59,7 +59,7 @@ cp "/common/configs/jvm.options" /etc/opensearch/
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Start services:
-systemctl enable mongod.service opensearch.service
+systemctl enable --now mongod.service opensearch.service
 echo "Waiting for Opensearch service to be ready before launching Graylog..." 
 until curl -s localhost:9200 
 do
