@@ -8,6 +8,11 @@ if [[ "$STRIGO_CLASS_ID" == "64384cec22c8f6a4e5a0c6ec" ]]; then
   exit
 fi
 
+# Make /etc/graylog dir if doesn't exist (e.g. non-Dan-AMI classes):
+if [ ! -d /etc/graylog ]; then
+  mkdir /etc/graylog
+fi
+
 # Import certs:
 echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$LUSER/strigosuccess
