@@ -18,6 +18,9 @@ mkdir /etc/graylog
 #Cert Update
 ./common/certs.sh >> /home/$LUSER/strigosuccess
 
+#Move Log Data
+mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
+
 #Course Settings
 #./common/course_settings.sh >> /home/$LUSER/strigosuccess
 
