@@ -9,20 +9,29 @@ showFooter: false
 showNewVersions: false
 themeName: graylog-theme
 
+actions:
 
+- title: Mac Firewall Logs GELF
+  shell: cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 5080
+  icon: backup
+  timeout: 900 
 
-actions:   
 - title: Windows Firewall Logs
   shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5140
   icon: backup
   timeout: 900
 
-- title: Open/PFSense Firewall Logs
-  shell: cat /etc/graylog/log_data/002-ofw.log | ncat -w 1 localhost 5140
+- title: Mac Firewall Logs
+  shell: cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 5050
   icon: backup
   timeout: 900
 
-- title: PiHole Firewall Logs
-  shell: cat /etc/graylog/log_data/004-phe.log | ncat -w 1 localhost 5555
+- title: Unrealistcally Large Log 1
+  shell: cat /etc/graylog/log_data/600field1.log | ncat -w 1 localhost 5555
+  icon: backup
+  timeout: 900
+
+- title: Unrealistcally Large Log 2
+  shell: cat /etc/graylog/log_data/600filed2.log | ncat -w 1 localhost 5555
   icon: backup
   timeout: 900
