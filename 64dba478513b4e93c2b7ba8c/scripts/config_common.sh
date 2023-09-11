@@ -33,7 +33,11 @@ mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
 #docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
 
 #Run this to speed up first run with OliveTin
-pwsh -c 'write-host "loaded PS!"'
+wget https://github.com/OliveTin/OliveTin/releases/download/2023.03.25/OliveTin_linux_amd64.deb
+sudo dpkg -i OliveTin_linux_amd64.deb 
+sudo systemctl start OliveTin.service 
+sudo systemctl enable OliveTin.service
+mkdir -p /etc/OliveTin; ln -s /$STRIGO_CLASS_ID/.configs/config.yaml /etc/OliveTin
 
 # Import course-specific setup script:
 chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
