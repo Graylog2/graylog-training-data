@@ -5,7 +5,8 @@ sleep 2
 echo "=== Submitting CSR's to CA for signing..."
 sleep 4
 
-mkdir /home/$LUSER/certs
+# If certs dir does not exist, make it:
+[[ ! -d /home/$LUSER/certs ]] && mkdir /home/$LUSER/certs
 cd /.ssl
 cp cert.pem /home/$LUSER/certs/graylog.pem
 cp cert.pem /home/$LUSER/certs/opensearch.pem
@@ -16,7 +17,6 @@ cp osadmin_cert.pem /home/$LUSER/certs/osadmin.pem
 cp osadmin_privkey.pem /home/$LUSER/certs/osadmin.key
 cp osadmin_fullchain.pem /home/$LUSER/certs/osadmin_fullchain.pem
 chmod 0400 /home/$LUSER/certs/*.key
-sudo rm -rf /.ssl
 
 printf "\n\e[1;37m=== Certificates signed successfully!\e[0m\n"
 printf "\n=== Your certificate files & private keys have been uploaded to: \e[1;93m/home/$LUSER/certs\e[0m\n\n"
