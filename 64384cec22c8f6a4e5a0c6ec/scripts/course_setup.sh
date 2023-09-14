@@ -109,5 +109,8 @@ printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 # Add keytool binary to sudo's secure_path so user can run command with sudo w/o specifying full path:
 sed -E -i 's%secure_path="(.*?)"%secure_path="\1:/usr/share/graylog-server/jvm/bin"%' /etc/sudoers
 
+# Add student CNAME to /etc/hosts to prevent "Unable to call proxied resource" errors in server.log:
+echo "127.0.0.1 $dns.logfather.org" >> /etc/hosts
+
 # Create file for lab to finally appear
 touch /home/$LUSER/gogogo
