@@ -11,27 +11,47 @@ themeName: graylog-theme
 
 actions:
 
-- title: Mac Firewall Logs GELF
+- title: Mac Firewall Logs GELF - PORT 5080
   shell: cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 5080
   icon: backup
   timeout: 900 
+  
+- title: TCPLEASE HELP ME! - PORT 1114
+  shell: cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 1114
+  icon: backup
+  timeout: 900
 
-- title: Windows Firewall Logs
+- title: FIREWALL LOGS Step 1. - PORT 5070
+  shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5070
+  icon: backup
+  timeout: 900
+
+- title: FIREWALL LOGS Step 2. - PORT 2020
+  shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 2020
+  icon: backup
+  timeout: 900
+
+- title: Windows Firewall Logs - PORT 5140
   shell: cat /etc/graylog/log_data/001-wf.log | ncat -w 1 localhost 5140
   icon: backup
   timeout: 900
 
-- title: Mac Firewall Logs
+- title: Mac Firewall Logs - PORT 5050
   shell: cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 5050
   icon: backup
   timeout: 900
 
-- title: Unrealistcally Large Log 1
+- title: Unrealistcally Large Log 1 - PORT 5555
   shell: cat /etc/graylog/log_data/600field1.log | ncat -w 1 localhost 5555
   icon: backup
   timeout: 900
 
-- title: Unrealistcally Large Log 2
-  shell: cat /etc/graylog/log_data/600filed2.log | ncat -w 1 localhost 5555
+- title: Unrealistcally Large Log 2 - PORT 5555
+  shell: cat /etc/graylog/log_data/600field2.log | ncat -w 1 localhost 5555
+  icon: backup
+  timeout: 900
+
+- title: BREAK IT!! - PORT 5060
+  shell: for (( i=0; i<500; i++ )); do cat /etc/graylog/log_data/004-mf.log | ncat -w 1 localhost 5060; done
   icon: backup
   timeout: 900
