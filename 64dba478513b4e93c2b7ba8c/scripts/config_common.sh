@@ -39,6 +39,10 @@ sudo systemctl start OliveTin.service
 sudo systemctl enable OliveTin.service
 mkdir -p /etc/OliveTin; ln -s /$STRIGO_CLASS_ID/.configs/config.yaml /etc/OliveTin
 
+# Install NC
+
+sudo apt-get install netcat -y
+
 # Import course-specific setup script:
 chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
 ./$STRIGO_CLASS_ID/scripts/course_setup.sh >> /home/$LUSER/strigosuccess
