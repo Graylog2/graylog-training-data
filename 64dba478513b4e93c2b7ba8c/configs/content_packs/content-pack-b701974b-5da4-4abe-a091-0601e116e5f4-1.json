@@ -1,10 +1,10 @@
 {
-  "v": "1",
-  "id": "3c4603fa-0c3a-479e-bede-377a66bc0faa",
-  "rev": 3,
-  "name": "Troubleshooting Final - V1",
+  "v": 1,
+  "id": "b701974b-5da4-4abe-a091-0601e116e5f4",
+  "rev": 1,
+  "name": "troubleshooting_lab_v3",
   "summary": "Troubleshooting Lab",
-  "description": "Troubleshooting Lab",
+  "description": "",
   "vendor": "Graylog",
   "url": "",
   "parameters": [],
@@ -12,10 +12,105 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "418b82e9-4cf3-4848-8e5a-2e4e37c0846f",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "DC-01.graylog.loc Firewall Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"DC-01.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"source\",\"DC-01.graylog.loc\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "8232eb37-f3e0-4d5c-86b5-3011ae2af9de",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Apache Logs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "64f9c83eacc807120a998e84"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "f3ecc066-4506-4a8d-84c3-ca2ee736b417",
+      "id": "5dc610a2-d4ca-45d6-aa7f-638aa19b0599",
       "data": {
         "title": {
           "@type": "string",
@@ -103,7 +198,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "b253c08b-67c5-4549-b51d-07fe75b1600b",
+      "id": "414367ce-3b65-4a96-8937-39dedcdd698d",
       "data": {
         "title": {
           "@type": "string",
@@ -191,7 +286,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "a305ab1b-b277-4c92-9e9c-17ca65593594",
+      "id": "13680bcb-5341-40c3-9797-f3e42c2051ef",
       "data": {
         "title": {
           "@type": "string",
@@ -276,10 +371,133 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "20497abe-4ccf-48a3-b955-995e9f0b7f42",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "DC-02.graylog.loc Firewall Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"DC-02.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"parse\",\"Parse - WF - Split\");\nset_field(\"source\",\"DC-02.graylog.loc\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "89d6019f-499f-4589-b4e5-fa28169d69f7",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Mac Firewall"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "64f9b3a2acc807120a991858"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "dcde29a0-d4f6-4460-b91b-72117f02ef51",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "reroute messages"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"reroute messages\"\nwhen\n  has_field(\"winlogbeat_server_request_time\")\nthen\n route_to_stream(\"winloghome\");\n remove_from_stream();\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "1896836e-c909-44cb-b9b6-8c18ec7c534e",
+      "id": "62c5b294-8471-4b8e-89cb-e5a31367ec44",
       "data": {
         "title": {
           "@type": "string",
@@ -387,7 +605,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "b88043a3-c0ce-44bb-8421-eaed59bd613a",
+      "id": "7bea25ce-ad08-41f8-bfa4-7a9b6f5d427d",
       "data": {
         "title": {
           "@type": "string",
@@ -492,10 +710,105 @@
     {
       "v": "1",
       "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "be2d2c95-7731-4aad-8e9c-976b0f48ee05",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "DC-01.graylog.loc Firewall"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "6509651e8d895959f19de987"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "84ed68b0-d492-4956-8202-42736c0458b2",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "convert fields to string type"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"convert fields to string type\"\nwhen\n  true\nthen\n  let srcport = to_string($message.src_port);\n  let dstport = to_string($message.dst_port);\n  set_field(\"src-port\", srcport);\n  set_field(\"dst-port\", dstport);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "bd567736-6c72-4654-af9a-0c70a47d3dd1",
+      "id": "b75ca284-1c27-4d62-b065-f9fe94ddacb7",
       "data": {
         "title": {
           "@type": "string",
@@ -600,10 +913,116 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "7950a5e6-3a72-43d0-9ed5-0a9ec211cf88",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "mac firewall"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"mac firewall\"\nstage 0 match all\nrule \"create_host\"\nrule \"MAC Firewall Parser\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "89d6019f-499f-4589-b4e5-fa28169d69f7"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a88cede0-ede6-42c8-bfc7-511a5fbf9152",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "set dc-01"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"set dc-01\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_string(\"dc-01\"));\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "5f8087fc-218b-467e-ad61-3cfd67a898a1",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "winloghome"
+        },
+        "stream_rules": [],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "bd2067a9-5959-48e9-be10-e8ec1cbc175c",
+      "id": "dda2a27b-e4fc-4eee-bdd7-b15d9628b4b1",
       "data": {
         "title": {
           "@type": "string",
@@ -688,67 +1107,129 @@
     {
       "v": "1",
       "type": {
-        "name": "input",
+        "name": "stream",
         "version": "1"
       },
-      "id": "833788bd-2a49-421d-8aae-396d92d79836",
+      "id": "0b2e3bf6-695f-4b76-b016-00dfa1bf64c2",
       "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
         "title": {
           "@type": "string",
-          "@value": "UDP - Where are my logs...?"
+          "@value": "DC-02.graylog.loc Firewall"
         },
-        "configuration": {
-          "port": {
-            "@type": "integer",
-            "@value": 1114
-          },
-          "recv_buffer_size": {
-            "@type": "integer",
-            "@value": 262144
-          },
-          "force_rdns": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "allow_override_date": {
-            "@type": "boolean",
-            "@value": true
-          },
-          "bind_address": {
-            "@type": "string",
-            "@value": "0.0.0.0"
-          },
-          "expand_structured_data": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "store_full_message": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "timezone": {
-            "@type": "string",
-            "@value": "NotSet"
-          },
-          "charset_name": {
-            "@type": "string",
-            "@value": "UTF-8"
-          },
-          "number_worker_threads": {
-            "@type": "integer",
-            "@value": 2
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "64f9df0dacc807120a9a2746"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
           }
-        },
-        "static_fields": {},
-        "type": {
+        ],
+        "alert_conditions": [],
+        "matching_type": {
           "@type": "string",
-          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+          "@value": "AND"
         },
-        "global": {
+        "disabled": {
           "@type": "boolean",
           "@value": false
         },
-        "extractors": []
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "b687b3e0-75d5-4d90-9b2c-687380b26eae",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Too many fields..."
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "65096a648d895959f19e1419"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
       },
       "constraints": [
         {
@@ -763,7 +1244,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "efee1213-9a4e-498a-b01a-8c6adc8d80aa",
+      "id": "cf496853-3c87-4f09-9b6a-63c83b541363",
       "data": {
         "title": {
           "@type": "string",
@@ -852,10 +1333,38 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "00287f2f-80b7-440d-a93d-92b374aa61d9",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MAC Firewall Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "tcp4 10.5.5.49:52342<->212.34.186.8:443,en0,1507,5871,24.47 ms"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"MAC Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\",\", value: to_string($message.message));\nset_field(\"action\",pf[0]);\nset_field(\"interface\",pf[1]);\nset_field(\"src-por\",pf[2]);\nset_field(\"dst-port\",pf[3]);\nset_field(\"time\",pf[5]); // <----- I forgot how to count....\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "79851c91-d66a-4fe9-9704-3bacce2ebb04",
+      "id": "dcde6315-c1b6-4c6f-ab9f-6cedf1318428",
       "data": {
         "title": {
           "@type": "string",
@@ -963,41 +1472,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "5b5691bf-7dff-4cd0-99f4-3723da829cc7",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "mac firewall"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "pipeline \"mac firewall\"\nstage 0 match all\nrule \"create_host\"\nrule \"MAC Firewall Parser\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "26253d28-8b45-4141-9826-7ae7e9018814"
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline",
-        "version": "1"
-      },
-      "id": "8767f3be-8624-41e1-af2b-81ea77d71ab9",
+      "id": "0684faf3-c6a9-432d-a600-013073e23dab",
       "data": {
         "title": {
           "@type": "string",
@@ -1014,109 +1489,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "f7dde32c-12c0-4e5d-9579-d335d1102ac1"
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline",
-        "version": "1"
-      },
-      "id": "2a27b8ce-befd-4bfa-9265-bf2642dd5558",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "DC-01.graylog.loc Firewall Parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "pipeline \"DC-01.graylog.loc Firewall Parser\"\nstage 0 match either\nrule \"DC-01.graylog.loc Firewall Parser\"\nstage 1 match pass\nstage 2 match either\nrule \"set dc-01\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "40379ad6-c8ac-4d76-9977-d9289f29633d"
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline",
-        "version": "1"
-      },
-      "id": "e5c88a23-1e45-4c23-b735-cd316da7805a",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "DC-02.graylog.loc Firewall Parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "pipeline \"DC-02.graylog.loc Firewall Parser\"\nstage 0 match either\nrule \"DC-02.graylog.loc Firewall Parser\"\nstage 1 match either\nrule \"set dc-02\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "0961a485-1af0-44d0-a088-7089e9afcf3f"
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline",
-        "version": "1"
-      },
-      "id": "f63cdc56-f8ed-4ac5-a00f-5346fb284d61",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "Too many fields..."
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "pipeline \"Too many fields...\"\nstage 0 match either\nrule \"too_many_parser\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "c08f7339-a0b7-4398-b098-2c81a0533044"
+            "@value": "8232eb37-f3e0-4d5c-86b5-3011ae2af9de"
           }
         ]
       },
@@ -1133,119 +1506,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "c7893af2-c486-4ef2-9c22-c7eadb6d90fe",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "DC-01.graylog.loc Firewall Parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"DC-01.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"source\",\"DC-01.graylog.loc\");\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "55a50d2b-f8a9-4331-9c38-12c9b5a748ae",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "DC-02.graylog.loc Firewall Parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"DC-02.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"parse\",\"Parse - WF - Split\");\nset_field(\"source\",\"DC-02.graylog.loc\");\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "580f2998-d4d6-4a9a-bd5e-06c78df67066",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "set dc-01"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"set dc-01\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_string(\"dc-01\"));\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "01417460-9a67-416c-85ad-f9be8302c4e3",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "MAC Firewall Parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "tcp4 10.5.5.49:52342<->212.34.186.8:443,en0,1507,5871,24.47 ms"
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"MAC Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\",\", value: to_string($message.message));\nset_field(\"action\",pf[0]);\nset_field(\"interface\",pf[1]);\nset_field(\"src-por\",pf[2]);\nset_field(\"dst-port\",pf[3]);\nset_field(\"time\",pf[5]); // <----- I forgot how to count....\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "3f18c0b0-b410-48ed-b1ba-8c4474f9425a",
+      "id": "da4e73c8-6af7-427b-a247-66c0ec2b5f37",
       "data": {
         "title": {
           "@type": "string",
@@ -1270,14 +1531,14 @@
     {
       "v": "1",
       "type": {
-        "name": "pipeline_rule",
+        "name": "pipeline",
         "version": "1"
       },
-      "id": "83570fb0-a74c-4933-992c-710c6fba233b",
+      "id": "47205bd6-9e85-400c-b653-161aff687310",
       "data": {
         "title": {
           "@type": "string",
-          "@value": "too_many_parser"
+          "@value": "DC-01.graylog.loc Firewall Parser"
         },
         "description": {
           "@type": "string",
@@ -1285,7 +1546,109 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"too_many_parser\"\nwhen\ntrue\nthen\nset_fields(\n   fields:key_value(\n   value: to_string($message.message),\n   delimiters:\" \",\n   kv_delimiters:\"=\"\n)\n);\nend"
+          "@value": "pipeline \"DC-01.graylog.loc Firewall Parser\"\nstage 0 match either\nrule \"DC-01.graylog.loc Firewall Parser\"\nstage 1 match pass\nstage 2 match either\nrule \"set dc-01\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "be2d2c95-7731-4aad-8e9c-976b0f48ee05"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "bfee2668-3433-47a6-94e0-0d441282710c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "DC-02.graylog.loc Firewall Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"DC-02.graylog.loc Firewall Parser\"\nstage 0 match either\nrule \"DC-02.graylog.loc Firewall Parser\"\nstage 1 match either\nrule \"set dc-02\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "0b2e3bf6-695f-4b76-b016-00dfa1bf64c2"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "e3450a3b-30b3-4f87-87f1-c73af325e35b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Too many fields..."
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Too many fields...\"\nstage 0 match either\nrule \"too_many_parser\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "b687b3e0-75d5-4d90-9b2c-687380b26eae"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "8efb95c2-162e-471f-9d90-e28a7b92ee6e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "convert fields to Long type"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"convert fields to Long type\"\nwhen\n  true\nthen\n  let srcport = to_long($message.src_port);\n  let dstport = to_long($message.dst_port);\n  set_field(\"src-port\", srcport);\n  set_field(\"dst-port\", dstport);\nend"
         }
       },
       "constraints": [
@@ -1301,7 +1664,35 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "96b2464c-da1f-42be-99c1-44b8aa7f8d3b",
+      "id": "27f20a5b-f0fd-48ca-8265-3e1c79229cf5",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "too_many_parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"too_many_parser\"\nwhen\ntrue\nthen\nset_fields(\n   fields:key_value(\n   value: to_string($message.message),\n   delimiters:\" \",\n   kv_delimiters:\"=\"\n)\n);\nset_field(\"message\", \"success!\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "554fe2f0-9707-45e4-8b54-8b0410793028",
       "data": {
         "title": {
           "@type": "string",
@@ -1329,7 +1720,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "114b8e77-ddb3-41a6-8815-520451e989b6",
+      "id": "b40194a4-02c2-4a0b-8b99-c158d88dfdad",
       "data": {
         "title": {
           "@type": "string",
@@ -1342,513 +1733,6 @@
         "source": {
           "@type": "string",
           "@value": "rule \"create_host\"\nwhen\ntrue\nthen\nset_field(\"hostname\", \"yourboysmac\");\nend \n"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "e8f35ae3-1f0a-456d-a51e-390a378258a0",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "reroute messages"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"reroute messages\"\nwhen\n  has_field(\"winlogbeat_server_request_time\")\nthen\n route_to_stream(\"winloghome\");\n drop_message();\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "9ac9ebef-566e-4f24-b87f-cfbb537507e8",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "reroute messages"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"reroute messages\"\nwhen\n  has_field(\"winlogbeat_server_request_time\")\nthen\n route_to_stream(\"winloghome\");\n remove_from_stream();\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "50cb01da-eb03-49b3-bb17-848d5c4f95c8",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "too_many_parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"too_many_parser\"\nwhen\ntrue\nthen\nset_fields(\n   fields:key_value(\n   value: to_string($message.message),\n   delimiters:\" \",\n   kv_delimiters:\"=\"\n)\n);\nset_field(\"message\", \"success!\");\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "f7dde32c-12c0-4e5d-9579-d335d1102ac1",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Apache Logs"
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "64f9c83eacc807120a998e84"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "26253d28-8b45-4141-9826-7ae7e9018814",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Mac Firewall"
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "64f9b3a2acc807120a991858"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "0961a485-1af0-44d0-a088-7089e9afcf3f",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "title": {
-          "@type": "string",
-          "@value": "DC-01.graylog.loc Firewall"
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "6509651e8d895959f19de987"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "40379ad6-c8ac-4d76-9977-d9289f29633d",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "title": {
-          "@type": "string",
-          "@value": "DC-02.graylog.loc Firewall"
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "64f9df0dacc807120a9a2746"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "c08f7339-a0b7-4398-b098-2c81a0533044",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Too many fields..."
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "65096a648d895959f19e1419"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "4206da81-c754-4876-b9a6-6c2a4af75fa3",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "title": {
-          "@type": "string",
-          "@value": "winloghome"
-        },
-        "stream_rules": [],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "2fe1d01c-27de-4708-8f01-b6e8815f931e",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "title": {
-          "@type": "string",
-          "@value": "winloghome"
-        },
-        "stream_rules": [],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
         }
       },
       "constraints": [
