@@ -53,6 +53,11 @@ chmod +x ./$STRIGO_CLASS_ID/scripts/course_setup.sh
 #Illuminate Install
 #./common/inst_illuminate.sh >> /home/$LUSER/strigosuccess
 
+# Disable Input
+echo "Stopping inputs" >> /home/$LUSER/strigosuccess
+curl -u'admin:yabba dabba doo' -XDELETE  "http://localhost:9000/api/system/inputstates/650c1ae75d34aa3464372818" -H 'X-Requested-By: PS_TeamAwesome'
+curl -u'admin:yabba dabba doo' -XDELETE  "http://localhost:9000/api/system/inputstates/650c1ae75d34aa346437286f" -H 'X-Requested-By: PS_TeamAwesome'
+
 #OT Theme
 ./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess
 
