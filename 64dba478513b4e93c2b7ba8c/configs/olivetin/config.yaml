@@ -22,7 +22,7 @@ actions:
   timeout: 900
 
 - title: FIREWALL LOGS Step 1. - PORT 2020
-  shell: cat /etc/graylog/log_data/4-wf.log | nc -w 1 localhost 2020
+  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 2020
   icon: backup
   timeout: 900
 
@@ -41,8 +41,13 @@ actions:
   icon: backup
   timeout: 900
 
-- title: Unrealistcally Large Log - PORT 5555
-  shell: cat /etc/graylog/log_data/600field1.log /etc/graylog/log_data/600field2.log | nc -w 1 localhost 5555
+- title: Unrealistcally Large Log 1 - PORT 5555
+  shell: cat /etc/graylog/log_data/600field1.log | nc -w 1 localhost 5555
+  icon: backup
+  timeout: 900
+
+- title: Unrealistcally Large Log 2 - PORT 5555
+  shell: cat/etc/graylog/log_data/600field2.log | nc -w 1 localhost 5555
   icon: backup
   timeout: 900
 
