@@ -1,8 +1,8 @@
 {
   "v": 1,
-  "id": "04e9d898-a790-4582-bfac-3bf78cd58e26",
+  "id": "b3cc78f7-6762-4b13-993a-e9125828fffe",
   "rev": 1,
-  "name": "troubleshooting_lab_v4",
+  "name": "I'm trouble...",
   "summary": "Troubleshooting Lab",
   "description": "",
   "vendor": "Graylog",
@@ -15,7 +15,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "cc013d17-a068-4a5b-a4a4-95f1a33eb5f5",
+      "id": "fcd61551-9581-447c-8aab-d844d2c62244",
       "data": {
         "title": {
           "@type": "string",
@@ -43,7 +43,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "aa2d214c-1829-4c5f-800a-66b7956bf265",
+      "id": "6432f5b5-17b0-41d7-a62d-edfda2062fd0",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -110,7 +110,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "0f31b914-f837-45f1-8720-837d744873dc",
+      "id": "c9ec8dcb-16e7-4608-82a6-4e8a3c910faf",
       "data": {
         "title": {
           "@type": "string",
@@ -195,23 +195,83 @@
     {
       "v": "1",
       "type": {
-        "name": "pipeline_rule",
+        "name": "input",
         "version": "1"
       },
-      "id": "215039ec-cbb0-4b4b-8261-f1d73cddbdd8",
+      "id": "119aeaf2-edfc-4fb7-a915-143560221979",
       "data": {
         "title": {
           "@type": "string",
-          "@value": "DC-02.graylog.loc Firewall Parser"
+          "@value": "Conflictor 2 Raw/Plaintext TCP"
         },
-        "description": {
-          "@type": "string",
-          "@value": ""
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1112
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 8
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
         },
-        "source": {
+        "static_fields": {},
+        "type": {
           "@type": "string",
-          "@value": "rule \"DC-02.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"parse\",\"Parse - WF - Split\");\nset_field(\"source\",\"DC-02.graylog.loc\");\nend"
-        }
+          "@value": "org.graylog2.inputs.raw.tcp.RawTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
       },
       "constraints": [
         {
@@ -226,7 +286,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "d2a53690-151c-4ded-989e-7e0905a82b07",
+      "id": "081909ad-1c1d-48bf-a105-930b194e7509",
       "data": {
         "title": {
           "@type": "string",
@@ -311,10 +371,38 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "b3201ff9-55fd-4080-8c76-388ddccdfbb7",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "DC-02.graylog.loc Firewall Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"DC-02.graylog.loc Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\" \", value: to_string($message.message));\nset_field(\"date\",pf[0]);\nset_field(\"time\",pf[1]);\nset_field(\"action\",pf[2]);\nset_field(\"protocol\",pf[3]);\nset_field(\"src-ip\",pf[4]);\nset_field(\"dst-ip\",pf[5]);\nset_field(\"src-port\",pf[6]);\nset_field(\"dst-port\",pf[7]);\nset_field(\"size\",pf[8]);\nset_field(\"path\",pf[16]);\nset_field(\"parse\",\"Parse - WF - Split\");\nset_field(\"source\",\"DC-02.graylog.loc\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "stream",
         "version": "1"
       },
-      "id": "4c38190c-0b68-4b55-8f0c-330135ad89dc",
+      "id": "dd72158d-3df4-4b0d-8080-8d32b3d3c930",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -381,7 +469,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "52f57b10-fc3e-44a6-9335-83d248247412",
+      "id": "2fcfa6e1-158a-4bce-8dbc-72f49491b0b6",
       "data": {
         "title": {
           "@type": "string",
@@ -409,7 +497,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "1d1f64d0-5e83-42cd-ac1e-04a6f83670e4",
+      "id": "53039bd3-b2a7-4bbf-896d-1a40626140b0",
       "data": {
         "title": {
           "@type": "string",
@@ -514,77 +602,10 @@
     {
       "v": "1",
       "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "7ae87f67-7727-4ce2-88a1-7344fa55b0a5",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "title": {
-          "@type": "string",
-          "@value": "DC-01.graylog.loc Firewall"
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "6509651e8d895959f19de987"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "76e342e7-3c3a-45e0-b970-e23b0b720bfe",
+      "id": "271ba5c8-fdb3-4aa3-87e3-fd5c25ad59c8",
       "data": {
         "title": {
           "@type": "string",
@@ -689,10 +710,77 @@
     {
       "v": "1",
       "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "48cfae99-c56f-40eb-b1e2-69594ae5437e",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "DC-01.graylog.loc Firewall"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "6509651e8d895959f19de987"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "1abbc30f-aa0f-4e58-bf25-0cc1e21f7758",
+      "id": "c07f2579-c267-4c92-83f3-bb422b20fafe",
       "data": {
         "title": {
           "@type": "string",
@@ -720,7 +808,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "35cc9f23-eb31-441f-b95b-6906c5ea8a17",
+      "id": "f262a3d6-8b1a-4d25-b89d-a826e658171d",
       "data": {
         "title": {
           "@type": "string",
@@ -828,7 +916,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "890cbc3d-1798-45e7-a554-175b48f39b29",
+      "id": "98481009-7dd1-4246-917d-c9176315c85e",
       "data": {
         "title": {
           "@type": "string",
@@ -845,7 +933,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "4c38190c-0b68-4b55-8f0c-330135ad89dc"
+            "@value": "dd72158d-3df4-4b0d-8080-8d32b3d3c930"
           }
         ]
       },
@@ -862,7 +950,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "aa297a92-26e0-4e08-b7ff-04a20dc7eca5",
+      "id": "aac4f735-35e8-4eb0-943a-7381c7263169",
       "data": {
         "title": {
           "@type": "string",
@@ -890,7 +978,95 @@
         "name": "input",
         "version": "1"
       },
-      "id": "52ae169f-e94a-41b7-8320-9ae5b11d96e2",
+      "id": "f22003c1-2275-420d-9971-9c910953420e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Conflicter  1 Raw/Plaintext TCP"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1112
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 8
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.tcp.RawTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "5eeab14e-a496-41e9-bf7a-5c28bb4f3422",
       "data": {
         "title": {
           "@type": "string",
@@ -962,74 +1138,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "89aba7f4-053c-4dd3-a139-295bd9a5e308",
-      "data": {
-        "alarm_callbacks": [],
-        "outputs": [],
-        "remove_matches": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Too many fields..."
-        },
-        "stream_rules": [
-          {
-            "type": {
-              "@type": "string",
-              "@value": "EXACT"
-            },
-            "field": {
-              "@type": "string",
-              "@value": "gl2_source_input"
-            },
-            "value": {
-              "@type": "string",
-              "@value": "65096a648d895959f19e1419"
-            },
-            "inverted": {
-              "@type": "boolean",
-              "@value": false
-            },
-            "description": {
-              "@type": "string",
-              "@value": ""
-            }
-          }
-        ],
-        "alert_conditions": [],
-        "matching_type": {
-          "@type": "string",
-          "@value": "AND"
-        },
-        "disabled": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "default_stream": {
-          "@type": "boolean",
-          "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "stream",
-        "version": "1"
-      },
-      "id": "b92cc6fe-2a41-4b21-9d3d-e2fb9774f11f",
+      "id": "9d02229e-1ae0-4843-b418-50c3f9a65390",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -1093,22 +1202,61 @@
     {
       "v": "1",
       "type": {
-        "name": "pipeline_rule",
+        "name": "stream",
         "version": "1"
       },
-      "id": "bdf44ebb-0cf4-454c-8156-2423bd2e1a8c",
+      "id": "c47043a4-0a76-44fd-b80d-485d22530312",
       "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
         "title": {
           "@type": "string",
-          "@value": "MAC Firewall Parser"
+          "@value": "Too many fields..."
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "gl2_source_input"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "65096a648d895959f19e1419"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
         },
         "description": {
           "@type": "string",
-          "@value": "tcp4 10.5.5.49:52342<->212.34.186.8:443,en0,1507,5871,24.47 ms"
+          "@value": ""
         },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"MAC Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\",\", value: to_string($message.message));\nset_field(\"action\",pf[0]);\nset_field(\"interface\",pf[1]);\nset_field(\"src-por\",pf[2]);\nset_field(\"dst-port\",pf[3]);\nset_field(\"time\",pf[5]); // <----- I forgot how to count....\nend"
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
         }
       },
       "constraints": [
@@ -1124,7 +1272,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "a820691f-457a-4854-bf88-72c0789bf93a",
+      "id": "d6ca7f4e-440f-454c-b5a4-3ff63780d04d",
       "data": {
         "title": {
           "@type": "string",
@@ -1213,29 +1361,23 @@
     {
       "v": "1",
       "type": {
-        "name": "pipeline",
+        "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "7c5a52a8-6444-4ff6-94e9-d40671bbb141",
+      "id": "d0559e9f-5f8c-44d2-afed-0cf24cd1ca2d",
       "data": {
         "title": {
           "@type": "string",
-          "@value": "Apache Logs"
+          "@value": "MAC Firewall Parser"
         },
         "description": {
           "@type": "string",
-          "@value": ""
+          "@value": "tcp4 10.5.5.49:52342<->212.34.186.8:443,en0,1507,5871,24.47 ms"
         },
         "source": {
           "@type": "string",
-          "@value": "pipeline \"Apache Logs\"\nstage 0 match pass\nrule \"BREAK IT!\"\nstage 1 match either\nrule \"BREAK IT!\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "aa2d214c-1829-4c5f-800a-66b7956bf265"
-          }
-        ]
+          "@value": "rule \"MAC Firewall Parser\"\nwhen    // Use routing message to select messages    \ntrue\nthen\nlet pf = split(pattern:\",\", value: to_string($message.message));\nset_field(\"action\",pf[0]);\nset_field(\"interface\",pf[1]);\nset_field(\"src-por\",pf[2]);\nset_field(\"dst-port\",pf[3]);\nset_field(\"time\",pf[5]); // <----- I forgot how to count....\nend"
+        }
       },
       "constraints": [
         {
@@ -1250,7 +1392,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "370a37be-1757-4e33-9fb3-3ea62ebca4d5",
+      "id": "cb6ca3a1-fbd8-4ff1-ae01-bc864039087e",
       "data": {
         "title": {
           "@type": "string",
@@ -1355,10 +1497,44 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "e764a7b2-60e4-4b41-ba2b-0ed4f3b02811",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Apache Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Apache Logs\"\nstage 0 match pass\nrule \"BREAK IT!\"\nstage 1 match either\nrule \"BREAK IT!\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "6432f5b5-17b0-41d7-a62d-edfda2062fd0"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "626ff9f8-b67e-4cd2-928e-38313273aab7",
+      "id": "03f960a6-a0ee-4ef2-9d1b-19892fbc3f35",
       "data": {
         "title": {
           "@type": "string",
@@ -1386,7 +1562,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "eb9feafb-e6e3-4147-819f-91f5f8cd2979",
+      "id": "a5659468-8d8e-4d81-bead-5365c66619e7",
       "data": {
         "title": {
           "@type": "string",
@@ -1403,7 +1579,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "7ae87f67-7727-4ce2-88a1-7344fa55b0a5"
+            "@value": "48cfae99-c56f-40eb-b1e2-69594ae5437e"
           }
         ]
       },
@@ -1420,7 +1596,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "0ad12bf2-b328-48ee-b877-8d3d4e057e05",
+      "id": "eb437964-5aad-4b8f-81e8-cf80581e7cce",
       "data": {
         "title": {
           "@type": "string",
@@ -1437,7 +1613,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "b92cc6fe-2a41-4b21-9d3d-e2fb9774f11f"
+            "@value": "9d02229e-1ae0-4843-b418-50c3f9a65390"
           }
         ]
       },
@@ -1454,7 +1630,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "53fa21bd-d823-4d21-bd10-0a9b4e74694f",
+      "id": "7e4cd6e4-44dd-4291-a042-bfc108e046b0",
       "data": {
         "title": {
           "@type": "string",
@@ -1471,7 +1647,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "89aba7f4-053c-4dd3-a139-295bd9a5e308"
+            "@value": "c47043a4-0a76-44fd-b80d-485d22530312"
           }
         ]
       },
@@ -1488,7 +1664,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "d0446982-5b94-4830-8a37-9bd9b5d04c92",
+      "id": "323aa482-b6fb-456c-b4e6-0b4565f8b2cd",
       "data": {
         "title": {
           "@type": "string",
@@ -1516,7 +1692,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "86039299-910b-4150-ac07-1f49dc2be21c",
+      "id": "47f2087e-c95a-4457-a390-42803a0edcac",
       "data": {
         "title": {
           "@type": "string",
@@ -1544,7 +1720,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "29af169d-ee66-4d9e-ba74-701095d3fc9e",
+      "id": "60169b86-0a3b-44e3-9d4a-121f17f0f34a",
       "data": {
         "title": {
           "@type": "string",
@@ -1572,7 +1748,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "0f06ea96-a40b-45b8-a624-2114975e6f7c",
+      "id": "248aeddc-5612-4537-97ea-73605fef494e",
       "data": {
         "title": {
           "@type": "string",
