@@ -22,17 +22,17 @@ actions:
   timeout: 900
 
 - title: FIREWALL LOGS Step 1. - PORT 2020
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 2020
+  shell: cat /etc/graylog/log_data/4-wf.log | nc -w 1 localhost 2020
   icon: backup
   timeout: 900
 
 - title: FIREWALL LOGS Step 2. - PORT 5070
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 5070
+  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 5070
   icon: backup
   timeout: 900
 
 - title: Windows Firewall Logs - PORT 5140
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 5140
+  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 5140
   icon: backup
   timeout: 900
 
