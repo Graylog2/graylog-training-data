@@ -1,8 +1,8 @@
 {
   "v": 1,
-  "id": "b3cc78f7-6762-4b13-993a-e9125828fffe",
+  "id": "63209c59-883b-4813-a098-b4f459dac8b5",
   "rev": 1,
-  "name": "I'm trouble...",
+  "name": "troubleshooting_lab_v5",
   "summary": "Troubleshooting Lab",
   "description": "",
   "vendor": "Graylog",
@@ -15,7 +15,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "fcd61551-9581-447c-8aab-d844d2c62244",
+      "id": "6ce569d9-3e5c-4c8c-b416-0b47a3f7dabe",
       "data": {
         "title": {
           "@type": "string",
@@ -43,7 +43,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "6432f5b5-17b0-41d7-a62d-edfda2062fd0",
+      "id": "5decc7d2-d3a0-4d8c-93a8-111f68bd982a",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -63,11 +63,11 @@
             },
             "field": {
               "@type": "string",
-              "@value": "gl2_source_input"
+              "@value": "apache_logs"
             },
             "value": {
               "@type": "string",
-              "@value": "64f9c83eacc807120a998e84"
+              "@value": "true"
             },
             "inverted": {
               "@type": "boolean",
@@ -110,7 +110,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "c9ec8dcb-16e7-4608-82a6-4e8a3c910faf",
+      "id": "7a7b49c3-51ed-40b5-964e-14a045256a1a",
       "data": {
         "title": {
           "@type": "string",
@@ -181,7 +181,7 @@
         },
         "global": {
           "@type": "boolean",
-          "@value": true
+          "@value": false
         },
         "extractors": []
       },
@@ -198,7 +198,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "119aeaf2-edfc-4fb7-a915-143560221979",
+      "id": "4b41622f-eec5-4a81-8445-07bb264cf54b",
       "data": {
         "title": {
           "@type": "string",
@@ -269,7 +269,7 @@
         },
         "global": {
           "@type": "boolean",
-          "@value": true
+          "@value": false
         },
         "extractors": []
       },
@@ -286,7 +286,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "081909ad-1c1d-48bf-a105-930b194e7509",
+      "id": "18c7160c-af57-4dfb-bd2a-083a1d0a2a5b",
       "data": {
         "title": {
           "@type": "string",
@@ -350,7 +350,12 @@
             "@value": ""
           }
         },
-        "static_fields": {},
+        "static_fields": {
+          "too_many": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
         "type": {
           "@type": "string",
           "@value": "org.graylog2.inputs.raw.tcp.RawTCPInput"
@@ -374,7 +379,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "b3201ff9-55fd-4080-8c76-388ddccdfbb7",
+      "id": "e42c4b14-919c-4d33-a567-421126ea9e4d",
       "data": {
         "title": {
           "@type": "string",
@@ -402,7 +407,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "dd72158d-3df4-4b0d-8080-8d32b3d3c930",
+      "id": "182ec03e-d880-48c6-9d83-691e1e101d5a",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -422,11 +427,11 @@
             },
             "field": {
               "@type": "string",
-              "@value": "gl2_source_input"
+              "@value": "mac_firewall"
             },
             "value": {
               "@type": "string",
-              "@value": "64f9b3a2acc807120a991858"
+              "@value": "true"
             },
             "inverted": {
               "@type": "boolean",
@@ -469,7 +474,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "2fcfa6e1-158a-4bce-8dbc-72f49491b0b6",
+      "id": "a4eadbde-a1b0-4716-b63a-8e285bacf87e",
       "data": {
         "title": {
           "@type": "string",
@@ -497,7 +502,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "53039bd3-b2a7-4bbf-896d-1a40626140b0",
+      "id": "1ad6d92b-507c-41b0-b070-29b2a336f5ec",
       "data": {
         "title": {
           "@type": "string",
@@ -510,7 +515,7 @@
           },
           "port": {
             "@type": "integer",
-            "@value": 5070
+            "@value": 2010
           },
           "tls_enable": {
             "@type": "boolean",
@@ -581,14 +586,19 @@
             "@value": ""
           }
         },
-        "static_fields": {},
+        "static_fields": {
+          "firewall_2": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
         "type": {
           "@type": "string",
           "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
         },
         "global": {
           "@type": "boolean",
-          "@value": true
+          "@value": false
         },
         "extractors": []
       },
@@ -605,7 +615,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "271ba5c8-fdb3-4aa3-87e3-fd5c25ad59c8",
+      "id": "ed0a1d79-ed23-448a-96c7-30d8d21a33b5",
       "data": {
         "title": {
           "@type": "string",
@@ -689,7 +699,12 @@
             "@value": ""
           }
         },
-        "static_fields": {},
+        "static_fields": {
+          "firewall_1": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
         "type": {
           "@type": "string",
           "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
@@ -713,7 +728,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "48cfae99-c56f-40eb-b1e2-69594ae5437e",
+      "id": "f5316c79-7fa7-4845-b203-b11ac3e08e7b",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -733,11 +748,11 @@
             },
             "field": {
               "@type": "string",
-              "@value": "gl2_source_input"
+              "@value": "firewall_1"
             },
             "value": {
               "@type": "string",
-              "@value": "6509651e8d895959f19de987"
+              "@value": "true"
             },
             "inverted": {
               "@type": "boolean",
@@ -780,7 +795,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "c07f2579-c267-4c92-83f3-bb422b20fafe",
+      "id": "912fb4bd-adf2-44c2-9ad3-a20e91d6cb72",
       "data": {
         "title": {
           "@type": "string",
@@ -808,7 +823,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "f262a3d6-8b1a-4d25-b89d-a826e658171d",
+      "id": "76e3bfd3-7d07-4d25-b9a0-d9fc5074c846",
       "data": {
         "title": {
           "@type": "string",
@@ -892,7 +907,12 @@
             "@value": ""
           }
         },
-        "static_fields": {},
+        "static_fields": {
+          "mac_firewall": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
         "type": {
           "@type": "string",
           "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
@@ -916,7 +936,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "98481009-7dd1-4246-917d-c9176315c85e",
+      "id": "579390f1-3b9d-4e95-83bc-242f135fb74f",
       "data": {
         "title": {
           "@type": "string",
@@ -933,7 +953,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "dd72158d-3df4-4b0d-8080-8d32b3d3c930"
+            "@value": "182ec03e-d880-48c6-9d83-691e1e101d5a"
           }
         ]
       },
@@ -950,7 +970,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "aac4f735-35e8-4eb0-943a-7381c7263169",
+      "id": "d6b6af16-1797-45c4-a1a9-3d841c1e40a1",
       "data": {
         "title": {
           "@type": "string",
@@ -978,7 +998,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "f22003c1-2275-420d-9971-9c910953420e",
+      "id": "5cef8bd6-5d39-4cca-af01-8f4ded2c8e3f",
       "data": {
         "title": {
           "@type": "string",
@@ -1049,7 +1069,7 @@
         },
         "global": {
           "@type": "boolean",
-          "@value": true
+          "@value": false
         },
         "extractors": []
       },
@@ -1066,7 +1086,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "5eeab14e-a496-41e9-bf7a-5c28bb4f3422",
+      "id": "0cfd8a17-70d9-4889-9c47-00a2fd0fd0fb",
       "data": {
         "title": {
           "@type": "string",
@@ -1138,7 +1158,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "9d02229e-1ae0-4843-b418-50c3f9a65390",
+      "id": "d78d1cce-ca96-4184-a8b6-a850dc31536f",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -1158,11 +1178,11 @@
             },
             "field": {
               "@type": "string",
-              "@value": "gl2_source_input"
+              "@value": "firewall_2"
             },
             "value": {
               "@type": "string",
-              "@value": "64f9df0dacc807120a9a2746"
+              "@value": "true"
             },
             "inverted": {
               "@type": "boolean",
@@ -1205,7 +1225,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "c47043a4-0a76-44fd-b80d-485d22530312",
+      "id": "19ff02ce-bdcd-4f77-998c-c24c453b22df",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -1225,11 +1245,11 @@
             },
             "field": {
               "@type": "string",
-              "@value": "gl2_source_input"
+              "@value": "too_many"
             },
             "value": {
               "@type": "string",
-              "@value": "65096a648d895959f19e1419"
+              "@value": "true"
             },
             "inverted": {
               "@type": "boolean",
@@ -1272,7 +1292,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "d6ca7f4e-440f-454c-b5a4-3ff63780d04d",
+      "id": "894e3057-d9cf-45fb-aa7a-a2787a68ebf0",
       "data": {
         "title": {
           "@type": "string",
@@ -1364,7 +1384,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "d0559e9f-5f8c-44d2-afed-0cf24cd1ca2d",
+      "id": "68077f8b-6b55-4f08-be96-131b56a8ab3e",
       "data": {
         "title": {
           "@type": "string",
@@ -1392,7 +1412,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "cb6ca3a1-fbd8-4ff1-ae01-bc864039087e",
+      "id": "e49ffdae-7f4d-4e69-aa30-47c5a75278cb",
       "data": {
         "title": {
           "@type": "string",
@@ -1476,7 +1496,12 @@
             "@value": ""
           }
         },
-        "static_fields": {},
+        "static_fields": {
+          "apache_logs": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
         "type": {
           "@type": "string",
           "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
@@ -1500,7 +1525,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "e764a7b2-60e4-4b41-ba2b-0ed4f3b02811",
+      "id": "509e333b-f134-4579-8d87-812acfa0b565",
       "data": {
         "title": {
           "@type": "string",
@@ -1517,7 +1542,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "6432f5b5-17b0-41d7-a62d-edfda2062fd0"
+            "@value": "5decc7d2-d3a0-4d8c-93a8-111f68bd982a"
           }
         ]
       },
@@ -1534,7 +1559,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "03f960a6-a0ee-4ef2-9d1b-19892fbc3f35",
+      "id": "2574e82e-b908-4138-8be8-73d67b8e2b56",
       "data": {
         "title": {
           "@type": "string",
@@ -1562,7 +1587,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "a5659468-8d8e-4d81-bead-5365c66619e7",
+      "id": "745596ae-7226-43f1-8ab1-e031381d37f2",
       "data": {
         "title": {
           "@type": "string",
@@ -1579,7 +1604,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "48cfae99-c56f-40eb-b1e2-69594ae5437e"
+            "@value": "f5316c79-7fa7-4845-b203-b11ac3e08e7b"
           }
         ]
       },
@@ -1596,7 +1621,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "eb437964-5aad-4b8f-81e8-cf80581e7cce",
+      "id": "4d68d9f6-64f3-4313-8eea-08cc1b001f38",
       "data": {
         "title": {
           "@type": "string",
@@ -1613,7 +1638,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "9d02229e-1ae0-4843-b418-50c3f9a65390"
+            "@value": "d78d1cce-ca96-4184-a8b6-a850dc31536f"
           }
         ]
       },
@@ -1630,7 +1655,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "7e4cd6e4-44dd-4291-a042-bfc108e046b0",
+      "id": "13101a53-a59d-4b38-b2b0-bbdbf027dc99",
       "data": {
         "title": {
           "@type": "string",
@@ -1647,7 +1672,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "c47043a4-0a76-44fd-b80d-485d22530312"
+            "@value": "19ff02ce-bdcd-4f77-998c-c24c453b22df"
           }
         ]
       },
@@ -1664,7 +1689,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "323aa482-b6fb-456c-b4e6-0b4565f8b2cd",
+      "id": "f074cbb8-c62f-4431-b9f9-a9a26edbd45f",
       "data": {
         "title": {
           "@type": "string",
@@ -1692,7 +1717,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "47f2087e-c95a-4457-a390-42803a0edcac",
+      "id": "63cbb537-a0e8-4962-acd0-f2c7ca705881",
       "data": {
         "title": {
           "@type": "string",
@@ -1720,7 +1745,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "60169b86-0a3b-44e3-9d4a-121f17f0f34a",
+      "id": "05ef620e-da23-45ad-8b75-6dba29dd6002",
       "data": {
         "title": {
           "@type": "string",
@@ -1748,7 +1773,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "248aeddc-5612-4537-97ea-73605fef494e",
+      "id": "44d2d0ac-76a0-4d25-8038-73e28e1e6279",
       "data": {
         "title": {
           "@type": "string",

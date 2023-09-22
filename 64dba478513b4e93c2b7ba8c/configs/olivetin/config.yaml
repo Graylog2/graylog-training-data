@@ -12,32 +12,27 @@ themeName: graylog-theme
 actions:
 
 - title: Mac Firewall Logs GELF ON A SHELF - PORT 5080
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5080
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5080 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900 
   
 - title: TCPLEASE HELP ME! - PORT 1114
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 1114
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 1114 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900
 
 - title: FIREWALL LOGS Step 1. - PORT 2020
-  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 2020
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2020 -f /etc/graylog/log_data/004-wf.log 
   icon: backup
   timeout: 900
 
-- title: FIREWALL LOGS Step 2. - PORT 5070
-  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 5070
-  icon: backup
-  timeout: 900
-
-- title: Windows Firewall Logs - PORT 5140
-  shell: cat /etc/graylog/log_data/004-wf.log | nc -w 1 localhost 5140
+- title: FIREWALL LOGS Step 2. - PORT 2010
+  shell:  python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2010 -f /etc/graylog/log_data/004-wf.log
   icon: backup
   timeout: 900
 
 - title: Mac Firewall Logs - PORT 5050
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5050
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5050 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900
 
