@@ -11,42 +11,59 @@ themeName: graylog-theme
 
 actions:
 
-- title: Mac Firewall Logs GELF ON A SHELF - PORT 5080
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5080
+- title: GELF ON A SHELF - PORT 5080
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5080 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900 
   
 - title: TCPLEASE HELP ME! - PORT 1114
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 1114
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 1114 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900
 
-- title: FIREWALL LOGS Step 1. - PORT 5070
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 5070
+- title: FIREWALL LOGS STEP 1. - PORT 2020
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2020 -f /etc/graylog/log_data/004-wf.log 
   icon: backup
   timeout: 900
 
-- title: FIREWALL LOGS Step 2. - PORT 2020
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 2020
+- title: FIREWALL LOGS STEP 2. - PORT 2010
+  shell:  python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2010 -f /etc/graylog/log_data/004-wf.log
   icon: backup
   timeout: 900
 
-- title: Windows Firewall Logs - PORT 5140
-  shell: cat /etc/graylog/log_data/001-wf.log | nc -w 1 localhost 5140
+- title: MAC FIREWALL LOGS - PORT 5050
+  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5050 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900
 
-- title: Mac Firewall Logs - PORT 5050
-  shell: cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5050
+- title: UNREALISTCALLY LARGE LOG 1 - PORT 5555
+  shell: cat /etc/graylog/log_data/600field1.log | nc -w 1 localhost 5555
   icon: backup
   timeout: 900
 
-- title: Unrealistcally Large Log - PORT 5555
-  shell: cat /etc/graylog/log_data/600field1.log /etc/graylog/log_data/600field2.log | nc -w 1 localhost 5555
+- title: UNREALISTCALLY LARGE LOG 2 - PORT 5555
+  shell: cat /etc/graylog/log_data/600field2.log | nc -w 1 localhost 5555
   icon: backup
   timeout: 900
 
 - title: BREAK IT!! - PORT 5060
-  shell: for (( i=0; i<500; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
+  shell: for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
   icon: backup
   timeout: 900
+
+- title: Who keeps leaving this here?
+  shell: sudo fallocate  -l 3.3GB /var/lib/opensearch/nodes/0/indices/test.txt
+  icon: backup
+  timeout: 900
+
+- title: This is the last time I clean up your mess...
+  shell: sudo rm /var/lib/opensearch/nodes/0/indices/test.txt
+  icon: backup
+  timeout: 900
+
+- title: THE FINAL BLOW.
+  shell: for (( i=0; i<100; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
+  icon: backup
+  timeout: 900
+
+
