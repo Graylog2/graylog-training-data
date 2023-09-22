@@ -1,8 +1,8 @@
 {
   "v": 1,
-  "id": "63209c59-883b-4813-a098-b4f459dac8b5",
+  "id": "68586a33-8878-486b-b420-fc5c3426f3d8",
   "rev": 1,
-  "name": "troubleshooting_lab_v5",
+  "name": "troubleshooting_lab_v8",
   "summary": "Troubleshooting Lab",
   "description": "",
   "vendor": "Graylog",
@@ -15,7 +15,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "6ce569d9-3e5c-4c8c-b416-0b47a3f7dabe",
+      "id": "c5c96df0-27ad-4526-abf8-9d42f67b9685",
       "data": {
         "title": {
           "@type": "string",
@@ -43,7 +43,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "5decc7d2-d3a0-4d8c-93a8-111f68bd982a",
+      "id": "909a974e-0d46-474a-9ab3-215f254352c6",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -110,7 +110,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "7a7b49c3-51ed-40b5-964e-14a045256a1a",
+      "id": "b28bd99e-f690-471f-9634-1a2824eedfd4",
       "data": {
         "title": {
           "@type": "string",
@@ -198,7 +198,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "4b41622f-eec5-4a81-8445-07bb264cf54b",
+      "id": "f28bec2b-a9bc-4ff2-9fe6-f08b6b6c5b81",
       "data": {
         "title": {
           "@type": "string",
@@ -286,7 +286,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "18c7160c-af57-4dfb-bd2a-083a1d0a2a5b",
+      "id": "386c66c7-f51d-4712-8381-9bd76a49a4b1",
       "data": {
         "title": {
           "@type": "string",
@@ -379,7 +379,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "e42c4b14-919c-4d33-a567-421126ea9e4d",
+      "id": "4a71ccae-22c1-47b5-968c-1d5c8e95cfb0",
       "data": {
         "title": {
           "@type": "string",
@@ -407,13 +407,13 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "182ec03e-d880-48c6-9d83-691e1e101d5a",
+      "id": "98ea53ff-5cfd-434c-a3de-de2dfb759226",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
         "remove_matches": {
           "@type": "boolean",
-          "@value": false
+          "@value": true
         },
         "title": {
           "@type": "string",
@@ -474,7 +474,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "a4eadbde-a1b0-4716-b63a-8e285bacf87e",
+      "id": "b571d558-5f2e-472e-bac1-f1b9d03c31fb",
       "data": {
         "title": {
           "@type": "string",
@@ -502,7 +502,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "1ad6d92b-507c-41b0-b070-29b2a336f5ec",
+      "id": "805eb4d0-2463-4ce8-a288-9e1ba1c00604",
       "data": {
         "title": {
           "@type": "string",
@@ -615,7 +615,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "ed0a1d79-ed23-448a-96c7-30d8d21a33b5",
+      "id": "33eb6aeb-66c2-437c-af67-76450a5e2c16",
       "data": {
         "title": {
           "@type": "string",
@@ -728,7 +728,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "f5316c79-7fa7-4845-b203-b11ac3e08e7b",
+      "id": "6c012d3f-7dae-49cf-b3bc-6ab7076cca28",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -792,38 +792,10 @@
     {
       "v": "1",
       "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "912fb4bd-adf2-44c2-9ad3-a20e91d6cb72",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "convert fields to string type"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"convert fields to string type\"\nwhen\n  true\nthen\n  let srcport = to_string($message.src_port);\n  let dstport = to_string($message.dst_port);\n  set_field(\"src-port\", srcport);\n  set_field(\"dst-port\", dstport);\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "76e3bfd3-7d07-4d25-b9a0-d9fc5074c846",
+      "id": "e7dfd0e4-6db0-4302-8cbe-9558d2ca1d90",
       "data": {
         "title": {
           "@type": "string",
@@ -933,10 +905,103 @@
     {
       "v": "1",
       "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "aebe54b1-5344-4280-8536-3abf3a1c7627",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Apache Logs"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5060
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {
+          "apache_logs": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.tcp.RawTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "pipeline",
         "version": "1"
       },
-      "id": "579390f1-3b9d-4e95-83bc-242f135fb74f",
+      "id": "e68346ac-8b38-4bd7-95a6-7fdf444bb34d",
       "data": {
         "title": {
           "@type": "string",
@@ -953,7 +1018,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "182ec03e-d880-48c6-9d83-691e1e101d5a"
+            "@value": "98ea53ff-5cfd-434c-a3de-de2dfb759226"
           }
         ]
       },
@@ -970,7 +1035,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "d6b6af16-1797-45c4-a1a9-3d841c1e40a1",
+      "id": "585a3c18-bd8a-4247-9fab-19f471e87927",
       "data": {
         "title": {
           "@type": "string",
@@ -982,7 +1047,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"set dc-01\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_string(\"dc-01\"));\nend"
+          "@value": "rule \"set dc-01\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_long(\"01\"));\nend"
         }
       },
       "constraints": [
@@ -998,7 +1063,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "5cef8bd6-5d39-4cca-af01-8f4ded2c8e3f",
+      "id": "4d5699c7-90d8-4792-8d2b-6a4e63be8e19",
       "data": {
         "title": {
           "@type": "string",
@@ -1086,7 +1151,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "0cfd8a17-70d9-4889-9c47-00a2fd0fd0fb",
+      "id": "cb0332fb-5720-4b16-b717-4bada6294468",
       "data": {
         "title": {
           "@type": "string",
@@ -1158,7 +1223,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "d78d1cce-ca96-4184-a8b6-a850dc31536f",
+      "id": "2a4fbcfc-496d-450e-8286-c33463a30da3",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -1225,7 +1290,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "19ff02ce-bdcd-4f77-998c-c24c453b22df",
+      "id": "7e8c3c86-482c-4696-a653-dcaeddb2d278",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -1292,7 +1357,7 @@
         "name": "input",
         "version": "1"
       },
-      "id": "894e3057-d9cf-45fb-aa7a-a2787a68ebf0",
+      "id": "628c18bb-eb3d-4b98-aec0-24fc9fcb206c",
       "data": {
         "title": {
           "@type": "string",
@@ -1384,7 +1449,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "68077f8b-6b55-4f08-be96-131b56a8ab3e",
+      "id": "b13411c7-a3bf-4c3d-862e-d27cc6a2998b",
       "data": {
         "title": {
           "@type": "string",
@@ -1409,123 +1474,10 @@
     {
       "v": "1",
       "type": {
-        "name": "input",
-        "version": "1"
-      },
-      "id": "e49ffdae-7f4d-4e69-aa30-47c5a75278cb",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "Apache Logs"
-        },
-        "configuration": {
-          "tls_key_file": {
-            "@type": "string",
-            "@value": ""
-          },
-          "port": {
-            "@type": "integer",
-            "@value": 5060
-          },
-          "tls_enable": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "use_null_delimiter": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "recv_buffer_size": {
-            "@type": "integer",
-            "@value": 1048576
-          },
-          "tcp_keepalive": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "force_rdns": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "allow_override_date": {
-            "@type": "boolean",
-            "@value": true
-          },
-          "tls_client_auth_cert_file": {
-            "@type": "string",
-            "@value": ""
-          },
-          "bind_address": {
-            "@type": "string",
-            "@value": "0.0.0.0"
-          },
-          "tls_cert_file": {
-            "@type": "string",
-            "@value": ""
-          },
-          "expand_structured_data": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "max_message_size": {
-            "@type": "integer",
-            "@value": 2097152
-          },
-          "store_full_message": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "tls_client_auth": {
-            "@type": "string",
-            "@value": "disabled"
-          },
-          "timezone": {
-            "@type": "string",
-            "@value": "NotSet"
-          },
-          "charset_name": {
-            "@type": "string",
-            "@value": "UTF-8"
-          },
-          "number_worker_threads": {
-            "@type": "integer",
-            "@value": 2
-          },
-          "tls_key_password": {
-            "@type": "string",
-            "@value": ""
-          }
-        },
-        "static_fields": {
-          "apache_logs": {
-            "@type": "string",
-            "@value": "true"
-          }
-        },
-        "type": {
-          "@type": "string",
-          "@value": "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
-        },
-        "global": {
-          "@type": "boolean",
-          "@value": false
-        },
-        "extractors": []
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "pipeline",
         "version": "1"
       },
-      "id": "509e333b-f134-4579-8d87-812acfa0b565",
+      "id": "ae6d399e-4407-4a2e-8aff-fc0791cd09e0",
       "data": {
         "title": {
           "@type": "string",
@@ -1542,7 +1494,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "5decc7d2-d3a0-4d8c-93a8-111f68bd982a"
+            "@value": "909a974e-0d46-474a-9ab3-215f254352c6"
           }
         ]
       },
@@ -1559,7 +1511,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "2574e82e-b908-4138-8be8-73d67b8e2b56",
+      "id": "fc41f59c-b097-4767-89b3-7986af3fffe5",
       "data": {
         "title": {
           "@type": "string",
@@ -1571,7 +1523,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"set dc-02\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_long(\"02\"));\nend"
+          "@value": "rule \"set dc-02\"\nwhen\ntrue\nthen\n  set_field(\"DC\", to_string(\"DC-02\")); //<-------\nend"
         }
       },
       "constraints": [
@@ -1587,7 +1539,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "745596ae-7226-43f1-8ab1-e031381d37f2",
+      "id": "d0cde046-ecf1-44b0-853d-076988fd4b62",
       "data": {
         "title": {
           "@type": "string",
@@ -1604,7 +1556,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "f5316c79-7fa7-4845-b203-b11ac3e08e7b"
+            "@value": "6c012d3f-7dae-49cf-b3bc-6ab7076cca28"
           }
         ]
       },
@@ -1621,7 +1573,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "4d68d9f6-64f3-4313-8eea-08cc1b001f38",
+      "id": "ee8949eb-8a0d-4af3-9bec-8e9d0504e143",
       "data": {
         "title": {
           "@type": "string",
@@ -1638,7 +1590,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "d78d1cce-ca96-4184-a8b6-a850dc31536f"
+            "@value": "2a4fbcfc-496d-450e-8286-c33463a30da3"
           }
         ]
       },
@@ -1655,7 +1607,7 @@
         "name": "pipeline",
         "version": "1"
       },
-      "id": "13101a53-a59d-4b38-b2b0-bbdbf027dc99",
+      "id": "8866b7e5-46f7-4ca5-8100-b5b9b8530001",
       "data": {
         "title": {
           "@type": "string",
@@ -1672,7 +1624,7 @@
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "19ff02ce-bdcd-4f77-998c-c24c453b22df"
+            "@value": "7e8c3c86-482c-4696-a653-dcaeddb2d278"
           }
         ]
       },
@@ -1689,63 +1641,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "f074cbb8-c62f-4431-b9f9-a9a26edbd45f",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "convert fields to Long type"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"convert fields to Long type\"\nwhen\n  true\nthen\n  let srcport = to_long($message.src_port);\n  let dstport = to_long($message.dst_port);\n  set_field(\"src-port\", srcport);\n  set_field(\"dst-port\", dstport);\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "63cbb537-a0e8-4962-acd0-f2c7ca705881",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "too_many_parser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": ""
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"too_many_parser\"\nwhen\ntrue\nthen\nset_fields(\n   fields:key_value(\n   value: to_string($message.message),\n   delimiters:\" \",\n   kv_delimiters:\"=\"\n)\n);\nset_field(\"message\", \"success!\");\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=5.1.4+6fa2de3"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "05ef620e-da23-45ad-8b75-6dba29dd6002",
+      "id": "6d43cb8c-f43c-4956-b8ae-e29053d0ed00",
       "data": {
         "title": {
           "@type": "string",
@@ -1773,7 +1669,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "44d2d0ac-76a0-4d25-8038-73e28e1e6279",
+      "id": "89c152b5-2f4d-42f8-a4d8-3855374bcf39",
       "data": {
         "title": {
           "@type": "string",
@@ -1786,6 +1682,34 @@
         "source": {
           "@type": "string",
           "@value": "rule \"create_host\"\nwhen\ntrue\nthen\nset_field(\"hostname\", \"yourboysmac\");\nend \n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.4+6fa2de3"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "0c44a72f-6b67-4bdf-9136-45389d857fe6",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "too_many_parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"too_many_parser\"\nwhen\ntrue\nthen\nset_fields(\n   fields:key_value(\n   value: to_string($message.message),\n   delimiters:\" \",\n   kv_delimiters:\"=\"\n)\n);\nset_field(\"message\", \"success!\");\nend"
         }
       },
       "constraints": [
