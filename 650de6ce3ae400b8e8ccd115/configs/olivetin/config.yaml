@@ -1,69 +1,54 @@
 # Listen on all addresses available, port 1337
 listenAddressSingleHTTPFrontend: 0.0.0.0:1337 
 
-
-
 # Choose from INFO (default), WARN and DEBUG
 logLevel: "DEBUG"
 showFooter: false
 showNewVersions: false
 themeName: graylog-theme
 
-actions:
-
-- title: GELF ON A SHELF - PORT 5080
-  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5080 -f /etc/graylog/log_data/004-mf.log
-  icon: backup
-  timeout: 900 
-  
-- title: TCPLEASE HELP ME! - PORT 1114
-  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 1114 -f /etc/graylog/log_data/004-mf.log
+actions:   
+- title: Demo Log
+  shell: pwsh -c 'send-logs demo'
   icon: backup
   timeout: 900
 
-- title: FIREWALL LOGS STEP 1. - PORT 2020
-  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2020 -f /etc/graylog/log_data/004-wf.log 
-  icon: backup
-  timeout: 900
+- title: Search Logs
+  shell: pwsh -c 'Send-logs search'
+  icon: ping
+  timeout: 1200
 
-- title: FIREWALL LOGS STEP 2. - PORT 2010
-  shell:  python3 /etc/graylog/log_data/log_sender.py -s localhost -p 2010 -f /etc/graylog/log_data/004-wf.log
-  icon: backup
-  timeout: 900
+- title: Dashboard Logs
+  icon: "&#128269"
+  shell: pwsh -c 'send-logs Dashboards'
+  timeout: 1200
 
-- title: MAC FIREWALL LOGS - PORT 5050
-  shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5050 -f /etc/graylog/log_data/004-mf.log
-  icon: backup
-  timeout: 900
+- title: Discovery Logs
+  icon: "&#63"
+  shell: pwsh -c 'send-logs discovery'
+  timeout: 1200
 
-- title: UNREALISTCALLY LARGE LOG 1 - PORT 5555
-  shell: cat /etc/graylog/log_data/600field1.log | nc -w 1 localhost 5555
-  icon: backup
-  timeout: 900
+- title: Alert Logs
+  icon: "&#128227"
+  shell: pwsh -c 'send-logs Alerts'
+  timeout: 1200
 
-- title: UNREALISTCALLY LARGE LOG 2 - PORT 5555
-  shell: cat /etc/graylog/log_data/600field2.log | nc -w 1 localhost 5555
-  icon: backup
-  timeout: 900
+- title: pipeline-intro Logs
+  shell: pwsh -c 'Send-logs pipeline-intro'
+  icon: "&#128163" 
+  timeout: 1200
 
-- title: BREAK IT!! - PORT 5060
-  shell: for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
-  icon: backup
-  timeout: 900
+- title: windowsfirewall-sample
+  shell: pwsh -c 'Send-logs windowsfirewall-sample'
+  icon: "&#128293"
+  timeout: 1200
 
-- title: Who keeps leaving this here?
-  shell: sudo fallocate  -l 3.3GB /var/lib/opensearch/nodes/0/indices/test.txt
-  icon: backup
-  timeout: 900
+- title: Windows Firewall Logs
+  shell: pwsh -c 'Send-logs windowsfirewall'
+  icon: "&#128293"
+  timeout: 1200
 
-- title: This is the last time I clean up your mess...
-  shell: sudo rm /var/lib/opensearch/nodes/0/indices/test.txt
-  icon: backup
-  timeout: 900
-
-- title: THE FINAL BLOW.
-  shell: for (( i=0; i<100; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
-  icon: backup
-  timeout: 900
-
-
+- title: Mac Firewall Logs
+  shell: pwsh -c 'Send-logs macfirewall'
+  icon: "&#127879"
+  timeout: 1200
