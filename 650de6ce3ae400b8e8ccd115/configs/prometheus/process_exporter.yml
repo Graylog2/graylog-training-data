@@ -1,0 +1,7 @@
+process_names:
+  - comm:
+    - java
+    - graylog-server
+    - mongod
+  - cmdline:
+    - graylog\-server
