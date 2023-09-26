@@ -29,13 +29,17 @@ while ! curl -s -u 'admin:admin' http://localhost:3000; do
 done
 
 #Add promo to Grafana
+echo "Add prom to grafana" >> /home/$LUSER/strigosuccess
 GDS=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"Prometheus","type":"prometheus","url":"http://prometheus:9090","access":"proxy","basicAuth":false}' http://admin:admin@localhost:3000/api/datasources)
 GUID=$(echo $GDS | jq -r '.datasource.uid')
+echo "datasource UID: $GUID" >> /home/$LUSER/strigosuccess
 
 #Update DB File with new datasource ID
+echo "Update dashboards with correct datasource" >> /home/$LUSER/strigosuccess
 sed -i "s/f934cd4d-5189-433a-a001-3f2526c0ccb0/$GUID/g" /etc/graylog/grafana/Graylog-Server.json 
 sed -i "s/f934cd4d-5189-433a-a001-3f2526c0ccb0/$GUID/g" /etc/graylog/grafana/Elasticsearch.json     
 
 #Add DB to Grafana
+echo "Add dashboards to grafana" >> /home/$LUSER/strigosuccess
 curl -X POST -H "Content-Type: application/json" -d @/etc/graylog/grafana/Graylog-Server.json http://admin:admin@localhost:3000/api/dashboards/import
 curl -X POST -H "Content-Type: application/json" -d @/etc/graylog/grafana/Elasticsearch.json http://admin:admin@localhost:3000/api/dashboards/import
