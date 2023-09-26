@@ -29,8 +29,8 @@ while ! curl -s -u 'admin:admin' http://localhost:3000; do
 done
 
 #Add promo to Grafana
-GDS=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"Prometheus","type":"prometheus","url":"http://prometheus:9090","access":"proxy","basicAuth":false,"isDefault":"true"}' http://admin:admin@localhost:3000/api/datasources)
-GUID=$(echo $GDS | jq '.datasource.uid')
+GDS=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"Prometheus","type":"prometheus","url":"http://prometheus:9090","access":"proxy","basicAuth":false}' http://admin:admin@localhost:3000/api/datasources)
+GUID=$(echo $GDS | jq -r '.datasource.uid')
 
 #Update DB File with new datasource ID
 sed -i "s/f934cd4d-5189-433a-a001-3f2526c0ccb0/$GUID/g" /etc/graylog/grafana/Graylog-Server.json 
