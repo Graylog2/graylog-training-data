@@ -43,3 +43,19 @@ sed -i "s/f934cd4d-5189-433a-a001-3f2526c0ccb0/$GUID/g" /etc/graylog/grafana/Ela
 echo "Add dashboards to grafana" >> /home/$LUSER/strigosuccess
 curl -X POST -H "Content-Type: application/json" -d @/etc/graylog/grafana/Graylog-Server.json http://admin:admin@localhost:3000/api/dashboards/import
 curl -X POST -H "Content-Type: application/json" -d @/etc/graylog/grafana/Elasticsearch.json http://admin:admin@localhost:3000/api/dashboards/import
+
+#Install Nginx
+echo "Adding NGINX to slap headers in for grafana" >> /home/$LUSER/strigosuccess
+apt install nginx -y
+rm -r /etc/nginx/sites-enabled/default
+echo -e 'server {
+    listen 80;
+    listen [::]:80;
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_pass           http://localhost:3000/;
+    }
+}
+' > /etc/nginx/sites-enabled/grafana.conf
+systemctl restart nginx
