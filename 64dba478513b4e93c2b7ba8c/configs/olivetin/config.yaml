@@ -42,7 +42,7 @@ actions:
   timeout: 900
 
 - title: BREAK IT!! - PORT 5060
-  shell: 'for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done'
+  shell: for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
   icon: backup
   timeout: 900
 
@@ -57,7 +57,7 @@ actions:
   timeout: 900
 
 - title: THE FINAL BLOW.
-  shell: 'for (( i=0; i<100; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done'
+  shell: for i<100; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
   icon: backup
   timeout: 900
 
