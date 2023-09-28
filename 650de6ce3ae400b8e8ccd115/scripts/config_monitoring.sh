@@ -18,8 +18,12 @@ mv "/$STRIGO_CLASS_ID/configs/docker/mon-compose.yml" /etc/graylog/docker-compos
 mv "/$STRIGO_CLASS_ID/configs/grafana/Elasticsearch.json" /etc/graylog/grafana/
 mv "/$STRIGO_CLASS_ID/configs/grafana/Graylog-Server.json" /etc/graylog/grafana/
 
+sleep $(( ( RANDOM % 5 )  + 1 ))
+
 #Rebuild Docker
 echo "Rerun compose with new services" >> /home/$LUSER/strigosuccess
+docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env pull -q
+docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env create
 docker compose -f /etc/graylog/docker-compose-glservices.yml --env-file /etc/graylog/strigo-graylog-training-changes.env up -d
 
 #Wait for Grafana
