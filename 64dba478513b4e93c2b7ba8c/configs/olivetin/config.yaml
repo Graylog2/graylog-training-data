@@ -41,15 +41,15 @@ actions:
   icon: backup
   timeout: 900
 
-- title: BREAK IT!! - PORT 5060
-  shell: for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
-  icon: backup
-  timeout: 900
-
 - title: GELF ON A SHELF - PORT 5080
   shell: python3 /etc/graylog/log_data/log_sender.py -s localhost -p 5080 -f /etc/graylog/log_data/004-mf.log
   icon: backup
   timeout: 900 
+
+- title: BREAK IT!! - PORT 5060
+  shell: for (( i=0; i<50; i++ )); do cat /etc/graylog/log_data/004-mf.log | nc -w 1 localhost 5060; done
+  icon: backup
+  timeout: 900
 
 - title: Who keeps leaving this here?
   shell: sudo fallocate  -l 3.3GB /var/lib/opensearch/nodes/0/indices/test.txt
