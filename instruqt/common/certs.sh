@@ -23,14 +23,13 @@ echo "Decoding Certs"
 openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
 openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
 openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
-cp /certs/cacerts /etc/graylog/cacerts 
+cp /certs/cacerts /etc/graylog/cacerts
 
 #Cert Permissions
 chown root.root /etc/graylog/*.pem
 chmod 600 /etc/graylog/*.pem
 
 #Update OS and keystore with chain
-#keytool -importcert -alias letsencryptca -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
 
 echo "Updating Keystore" 
 keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt 

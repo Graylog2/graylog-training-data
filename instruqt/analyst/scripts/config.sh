@@ -2,6 +2,10 @@
 #load Vars from Strigo
 source /etc/profile
 
+#LogData
+sudo mv /$CLASS/log_data/* /root/powershell/Data
+sudo chown -R root.root /root
+
 #Illuminate Install
 ./common/inst_illuminate.sh 
 
@@ -12,7 +16,6 @@ source /etc/profile
 ./common/cp_inst.sh 
 
 #Update GL Docker Environment
-## After this point everything will be HTTPS
 ./common/docker_chg.sh 
 
 #OT Theme
