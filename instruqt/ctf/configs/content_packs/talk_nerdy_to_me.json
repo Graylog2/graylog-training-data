@@ -1,0 +1,75 @@
+{
+  "v": 1,
+  "id": "5b03c076-0504-4542-bd68-8c02d353d6cc",
+  "rev": 1,
+  "name": "Talk Nerdy to Me",
+  "summary": "Talk Nerdy to Me - CTF Pipeline and Rules",
+  "description": "",
+  "vendor": "graylog PS",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "3c0fed6f-9edd-4023-a723-8c1eeb9b7578",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Talk Nerdy to Me"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Talk Nerdy to Me\"\nstage 0 match either\nrule \"Talk Nerdy to Me\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.3+a017005"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "77d3ba53-e14d-4e14-989a-7fbed1ed66de",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Talk Nerdy to Me"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Talk Nerdy to Me\"\nwhen\n    grok (pattern: \"%{TIMESTAMP_ISO8601},%{DATA},%{IPV4},%{INT},%{IPV4},%{INT},%{DATA},%{WORD}\",\n     value: to_string($message.message)\n     ).matches == true\nthen\nlet grokp = grok(\n    pattern: \"%{TIMESTAMP_ISO8601:event_time},%{DATA:dept},%{IPV4:source_ip},%{INT:source_port},%{IPV4:destination_ip},%{INT:destination_port},%{DATA:status},%{WORD:Suspect}\", \n    value: to_string($message.message),\n    only_named_captures: true\n);\n \n// Set GROK Parsed Fields\nset_fields(grokp);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.1.3+a017005"
+        }
+      ]
+    }
+  ]
+}

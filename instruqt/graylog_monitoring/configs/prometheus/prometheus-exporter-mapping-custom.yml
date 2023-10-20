@@ -1,0 +1,355 @@
+metric_mappings:
+  - metric_name: "jvm_buffers_direct_capacity"
+    match_pattern: "jvm.buffers.direct.capacity"
+
+  - metric_name: "jvm_buffers_direct_count"
+    match_pattern: "jvm.buffers.direct.count"
+
+  - metric_name: "jvm_buffers_direct_used"
+    match_pattern: "jvm.buffers.direct.used"
+
+  - metric_name: "jvm_buffers_mapped_capacity"
+    match_pattern: "jvm.buffers.mapped.capacity"
+
+  - metric_name: "jvm_buffers_mapped_count"
+    match_pattern: "jvm.buffers.mapped.count"
+
+  - metric_name: "jvm_buffers_mapped_used"
+    match_pattern: "jvm.buffers.mapped.used"
+
+  - metric_name: "jvm_cl_loaded"
+    match_pattern: "jvm.cl.loaded"
+
+  - metric_name: "jvm_cl_unloaded"
+    match_pattern: "jvm.cl.unloaded"
+
+  - metric_name: "jvm_gc_ConcurrentMarkSweep_count"
+    match_pattern: "jvm.gc.ConcurrentMarkSweep.count"
+
+  - metric_name: "jvm_gc_ConcurrentMarkSweep_time"
+    match_pattern: "jvm.gc.ConcurrentMarkSweep.time"
+
+  - metric_name: "jvm_gc_ParNew_count"
+    match_pattern: "jvm.gc.ParNew.count"
+
+  - metric_name: "jvm_gc_ParNew_time"
+    match_pattern: "jvm.gc.ParNew.time"
+
+  - metric_name: "jvm_gc_G1_Old_Generation_count"
+    match_pattern: "jvm.gc.G1-Old-Generation.count"
+
+  - metric_name: "jvm_gc_G1_Old_Generation_time"
+    match_pattern: "jvm.gc.G1-Old-Generation.time"
+
+  - metric_name: "jvm_gc_G1_Young_Generation_count"
+    match_pattern: "jvm.gc.G1-Young-Generation.count"
+
+  - metric_name: "jvm_gc_G1_Young_Generation_time"
+    match_pattern: "jvm.gc.G1-Young-Generation.time"
+
+  - metric_name: "jvm_gc_ZGC_cycles_count"
+    match_pattern: "jvm.gc.ZGC-Cycles.count"
+
+  - metric_name: "jvm_gc_ZGC_cycles_time"
+    match_pattern: "jvm.gc.ZGC-Cycles.time"
+
+  - metric_name: "jvm_gc_ZGC_Pauses_count"
+    match_pattern: "jvm.gc.ZGC-Pauses.count"
+
+  - metric_name: "jvm_gc_ZGC_Pauses_time"
+    match_pattern: "jvm.gc.ZGC-Pauses.time"
+
+  - metric_name: "jvm_memory_heap_committed"
+    match_pattern: "jvm.memory.heap.committed"
+
+  - metric_name: "jvm_memory_heap_init"
+    match_pattern: "jvm.memory.heap.init"
+
+  - metric_name: "jvm_memory_heap_max"
+    match_pattern: "jvm.memory.heap.max"
+
+  - metric_name: "jvm_memory_heap_usage"
+    match_pattern: "jvm.memory.heap.usage"
+
+  - metric_name: "jvm_memory_heap_used"
+    match_pattern: "jvm.memory.heap.used"
+
+  - metric_name: "jvm_memory_non_heap_committed"
+    match_pattern: "jvm.memory.non-heap.committed"
+
+  - metric_name: "jvm_memory_non_heap_init"
+    match_pattern: "jvm.memory.non-heap.init"
+
+  - metric_name: "jvm_memory_non_heap_max"
+    match_pattern: "jvm.memory.non-heap.max"
+
+  - metric_name: "jvm_memory_non_heap_usage"
+    match_pattern: "jvm.memory.non-heap.usage"
+
+  - metric_name: "jvm_memory_non_heap_used"
+    match_pattern: "jvm.memory.non-heap.used"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_committed"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.committed"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_init"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.init"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_max"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.max"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_usage"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.usage"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_used"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.used"
+
+  - metric_name: "jvm_memory_pools_CMS-Old-Gen_used-after_gc"
+    match_pattern: "jvm.memory.pools.CMS-Old-Gen.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_nmethods_committed"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-methods.committed"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_nmethods_init"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-methods.init"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_nmethods_max"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-methods.max"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_nmethods_usage"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-methods.usage"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_nmethods_used"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-methods.used"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_profiled_nmethods_committed"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-profiled-nmethods.committed"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_profiled_nmethods_init"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-profiled-nmethods.init"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_profiled_nmethods_max"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-profiled-nmethods.max"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_profiled_nmethods_usage"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-profiled-nmethods.usage"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_non_profiled_nmethods_used"
+    match_pattern: "jvm.memory.pools.CodeHeap-non-profiled-nmethods.used"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_profiled_nmethods_committed"
+    match_pattern: "jvm.memory.pools.CodeHeap-profiled-nmethods.committed"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_profiled_nmethods_init"
+    match_pattern: "jvm.memory.pools.CodeHeap-profiled-nmethods.init"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_profiled_nmethods_max"
+    match_pattern: "jvm.memory.pools.CodeHeap-profiled-nmethods.max"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_profiled_nmethods_usage"
+    match_pattern: "jvm.memory.pools.CodeHeap-profiled-nmethods.usage"
+
+  - metric_name: "jvm_memory_pools_CodeHeap_profiled_nmethods_used"
+    match_pattern: "jvm.memory.pools.CodeHeap-profiled-nmethods.used"
+
+  - metric_name: "jvm_memory_pools_Compressed_Class_Space_committed"
+    match_pattern: "jvm.memory.pools.Compressed-Class-Space.committed"
+
+  - metric_name: "jvm_memory_pools_Compressed_Class_Space_init"
+    match_pattern: "jvm.memory.pools.Compressed-Class-Space.init"
+
+  - metric_name: "jvm_memory_pools_Compressed_Class_Space_max"
+    match_pattern: "jvm.memory.pools.Compressed-Class-Space.max"
+
+  - metric_name: "jvm_memory_pools_Compressed_Class_Space_usage"
+    match_pattern: "jvm.memory.pools.Compressed-Class-Space.usage"
+
+  - metric_name: "jvm_memory_pools_Compressed_Class_Space_used"
+    match_pattern: "jvm.memory.pools.Compressed-Class-Space.used"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_committed"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.committed"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_init"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.init"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_max"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.max"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_usage"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.usage"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_used"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.used"
+
+  - metric_name: "jvm_memory_pools_G1_Eden_Space_used_after_gc"
+    match_pattern: "jvm.memory.pools.G1-Eden-Space.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_committed"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.committed"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_init"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.init"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_max"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.max"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_usage"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.usage"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_used"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.used"
+
+  - metric_name: "jvm_memory_pools_G1_Old_Gen_used_after_gc"
+    match_pattern: "jvm.memory.pools.G1-Old-Gen.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_committed"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.committed"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_init"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.init"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_max"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.max"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_usage"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.usage"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_used"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.used"
+
+  - metric_name: "jvm_memory_pools_G1_Survivor_Space_used_after_gc"
+    match_pattern: "jvm.memory.pools.G1-Survivor-Space.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_Metaspace_committed"
+    match_pattern: "jvm.memory.pools.Metaspace.committed"
+
+  - metric_name: "jvm_memory_pools_Metaspace_init"
+    match_pattern: "jvm.memory.pools.Metaspace.init"
+
+  - metric_name: "jvm_memory_pools_Metaspace_max"
+    match_pattern: "jvm.memory.pools.Metaspace.max"
+
+  - metric_name: "jvm_memory_pools_Metaspace_usage"
+    match_pattern: "jvm.memory.pools.Metaspace.usage"
+
+  - metric_name: "jvm_memory_pools_Metaspace_used"
+    match_pattern: "jvm.memory.pools.Metaspace.used"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_committed"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.committed"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_init"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.init"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_max"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.max"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_usage"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.usage"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_used"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.used"
+
+  - metric_name: "jvm_memory_pools_Par_Eden_Space_used_after_gc"
+    match_pattern: "jvm.memory.pools.Par-Eden-Space.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_Par_Survivor_Space_committed"
+    match_pattern: "jvm.memory.pools.Par-Survivor-Space.committed"
+
+  - metric_name: "jvm_memory_pools_Par_Survivor_Space_init"
+    match_pattern: "jvm.memory.pools.Par-Survivor-Space.init"
+
+  - metric_name: "jvm_memory_pools_Par_Survivor_Space_max"
+    match_pattern: "jvm.memory.pools.Par-Survivor-Space.max"
+
+  - metric_name: "jvm_memory_pools_Par_Survivor_Space_usage"
+    match_pattern: "jvm.memory.pools.Par-Survivor-Space.usage"
+
+  - metric_name: "jvm_memory_pools_Par_Survivor_Space_used_after_gc"
+    match_pattern: "jvm.memory.pools.Par-Survivor-Space.used-after-gc"
+
+  - metric_name: "jvm_memory_pools_Zheap_committed"
+    match_pattern: "jvm.memory.pools.Zheap.committed"
+
+  - metric_name: "jvm_memory_pools_Zheap_init"
+    match_pattern: "jvm.memory.pools.Zheap.init"
+
+  - metric_name: "jvm_memory_pools_Zheap_max"
+    match_pattern: "jvm.memory.pools.Zheap.max"
+
+  - metric_name: "jvm_memory_pools_Zheap_usage"
+    match_pattern: "jvm.memory.pools.Zheap.usage"
+
+  - metric_name: "jvm_memory_pools_Zheap_used"
+    match_pattern: "jvm.memory.pools.Zheap.used"
+
+  - metric_name: "jvm_memory_pools_Zheap_used_after_gc"
+    match_pattern: "jvm.memory.pools.Zheap.used-after-gc"
+
+  - metric_name: "jvm_memory_total_committed"
+    match_pattern: "jvm.memory.total.committed"
+
+  - metric_name: "jvm_memory_total_init"
+    match_pattern: "jvm.memory.total.init"
+
+  - metric_name: "jvm_memory_total_max"
+    match_pattern: "jvm.memory.total.max"
+
+  - metric_name: "jvm_memory_total_used"
+    match_pattern: "jvm.memory.total.used"
+
+  - metric_name: "jvm_threads_blocked_count"
+    match_pattern: "jvm.threads.blocked.count"
+
+  - metric_name: "jvm_threads_count"
+    match_pattern: "jvm.threads.count"
+
+  - metric_name: "jvm_threads_daemon_count"
+    match_pattern: "jvm.threads.daemon.count"
+
+  - metric_name: "jvm_threads_deadlock_count"
+    match_pattern: "jvm.threads.deadlock.count"
+
+  - metric_name: "jvm_threads_deadlocks"
+    match_pattern: "jvm.threads.deadlocks"
+
+  - metric_name: "jvm_threads_new_count"
+    match_pattern: "jvm.threads.new.count"
+
+  - metric_name: "jvm_threads_runnable_count"
+    match_pattern: "jvm.threads.runnable.count"
+
+  - metric_name: "jvm_threads_terminated_count"
+    match_pattern: "jvm.threads.terminated.count"
+
+  - metric_name: "jvm_threads_timed_waiting_count"
+    match_pattern: "jvm.threads.timed_waiting.count"
+
+  - metric_name: "jvm_threads_waiting_count"
+    match_pattern: "jvm.threads.waiting.count"
+
+  - metric_name: "throughput_input_1_sec_rate"
+    match_pattern: "org.graylog2.throughput.input.1-sec-rate"
+    additional_labels:
+      type: "input"
+
+  - metric_name: "throughput_output_1_sec_rate"
+    match_pattern: "org.graylog2.throughput.output.1-sec-rate"
+    additional_labels:
+      type: "output"
+
+  - metric_name: "processBuffer_decodeTime"
+    match_pattern: "org.graylog2.shared.buffers.ProcessBuffer.decodeTime"
+
+  - metric_name: "processBuffer_parseTime"
+    match_pattern: "org.graylog2.shared.buffers.ProcessBuffer.parseTime"
+
+  - metric_name: "processBufferProcessor_processTime"
+    match_pattern: "org.graylog2.shared.buffers.processors.ProcessBufferProcessor.processTime"
+
+  - metric_name: "pipelineprocessor_rule_executed"
+    match_pattern: "org.graylog.plugins.pipelineprocessor.ast.Rule"
+
+  - metric_name: "streams_incommingmsgs"
+    match_pattern: "org.graylog2.plugin.streams.Stream"

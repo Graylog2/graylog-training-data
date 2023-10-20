@@ -1,0 +1,65 @@
+# graylog.yml
+# Traefik dynamic/running config specified in static config
+
+http:
+  routers:
+    graylog-router:
+      entryPoints:
+        - "https"
+      rule: Host(`{{env "STRIGO_PUBLIC_DNS"}}`)
+      service: "graylog-web"
+      tls: {}
+  services:
+    graylog-web:
+      loadBalancer:
+        servers:
+          - url: http://{{env "STRIGO_RESOURCE_0_DNS"}}:9000
+          - url: http://{{env "STRIGO_RESOURCE_1_DNS"}}:9000
+          - url: http://{{env "STRIGO_RESOURCE_2_DNS"}}:9000
+        healthCheck:
+          path: /api/system/lbstatus
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certs/fullchain.pem"
+      keyFile: "/etc/traefik/certs/privkey.pem"
+
+tcp:
+  routers:
+    beats-router:
+      entryPoints:
+        - "beats"
+      rule: "HostSNI(`*`)"
+      service: "beats"
+      tls: {}
+    raw-router:
+      entryPoints:
+        - "raw"
+      rule: "HostSNI(`*`)"
+      service: "raw"
+  services:
+    beats:
+      loadBalancer:
+        servers:
+          - address: {{env "STRIGO_RESOURCE_0_DNS"}}:5044
+          - address: {{env "STRIGO_RESOURCE_1_DNS"}}:5044
+          - address: {{env "STRIGO_RESOURCE_2_DNS"}}:5044
+    raw:
+      loadBalancer:
+        servers:
+          - address: {{env "STRIGO_RESOURCE_0_DNS"}}:5555
+          - address: {{env "STRIGO_RESOURCE_1_DNS"}}:5555
+          - address: {{env "STRIGO_RESOURCE_2_DNS"}}:5555
+
+udp:
+  routers:
+    syslog-router:
+      entryPoints:
+        - "syslog"
+      service: "syslog"
+  services:
+    syslog:
+      loadBalancer:
+        servers:
+          - address: {{env "STRIGO_RESOURCE_0_DNS"}}:514
+          - address: {{env "STRIGO_RESOURCE_1_DNS"}}:514
+          - address: {{env "STRIGO_RESOURCE_2_DNS"}}:514
