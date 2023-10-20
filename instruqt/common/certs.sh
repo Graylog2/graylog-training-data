@@ -4,7 +4,7 @@ source /etc/profile
 
 # Skip execution for TLS course:
 if [[ "$CLASS" == "64384cec22c8f6a4e5a0c6ec" ]]; then
-  echo "Skipping execution of $(basename "$0") because this is the TLS course..." >> /home/$LUSER/strigosuccess
+  echo "Skipping execution of $(basename "$0") because this is the TLS course..." 
   exit
 fi
 
@@ -14,12 +14,12 @@ if [ ! -d /etc/graylog ]; then
 fi
 
 # Import certs:
-echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$LUSER/strigosuccess
-echo "The present working directory is $(pwd)" >> /home/$LUSER/strigosuccess
+echo "Grabbing Certs" 
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" 
+echo "The present working directory is $(pwd)" 
 
 ## Copy Certs and Decode
-echo "Decoding Certs" >> /home/$LUSER/strigosuccess
+echo "Decoding Certs" 
 openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
 openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
 openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
@@ -32,8 +32,8 @@ chmod 600 /etc/graylog/*.pem
 #Update OS and keystore with chain
 #keytool -importcert -alias letsencryptca -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt
 
-echo "Updating Keystore" >> /home/$LUSER/strigosuccess
-keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt >> /home/$LUSER/strigosuccess
+echo "Updating Keystore" 
+keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt 
 
 cp /etc/graylog/fullchain.pem /usr/local/share/ca-certificates/fullchain.crt
 update-ca-certificates
@@ -41,7 +41,7 @@ update-ca-certificates
 #Wait for GL before changes
 if [ $(which docker) ]; then
     while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
-        printf "\n\nWaiting for GL to come online to add certs\n" >> /home/$LUSER/strigosuccess
+        printf "\n\nWaiting for GL to come online to add certs\n" 
         sleep 5
     done
 
@@ -58,4 +58,4 @@ if [ $(which docker) ]; then
     docker exec -u root -i $glc chown graylog.graylog /usr/share/graylog/data/config/cacerts
 fi
 
-echo "Cert install complete!" >> /home/$LUSER/strigosuccess
+echo "Cert install complete!" 

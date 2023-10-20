@@ -48,9 +48,6 @@ services:
       GRAYLOG_ELASTICSEARCH_HOSTS: "http://opensearch:9200"
       GRAYLOG_MONGODB_URI: "mongodb://mongodb:27017/graylog"
       GRAYLOG_HTTP_ENABLE_TLS: ${GLTLS}
-      GRAYLOG_HTTP_TLS_CERT_FILE: ${GLCERT}
-      GRAYLOG_HTTP_TLS_KEY_FILE: ${GLKEY}
-      GRAYLOG_SERVER_JAVA_OPTS: ${GLJAVAOPTS}
 
     ports:
       - "5044:5044/tcp"   # Beats
