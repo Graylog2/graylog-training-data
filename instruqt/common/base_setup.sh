@@ -1,5 +1,6 @@
 # Avoids warnings during package installations
 export DEBIAN_FRONTEND=noninteractive
+source /etc/profile
 
 #Add Docker Repo
 printf "\n\nAdding Docker Repo\n"
@@ -62,8 +63,6 @@ sudo chown -R root.root /OliveTin-linux-amd64/
 sed -i '/^Restart=always.*/a User=root' /OliveTin-linux-amd64/OliveTin.service
 sudo systemctl link /OliveTin-linux-amd64/OliveTin.service
 sudo systemctl enable OliveTin.service
-#wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/Gj95F7HnyYCZDsQP9/configs/olivetin/config.yaml
-#mv config.yaml /etc/OliveTin/config.yaml
 
 #Docker
 printf "\n\nInstall Docker"
@@ -71,16 +70,9 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plu
 
 printf "\n\nGrab and get containers running"
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/docker-compose-glservices.yml
+wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/graylog-training-changes.env
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env create
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env start mongodb
 
-sudo docker compose -f docker-compose-glservices.yml --env-file strigo-graylog-training-changes.env pull -q
-sudo docker compose -f docker-compose-glservices.yml --env-file strigo-graylog-training-changes.env create
-sudo docker compose -f docker-compose-glservices.yml --env-file strigo-graylog-training-changes.env start mongodb
-
-
-
-
-
-
-
-
-
+printf "\n\nComplete Base Setup -> Run class config please."
