@@ -8,7 +8,7 @@ sed -i '/export apitoken=/d' /etc/profile
 sed -i '/export authemail=/d' /etc/profile
 rm -r /certs
 rm /.pwd
-rm -r /$STRIGO_CLASS_ID
+rm -r /$CLASS
 rm -r /common
 
 #Opensearch Replica Cleanup

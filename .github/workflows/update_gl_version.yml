@@ -19,6 +19,10 @@ jobs:
           if [[ "$lgl" != "$dcv" ]]; then echo "update plz"; else echo "updated already"; exit 0; fi
           lgl=$(curl -L --fail "https://hub.docker.com/v2/repositories/graylog/graylog/tags/?page_size=1000" | jq '.results | .[] | .name' -r | sed 's/latest//' | sort --version-sort | awk '!/beta/' | awk '!/alpha/' | tail -n 1)
           sed -i "s+enterprise\:$dcv+enterprise\:$lgl+g" 650de6ce3ae400b8e8ccd115/configs/docker/mon-compose.yml
+          
+          #will need to add logic here in future
+          sed -i "s+enterprise\:$dcv+enterprise\:$lgl+g" instruqt/common/configs/docker-compose-glservices.yml
+          
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .

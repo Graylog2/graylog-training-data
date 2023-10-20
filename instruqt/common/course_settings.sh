@@ -10,7 +10,7 @@ curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/cluster_
 printf "\n\nDisable Whitelisting\n" >> /home/$LUSER/strigosuccess
 curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/urlwhitelist" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"entries":[],"disabled":true}' >> /home/$LUSER/strigosuccess
 
-if [[ "$STRIGO_CLASS_ID" == "6165e5c602fff3af945689f0" ]]; then
+if [[ "$CLASS" == "threat_hunting" ]]; then
     #Threat Hunter
     #Pausing Endpoint Firewalls Stream
     printf "\n\nRetrieve Endpoint Firewalls Stream ID\n" >> /home/$LUSER/strigosuccess

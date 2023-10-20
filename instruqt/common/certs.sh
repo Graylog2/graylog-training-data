@@ -3,7 +3,7 @@
 source /etc/profile
 
 # Skip execution for TLS course:
-if [[ "$STRIGO_CLASS_ID" == "64384cec22c8f6a4e5a0c6ec" ]]; then
+if [[ "$CLASS" == "64384cec22c8f6a4e5a0c6ec" ]]; then
   echo "Skipping execution of $(basename "$0") because this is the TLS course..." >> /home/$LUSER/strigosuccess
   exit
 fi

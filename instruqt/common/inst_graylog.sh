@@ -33,13 +33,13 @@ sudo chmod g+w -R /etc/graylog
 sudo usermod -aG graylog $LUSER
 
 # Modify server.conf:
-cp "/$STRIGO_CLASS_ID/configs/server.conf" /etc/graylog/server
+cp "/$CLASS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 # Modify opensearch.yml:
-cp "/$STRIGO_CLASS_ID/configs/opensearch.yml" /etc/opensearch/
+cp "/$CLASS/configs/opensearch.yml" /etc/opensearch/
 # sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
-cp "/$STRIGO_CLASS_ID/configs/jvm.options" /etc/opensearch/
+cp "/$CLASS/configs/jvm.options" /etc/opensearch/
 
 # Set java path for use by Opensearch Security plugin:
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
