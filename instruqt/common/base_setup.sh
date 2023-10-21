@@ -73,7 +73,7 @@ printf "\n\n$(date)-Complete Base Setup -> Running class config"
 #Class Config
 printf "\n\n$(date)-Grab Class Data"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
-sudo mv ~/$CLASS /$CLASS
+sudo mv $CLASS /$CLASS
 sudo chmod +x /$CLASS/scripts/*.sh
 
 printf "\n\n$(date)-Starting Class Config Script"
