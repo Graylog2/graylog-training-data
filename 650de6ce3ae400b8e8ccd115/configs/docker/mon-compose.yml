@@ -30,7 +30,7 @@ services:
     restart: "always"
 
   graylog:
-    image: "graylog/graylog-enterprise:5.1.7-1"
+    image: "graylog/graylog-enterprise:5.2.0-rc.1-1"
     depends_on:
       opensearch:
         condition: "service_started"
