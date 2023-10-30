@@ -15,9 +15,6 @@ sudo chown -R root.root /root
 #Add course CPs
 /common/cp_inst.sh 
 
-#Update GL Docker Environment
-/common/docker_chg.sh 
-
 #OT Theme
 /common/ot_gl_theme.sh 
 
