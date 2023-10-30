@@ -34,7 +34,7 @@ sudo apt-get install powershell -y
 
 #Move "sendlogs" to default profile
 sudo mkdir /root/.config/powershell -p
-sudo mv /common/scripts/Default_Profile.ps1 /root/.config/powershell/Microsoft.PowerShell_profile.ps1
+sudo mv /common/Default_Profile.ps1 /root/.config/powershell/Microsoft.PowerShell_profile.ps1
 sudo mkdir /root/powershell/Data -p
 
 #Tar OliveTin Install
