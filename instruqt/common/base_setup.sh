@@ -84,6 +84,6 @@ ls /$CLASS/scripts -lah
 
 
 printf "\n\n$(date)-Starting Class Config Script"
-./$CLASS/scripts/config.sh
+/$CLASS/scripts/config.sh
 
 printf "\n\n$(date)-100% Complete. Locked and loaded"
