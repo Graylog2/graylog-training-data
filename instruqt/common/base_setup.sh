@@ -16,7 +16,7 @@ sudo mkdir -p /etc/apt/keyrings
 printf "\n\n$(date)-$(date)adding gpg key\n"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 printf "\n\n$(date)-adding repo to apt\n"
-printf "\n\n$(date)-deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 cat /etc/apt/sources.list.d/docker.list
 
 #Install Software
@@ -46,10 +46,6 @@ sudo ln -s /OliveTin-linux-amd64/OliveTin /usr/local/bin/OliveTin
 sudo ln -s /OliveTin-linux-amd64 /etc/OliveTin
 sudo ln -s /OliveTin-linux-amd64/webui /var/www/olivetin
 
-#Update OliveTin Configuration File
-sudo rm /OliveTin-linux-amd64/config.yaml
-sudo mv /tmp/local_log_tooling/config.yml /OliveTin-linux-amd64/config.yaml
-
 #Update service file to use Ubuntu user and get it running
 printf "\n\n$(date)-Configure OT to use OT user"
 sudo chown -R root.root /OliveTin-linux-amd64/
@@ -76,8 +72,11 @@ git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/
 sudo mv $CLASS /$CLASS
 sudo chmod +x /$CLASS/scripts/*.sh
 
+#Update OliveTin Configuration File
+sudo rm /OliveTin-linux-amd64/config.yaml
+sudo mv /$CLASS/configs/olivetin/config.yaml /OliveTin-linux-amd64/config.yaml
+
 printf "\n\n$(date)-Starting Class Config Script"
 ./$CLASS/scripts/config.sh
 
 printf "\n\n$(date)-100% Complete. Locked and loaded"
-
