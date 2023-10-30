@@ -6,6 +6,10 @@ source /etc/profile
 echo "Cleaning up" 
 sed -i '/export apitoken=/d' /etc/profile
 sed -i '/export authemail=/d' /etc/profile
+sed -i '/license_enterprise=/d' /etc/profile
+sed -i '/license_security=/d' /etc/profile
+sed -i '/gn_api_key=/d' /etc/profile
+
 rm -r /certs
 rm /.pwd
 rm -r /$CLASS
