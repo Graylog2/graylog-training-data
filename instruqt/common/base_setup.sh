@@ -77,13 +77,15 @@ git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/
 printf printf "\n\n$(date)-Move Class Data and make exec"
 sudo mv $CLASS /$CLASS
 sudo chmod +x /$CLASS/scripts/*.sh
-ls / -lah
-ls /$CLASS -lah
-ls /$CLASS/scripts -lah
+sudo docker ps
 
-
+#Wait for GL before changes
+while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+	printf "\n\nWaiting for GL to come online to add content\n" >> /home/ubuntu/strigosuccess
+    sleep 5
+done
 
 printf "\n\n$(date)-Starting Class Config Script"
 /$CLASS/scripts/config.sh
 
-printf "\n\n$(date)-100% Complete. Locked and loaded"
+printf "\n\n$(date)Complete. Locked and loaded"
