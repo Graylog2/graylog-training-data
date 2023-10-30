@@ -46,6 +46,10 @@ sudo ln -s /OliveTin-linux-amd64/OliveTin /usr/local/bin/OliveTin
 sudo ln -s /OliveTin-linux-amd64 /etc/OliveTin
 sudo ln -s /OliveTin-linux-amd64/webui /var/www/olivetin
 
+#Update OliveTin Configuration File
+sudo rm /OliveTin-linux-amd64/config.yaml
+sudo mv /common/configs/config.yaml /OliveTin-linux-amd64/config.yaml
+
 #Update service file to use Ubuntu user and get it running
 printf "\n\n$(date)-Configure OT to use OT user"
 sudo chown -R root.root /OliveTin-linux-amd64/
@@ -69,12 +73,15 @@ printf "\n\n$(date)-Complete Base Setup -> Running class config"
 #Class Config
 printf "\n\n$(date)-Grab Class Data"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
+
+printf printf "\n\n$(date)-Move Class Data and make exec"
 sudo mv $CLASS /$CLASS
 sudo chmod +x /$CLASS/scripts/*.sh
+ls / -lah
+ls /$CLASS -lah
+ls /$CLASS/scripts -lah
 
-#Update OliveTin Configuration File
-sudo rm /OliveTin-linux-amd64/config.yaml
-sudo mv /$CLASS/configs/olivetin/config.yaml /OliveTin-linux-amd64/config.yaml
+
 
 printf "\n\n$(date)-Starting Class Config Script"
 ./$CLASS/scripts/config.sh
