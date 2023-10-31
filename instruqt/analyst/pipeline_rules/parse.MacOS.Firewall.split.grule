@@ -1,0 +1,22 @@
+rule "Parse - MF - Split"
+when
+    to_string($message.message_route) == "Desktop Firewall - MacOS Logs"
+then
+let pf = split(
+    pattern: " ",
+    value: to_string($message.message)
+    );
+set_field("date",pf[0]);
+set_field("time",pf[1]);
+set_field("action",pf[2]);
+set_field("protocol",pf[3]);
+set_field("src-ip",pf[4]);
+set_field("dst-ip",pf[5]);
+set_field("src-port",pf[6]);
+set_field("dst-port",pf[7]);
+set_field("size",pf[8]);
+set_field("path",pf[16]);
+
+set_field("parse","Parse - MF - Split");
+
+end

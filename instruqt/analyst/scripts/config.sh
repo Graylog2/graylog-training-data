@@ -5,6 +5,7 @@ source /etc/profile
 #LogData
 sudo mv /$CLASS/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
+sudo mv /$CLASS/pipeline_rules/* /home/ubuntu/pipeline_rules
 
 #Illuminate Install
 /common/inst_illuminate.sh 
