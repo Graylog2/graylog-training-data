@@ -22,8 +22,8 @@ if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
     echo "Setting up Proxy box" >> /home/$LUSER/strigosuccess
     #Install OT
     wget https://github.com/OliveTin/OliveTin/releases/download/2023.03.25/OliveTin_linux_amd64.deb
-    sudo dpkg -i OliveTin_linux_amd64.deb 
-    sudo systemctl start OliveTin.service 
+    sudo dpkg -i OliveTin_linux_amd64.deb
+    sudo systemctl start OliveTin.service
     sudo systemctl enable OliveTin.service
     mkdir -p /etc/OliveTin; ln -s /$STRIGO_CLASS_ID/.configs/config.yaml /etc/OliveTin
 
@@ -31,7 +31,7 @@ if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
     ./common/dns.sh >> /home/$LUSER/strigosuccess
     #Update DNS file
     source /etc/profile
-    echo "${dns}.logfather.org" > /home/$LUSER/DNSSuccess    
+    echo "${dns}.logfather.org" > /home/$LUSER/DNSSuccess
     
     ## Setting up Traefik Environment Variable overrides
     # Create Service override (service isn't installed yet)
@@ -40,11 +40,12 @@ if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
     # Add the file
     cat <<EOF >> /etc/systemd/system/traefik.service.d/override.conf
     [Service]
-    Environment="STRIGO_PUBLIC_DNS=$STRIGO_PUBLIC_DNS"
-    Environment="STRIGO_RESOURCE_0_DNS={{ .STRIGO_RESOURCE_0_DNS }}"
-    Environment="STRIGO_RESOURCE_1_DNS={{ .STRIGO_RESOURCE_1_DNS }}"
-    Environment="STRIGO_RESOURCE_2_DNS={{ .STRIGO_RESOURCE_2_DNS }}"
-    Environment="STRIGO_RESOURCE_3_DNS={{ .STRIGO_RESOURCE_3_DNS }}"
+    Environment="STRIGO_PUBLIC_DNS=$dns.logfather.org"
+    Environment="STRIGO_RESOURCE_0_DNS=$STRIGO_RESOURCE_0_DNS"
+    Environment="STRIGO_RESOURCE_1_DNS=$STRIGO_RESOURCE_1_DNS"
+    Environment="STRIGO_RESOURCE_2_DNS=$STRIGO_RESOURCE_2_DNS"
+    Environment="STRIGO_RESOURCE_3_DNS=$STRIGO_RESOURCE_3_DNS"
+    
 EOF
 
     # Install Traefik
