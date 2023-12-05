@@ -18,22 +18,8 @@ update-ca-certificates
 # Delete unneded files:
 rm /.ssl/*.enc /.ssl/cacerts /.ssl/root-ca.pem /.ssl/intermediate-ca.pem
 
-# Create course motd banner:
-source /etc/profile
-cat <<EOF >> /home/$LUSER/.bashrc
-printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
-printf "\e[37m██╔════╝ ██╔══██╗██╔══██╗╚██╗ ██╔╝\e[31m██║     ██╔═══██╗██╔════╝ \n";
-printf "\e[37m██║  ███╗██████╔╝███████║ ╚████╔╝ \e[31m██║     ██║   ██║██║  ███╗\n";
-printf "\e[37m██║   ██║██╔══██╗██╔══██║  ╚██╔╝  \e[31m██║     ██║   ██║██║   ██║\n";
-printf "\e[37m╚██████╔╝██║  ██║██║  ██║   ██║   \e[31m███████╗╚██████╔╝╚██████╔╝\n";
-printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
-printf "                                                            \n";
-printf "\e[39m Hi ${STRIGO_USER_NAME},\n Welcome to ${STRIGO_CLASS_NAME}\n\n";
-printf "\e[39m Your Graylog server can be reached at the following URL:\n\n"
-printf "\t\e[93mhttp://$dns.logfather.org:9000/\n\n\e[39m";
-
-PATH=$PATH:/usr/share/graylog-server/jvm/bin
-EOF
+# Add bundled keytool binary to path:
+echo "PATH=$PATH:/usr/share/graylog-server/jvm/bin" >> /etc/profile
 
 # Setup GPG keyring:
 apt install -y gnupg
@@ -56,7 +42,7 @@ curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
 
 # Install GL stack:
-apt update && apt install -y mongodb-org graylog-enterprise opensearch
+apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10
 
 # Set ownership+mode for /etc/graylog:
 sudo chown graylog.graylog -R /etc/graylog
