@@ -20,8 +20,8 @@ if [ ! -z "$DNSCheck" ]; then
     #Check it's CName to see if it matches existing DNS Record
     echo "Checking if CNAME is the same, result:" 
     CName=$(echo $DNSCheck | jq -r '.content')
-    echo "$CName vs $LAB" 
-    if [[ ! "$CName" == "$LAB" ]]; then
+    echo "$CName vs ${_SANDBOX_ID}.instruqt.io" 
+    if [[ ! "$CName" == "${_SANDBOX_ID}.instruqt.io" ]]; then
         #No Match - new DNS record but also need to check for more numbers
         #Loop through numbers and check for existing  DNS Records
         echo "Not a match, looping to find unused DNS record" 
@@ -33,8 +33,8 @@ if [ ! -z "$DNSCheck" ]; then
             CName=$(echo $DNSCheck | jq -r '.content')
             echo "Comparing new DNS record's CNAME (if there is one), result" 
             echo $CName 
-            if [[ "$CName" == "$LAB" ]]; then
-                echo "$CName compared to $LAB is true..." 
+            if [[ "$CName" == "${_SANDBOX_ID}.instruqt.io" ]]; then
+                echo "$CName compared to ${_SANDBOX_ID}.instruqt.io is true..." 
                 #If these match, ever, at all, exit the loop and set the DNS record below
                 DNSMatch="true"
                 break
@@ -51,14 +51,12 @@ fi
 if [[ ! "$DNSMatch" == "true" ]]; then
     #Create DNS Record
     echo "Creating DNS Record for: $dns" 
-    cdata="{\"type\":\"CNAME\",\"name\":\"$dns\",\"content\":\"$LAB\",\"ttl\":3600,\"priority\":10,\"proxied\":false}"
+    cdata="{\"type\":\"CNAME\",\"name\":\"$dns\",\"content\":\"${_SANDBOX_ID}.logfather.org\",\"ttl\":3600,\"priority\":10,\"proxied\":false}"
     createcname=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" --data $cdata)
     result=$(echo $createcname | jq '.success')
     echo "Result: $result" 
 fi
-echo $dns >> /home/$LUSER/DNSSuccess
 echo "Registered DNS record: $dns" 
 sed -i '/export dns=/d' /etc/profile
 echo "export dns=$dns" >> /etc/profile
-
 echo "DNS setup complete!" 
