@@ -26,7 +26,7 @@ sudo apt update
 sudo apt upgrade -y
 
 #Powershell
-printf "\n\n$(date)-Setting up local log tooling"
+printf "\n\n$(date)-Setting up local log tooling\n"
 sudo wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 sudo apt-get update -y
@@ -38,7 +38,7 @@ sudo mv /common/Default_Profile.ps1 /root/.config/powershell/Microsoft.PowerShel
 sudo mkdir /root/powershell/Data -p
 
 #Tar OliveTin Install
-printf "\n\n$(date)-Setting up OliveTin"
+printf "\n\n$(date)-Setting up OliveTin\n"
 sudo wget https://github.com/OliveTin/OliveTin/releases/download/2023.03.25/OliveTin-linux-amd64.tar.gz -O /tmp/OliveTin-linux-amd64.tar.gz
 sudo tar -xf /tmp/OliveTin-linux-amd64.tar.gz -C /
 sudo mkdir /var/www/ -p
@@ -51,17 +51,17 @@ sudo rm /OliveTin-linux-amd64/config.yaml
 sudo mv /common/configs/config.yaml /OliveTin-linux-amd64/config.yaml
 
 #Update service file to use Ubuntu user and get it running
-printf "\n\n$(date)-Configure OT to use OT user"
+printf "\n\n$(date)-Configure OT to use OT user\n"
 sudo chown -R root.root /OliveTin-linux-amd64/
 sed -i '/^Restart=always.*/a User=root' /OliveTin-linux-amd64/OliveTin.service
 sudo systemctl link /OliveTin-linux-amd64/OliveTin.service
 sudo systemctl enable OliveTin.service
 
 #Docker
-printf "\n\n$(date)-Install Docker"
+printf "\n\n$(date)-Install Docker\n"
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
 
-printf "\n\n$(date)-Grab and get containers running"
+printf "\n\n$(date)-Grab and get containers running\n"
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/docker-compose-glservices.yml
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/graylog-training-changes.env
 sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
@@ -131,18 +131,18 @@ printf "\e[93mhttps://${_SANDBOX_ID}.logfather.org/\e[39m\n";
 EOF
 ### END Base Config
 
-printf "\n\n$(date)-Complete Base Setup -> Running class config"
+printf "\n\n$(date)-Complete Base Setup -> Running class config\n"
 
 #Class Config
-printf "\n\n$(date)-Grab Class Data"
+printf "\n\n$(date)-Grab Class Data\n"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
 
-printf printf "\n\n$(date)-Move Class Data and make exec"
+printf printf "\n\n$(date)-Move Class Data and make exec\n"
 sudo mv $CLASS /$CLASS
 sudo chmod +x /$CLASS/scripts/*.sh
 sudo docker ps
 
-printf "\n\n$(date)-Starting Class Config Script"
+printf "\n\n$(date)-Starting Class Config Script\n"
 /$CLASS/scripts/config.sh
 
-printf "\n\n$(date)-Complete. Locked and loaded"
+printf "\n\n$(date)-Complete. Locked and loaded\n"
