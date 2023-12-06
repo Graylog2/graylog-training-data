@@ -9,6 +9,8 @@ sed -i '/export authemail=/d' /etc/profile
 sed -i '/license_enterprise=/d' /etc/profile
 sed -i '/license_security=/d' /etc/profile
 sed -i '/gn_api_key=/d' /etc/profile
+sed -i '/authemail=/d' /etc/profile
+sed -i '/apitoken=/d' /etc/profile
 
 rm -r /certs
 rm /.pwd
