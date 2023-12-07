@@ -6,13 +6,20 @@ cluster_id=${cluster_id}
 license_enterprise=${license_enterprise}
 license_security=${license_security}
 gn_api_key=${gn_api_key}
+authemail=${cloudflare_auth_email}
+apitoken=${cloudflare_auth_token}
+dns=${HOSTNAME}.${_SANDBOX_ID}
+
 echo "export cluster_id=$cluster_id" >> /etc/profile
 echo "export license_enterprise=$license_enterprise" >> /etc/profile
 echo "export license_security=$license_security" >> /etc/profile
 echo "export gn_api_key=$gn_api_key" >> /etc/profile
+echo "export apitoken=$apitoken" >> /etc/profile
+echo "export authemail=$authemail" >> /etc/profile
+echo "export dns=$dns" >> /etc/profile
 
 #Setup Class Information
-CLASS="<INSERT CLASS NAME MATCHING FOLDER HERE>"
+CLASS="analyst"
 echo "export CLASS=$CLASS" >> /etc/profile
 
 #Base Apps
