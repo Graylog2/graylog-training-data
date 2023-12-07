@@ -16,4 +16,3 @@ echo "GLEURI=https://$dns.logfather.org/" >> graylog-training-changes.env
 #Launch Docker to load changes in env file
 echo "Running Docker Compose to update GL environment with new information" 
 docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
-pwsh -c 'write-host "loaded PS!"'

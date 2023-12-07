@@ -13,6 +13,9 @@ sudo mv /$CLASS/pipeline_rules/* /home/ubuntu/pipeline_rules
 #Illuminate Install
 /common/inst_illuminate.sh 
 
+#Cert Injection
+/common/certs.sh
+
 #Course Settings
 /common/course_settings.sh 
 
@@ -21,6 +24,10 @@ sudo mv /$CLASS/pipeline_rules/* /home/ubuntu/pipeline_rules
 
 #OT Theme
 /common/ot_gl_theme.sh 
+
+#Update GL Docker Environment
+## After this point everything will be HTTPS
+/common/docker_chg.sh
 
 #Cleanup
 /common/cleanup.sh 

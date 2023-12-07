@@ -13,7 +13,7 @@ sed -i '/authemail=/d' /etc/profile
 sed -i '/apitoken=/d' /etc/profile
 
 rm -r /certs
-rm /.pwd
+rm /root/.pwd
 rm -r /$CLASS
 rm -r /common
 
