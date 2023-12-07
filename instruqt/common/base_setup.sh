@@ -126,8 +126,7 @@ printf "\e[37m╚██████╔╝██║  ██║██║  ██�
 printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
 printf "                                                            \n";
 printf "\e[39m Hi,\n Welcome to Graylog ${CLASS}\n\n";
-printf "\e[93m Your public DNS record is:";
-printf "\e[93mhttps://${_SANDBOX_ID}.logfather.org/\e[39m\n";
+printf "\e[93m Your public DNS record is:https://${_SANDBOX_ID}.logfather.org";
 EOF
 ### END Base Config
 
