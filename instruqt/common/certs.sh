@@ -22,9 +22,9 @@ sudo mv certs /certs
 
 ## Copy Certs and Decode
 echo "Decoding Certs" 
-openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
-openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/cert.pem
-openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/fullchain.pem
+openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/root/.pwd > /etc/graylog/privkey.pem
+openssl enc -in /certs/cert.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/root/.pwd > /etc/graylog/cert.pem
+openssl enc -in /certs/fullchain.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/root/.pwd > /etc/graylog/fullchain.pem
 cp /certs/cacerts /etc/graylog/cacerts
 
 #Cert Permissions
