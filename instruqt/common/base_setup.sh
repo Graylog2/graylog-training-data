@@ -8,6 +8,29 @@ source /etc/profile
 printf "\n\n$(date)-Installing System Updates\n"
 sudo apt upgrade -y
 
+#BashRC
+cat <<EOF >> /root/.bashrc
+printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
+printf "\e[37m██╔════╝ ██╔══██╗██╔══██╗╚██╗ ██╔╝\e[31m██║     ██╔═══██╗██╔════╝ \n";
+printf "\e[37m██║  ███╗██████╔╝███████║ ╚████╔╝ \e[31m██║     ██║   ██║██║  ███╗\n";
+printf "\e[37m██║   ██║██╔══██╗██╔══██║  ╚██╔╝  \e[31m██║     ██║   ██║██║   ██║\n";
+printf "\e[37m╚██████╔╝██║  ██║██║  ██║   ██║   \e[31m███████╗╚██████╔╝╚██████╔╝\n";
+printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
+printf "                                                                        \n";
+printf "\e[39m Hi,\n Welcome to Graylog ${CLASS}\n\e[93m Your public DNS record is: https://$dns.logfather.org";
+printf "                                                                        \n";
+
+EOF
+
+# Certain courses need to skip Docker config.
+# Add their $CLASS codes to the NODOCKER array here:
+NODOCKER=("tls" "troubleshooting")
+# If course is in the above array, execute alternate setup script then exit:
+if [[ ${NODOCKER[@]} =~ "$CLASS" ]]; then
+    ./nondocker_setup.sh
+    exit
+fi
+
 #Add Docker Repo
 printf "\n\n$(date)-Adding Docker Repo\n"
 sudo apt install -y \
@@ -115,19 +138,6 @@ curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices
 printf "\n\ncreate Training Index\n"
 curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices/index_sets' -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"title":"Training","description":"Training","index_prefix":"train","writable":true,"can_be_default":true,"shards":2,"replicas":0,"retention_strategy_class":"org.graylog2.indexer.retention.strategies.DeletionRetentionStrategy","retention_strategy":{"max_number_of_indices":3,"type":"org.graylog2.indexer.retention.strategies.DeletionRetentionStrategyConfig"},"index_analyzer":"standard","index_optimization_max_num_segments":1,"index_optimization_disabled":false,"field_type_refresh_interval":5000,"rotation_strategy_class":"org.graylog2.indexer.rotation.strategies.MessageCountRotationStrategy","rotation_strategy":{"max_docs_per_index":20000,"type":"org.graylog2.indexer.rotation.strategies.MessageCountRotationStrategyConfig"},"creation_date":"2022-08-17T21:06:47.393Z"}'
 
-#BashRC
-cat <<EOF >> /root/.bashrc
-printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
-printf "\e[37m██╔════╝ ██╔══██╗██╔══██╗╚██╗ ██╔╝\e[31m██║     ██╔═══██╗██╔════╝ \n";
-printf "\e[37m██║  ███╗██████╔╝███████║ ╚████╔╝ \e[31m██║     ██║   ██║██║  ███╗\n";
-printf "\e[37m██║   ██║██╔══██╗██╔══██║  ╚██╔╝  \e[31m██║     ██║   ██║██║   ██║\n";
-printf "\e[37m╚██████╔╝██║  ██║██║  ██║   ██║   \e[31m███████╗╚██████╔╝╚██████╔╝\n";
-printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
-printf "                                                                        \n";
-printf "\e[39m Hi,\n Welcome to Graylog ${CLASS}\n\e[93m Your public DNS record is: https://$dns.logfather.org";
-printf "                                                                        \n";
-
-EOF
 ### END Base Config
 
 printf "\n\n$(date)-Complete Base Setup -> Running class config\n"
