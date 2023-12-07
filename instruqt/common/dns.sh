@@ -52,7 +52,7 @@ fi
 if [[ ! "$DNSMatch" == "true" ]]; then
     #Create DNS Record
     echo "Creating DNS Record for: $dns" 
-    cdata="{\"type\":\"CNAME\",\"name\":\"$dns\",\"content\":\"$dns.logfather.org\",\"ttl\":3600,\"priority\":10,\"proxied\":false}"
+    cdata="{\"type\":\"CNAME\",\"name\":\"$dns\",\"content\":\"$dns.instruqt.io\",\"ttl\":3600,\"priority\":10,\"proxied\":false}"
     createcname=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" --data $cdata)
     result=$(echo $createcname | jq '.success')
     echo "Result: $result" 
