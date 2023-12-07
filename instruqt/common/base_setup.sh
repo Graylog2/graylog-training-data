@@ -1,10 +1,15 @@
+#!/bin/bash
+
 # Avoids warnings during package installations
 export DEBIAN_FRONTEND=noninteractive
 source /etc/profile
 
+# Update all system packages first:
+printf "\n\n$(date)-Installing System Updates\n"
+sudo apt upgrade -y
+
 #Add Docker Repo
 printf "\n\n$(date)-Adding Docker Repo\n"
-sudo apt update
 sudo apt install -y \
     ca-certificates \
     curl \
@@ -18,11 +23,6 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 printf "\n\n$(date)-adding repo to apt\n"
 printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 cat /etc/apt/sources.list.d/docker.list
-
-# Update all system packages first:
-printf "\n\n$(date)-Installing System Updates\n"
-sudo mkdir /etc/graylog
-sudo apt upgrade -y
 
 #Powershell
 printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"
