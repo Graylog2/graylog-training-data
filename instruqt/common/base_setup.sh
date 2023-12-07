@@ -19,14 +19,13 @@ printf "\n\n$(date)-adding repo to apt\n"
 printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 cat /etc/apt/sources.list.d/docker.list
 
-#Install Software
-printf "\n\n$(date)-Installing Software\n"
+# Update all system packages first:
+printf "\n\n$(date)-Installing System Updates\n"
 sudo mkdir /etc/graylog
-sudo apt update
 sudo apt upgrade -y
 
 #Powershell
-printf "\n\n$(date)-Setting up local log tooling\n"
+printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"
 sudo wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 sudo apt update -y
