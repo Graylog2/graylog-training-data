@@ -10,7 +10,6 @@ apt install jq -y
 
 echo "The present working directory is $(pwd)" 
 echo "Running DNS Registration Steps"
-cat /etc/profile
 
 dnscount=0
 DNSMatch=false
