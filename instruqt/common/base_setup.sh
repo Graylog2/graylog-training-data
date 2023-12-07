@@ -4,8 +4,8 @@ source /etc/profile
 
 #Add Docker Repo
 printf "\n\n$(date)-Adding Docker Repo\n"
-sudo apt-get update
-sudo apt-get install -y \
+sudo apt update
+sudo apt install -y \
     ca-certificates \
     curl \
     gnupg \
@@ -29,8 +29,8 @@ sudo apt upgrade -y
 printf "\n\n$(date)-Setting up local log tooling\n"
 sudo wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
-sudo apt-get update -y
-sudo apt-get install powershell -y
+sudo apt update -y
+sudo apt install powershell -y
 
 #Move "sendlogs" to default profile
 sudo mkdir /root/.config/powershell -p
@@ -59,7 +59,7 @@ sudo systemctl enable OliveTin.service
 
 #Docker
 printf "\n\n$(date)-Install Docker\n"
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
 
 printf "\n\n$(date)-Grab and get containers running\n"
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/docker-compose-glservices.yml
