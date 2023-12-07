@@ -2,17 +2,6 @@
 #load Vars from Strigo
 source /etc/profile
 
-# Skip execution for TLS course:
-if [[ "$CLASS" == "tls" ]]; then
-  echo "Skipping execution of $(basename "$0") because this is the TLS course..." 
-  exit
-fi
-
-# Make /etc/graylog dir if doesn't exist (e.g. non-Dan-AMI classes):
-if [ ! -d /etc/graylog ]; then
-  mkdir /etc/graylog
-fi
-
 # Import certs:
 echo "Grabbing Certs" 
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" 
