@@ -8,7 +8,7 @@ license_security=${license_security}
 gn_api_key=${gn_api_key}
 authemail=${cloudflare_auth_email}
 apitoken=${cloudflare_auth_token}
-dns=${HOSTNAME}.${_SANDBOX_ID}
+dns=${HOSTNAME}${_SANDBOX_ID}
 
 echo "export cluster_id=$cluster_id" >> /etc/profile
 echo "export license_enterprise=$license_enterprise" >> /etc/profile
@@ -21,6 +21,9 @@ echo "export dns=$dns" >> /etc/profile
 #Setup Class Information
 CLASS="analyst"
 echo "export CLASS=$CLASS" >> /etc/profile
+
+#Cert Decode File
+echo "${cert_pwd}" > /root/.pwd
 
 #Base Apps
 printf "\n\nGrabbing Base Apps"
