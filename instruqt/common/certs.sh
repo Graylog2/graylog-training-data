@@ -18,6 +18,8 @@ echo "Grabbing Certs"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" 
 echo "The present working directory is $(pwd)" 
 
+sudo mv certs /certs
+
 ## Copy Certs and Decode
 echo "Decoding Certs" 
 openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > /etc/graylog/privkey.pem
