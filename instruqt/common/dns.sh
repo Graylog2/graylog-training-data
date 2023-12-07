@@ -9,7 +9,9 @@ apt install jq -y
 #sleep $(( ( RANDOM % 30 )  + 1 ))
 
 echo "The present working directory is $(pwd)" 
-echo "Running DNS Registration Steps" 
+echo "Running DNS Registration Steps"
+cat /etc/profile
+
 dnscount=0
 DNSMatch=false
 #Check for Existing DNS Record
