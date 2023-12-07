@@ -27,6 +27,7 @@ EOF
 NODOCKER=("tls" "troubleshooting")
 # If course is in the above array, execute alternate setup script then exit:
 if [[ ${NODOCKER[@]} =~ "$CLASS" ]]; then
+    printf "\n\n$(date)-Skipping Base Setup -> Running Non-Docker Setup Instead\n"
     ./nondocker_setup.sh
     exit
 fi
