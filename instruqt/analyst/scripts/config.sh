@@ -11,9 +11,6 @@ sudo mv /$CLASS/pipeline_rules/* /home/ubuntu/pipeline_rules
 #DNS
 /common/dns.sh 
 
-#Illuminate Install
-/common/inst_illuminate.sh 
-
 #Cert Injection
 /common/certs.sh
 
@@ -29,6 +26,9 @@ sudo mv /$CLASS/pipeline_rules/* /home/ubuntu/pipeline_rules
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
 /common/docker_chg.sh
+
+#Illuminate Install - moved to POST docker update. Illuminate doesn't seem to fetch first time graylog runs
+/common/inst_illuminate.sh 
 
 #Cleanup
 /common/cleanup.sh 
