@@ -10,7 +10,7 @@ fi
 
 # Make /etc/graylog dir if doesn't exist (e.g. non-Dan-AMI classes):
 if [ ! -d /etc/graylog ]; then
-  mkdir /etc/graylog
+  sudo mkdir /etc/graylog
 fi
 
 # Import certs:
