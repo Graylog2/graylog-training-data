@@ -2,12 +2,6 @@
 #load Vars from Strigo
 source /etc/profile
 
-# Skip execution for TLS course:
-if [[ "$CLASS" == "64384cec22c8f6a4e5a0c6ec" ]]; then
-  echo "Skipping execution of $(basename "$0") because this is the TLS course..." 
-  exit
-fi
-
 # Make /etc/graylog dir if doesn't exist (e.g. non-Dan-AMI classes):
 if [ ! -d /etc/graylog ]; then
   sudo mkdir /etc/graylog
