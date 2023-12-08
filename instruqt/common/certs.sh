@@ -19,7 +19,6 @@ git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
 echo "The present working directory is $(pwd)" 
 
 sudo mv certs /certs
-mkdir /etc/graylog
 
 ## Copy Certs and Decode
 echo "Decoding Certs" 
