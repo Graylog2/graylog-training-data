@@ -2,6 +2,12 @@
 #load Vars from Strigo
 source /etc/profile
 
+#Wait for GL before changes
+while ! curl -k -s -u 'admin:yabba dabba doo' https://localhost/api/system/cluster/nodes; do
+	printf "\n\nWaiting for GL to come online to add content\n"
+    sleep 5
+done
+
 #Setup Illuminate using API
 printf "\n\nInstalling Illuminate" 
 ilver=$(curl -u 'admin:yabba dabba doo' -XGET -k 'https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/hub/latest' | jq -r '.version')
