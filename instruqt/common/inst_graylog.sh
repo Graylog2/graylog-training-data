@@ -24,13 +24,13 @@ curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
 
 # Install GL stack:
-apt update && apt install -y mongodb-org graylog-enterprise opensearch
+apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10
 
 # Set ownership+mode for /etc/graylog:
 sudo chown graylog.graylog -R /etc/graylog
 sudo chmod g+w -R /etc/graylog
 # Add admin to graylog group
-sudo usermod -aG graylog $LUSER
+sudo usermod -aG graylog admin
 
 # Modify server.conf:
 cp "/$CLASS/configs/server.conf" /etc/graylog/server
@@ -64,5 +64,5 @@ done > /dev/null
 # Add keytool binary to sudo's secure_path so user can run command with sudo w/o specifying full path:
 sed -E -i 's%secure_path="(.*?)"%secure_path="\1:/usr/share/graylog-server/jvm/bin"%' /etc/sudoers
 
-# Minor vim behavior tweak to fix undesireable pasting behavior:
-printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
+# Add bundled keytool binary to path:
+echo "PATH=$PATH:/usr/share/graylog-server/jvm/bin" >> /etc/profile
