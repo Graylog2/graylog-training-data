@@ -3,8 +3,10 @@
 # Install Graylog, MongoDB, and Opensearch
 # Only needed if using a non-Docker environment!
 
-# Setup GPG keyring:
-apt install -y gnupg
+# Avoids warnings during package installations
+export DEBIAN_FRONTEND=noninteractive
+# Import env vars used throughout scripts runtime
+source /etc/profile
 
 ### Install MongoDB:
 # Download GPG key:
@@ -52,14 +54,16 @@ do
     echo "Waiting for Opensearch API to come online..."
     sleep 1
 done > /dev/null
-systemctl enable --now graylog-server.service
 
-# Wait for Graylog web to be available:
-until curl -s localhost:9000
-do
-    echo "Waiting for Graylog API to come online..."
-    sleep 1
-done > /dev/null
+systemctl enable --now graylog-server.service
+# Wait for Graylog to be accessible before continuing
+while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+	printf "\n\nWaiting for Graylog to come online...\n"
+    sleep 5
+done
+
+# Set Graylog Cluster ID:
+/usr/bin/mongosh graylog --eval "db.cluster_config.updateMany({\"type\":\"org.graylog2.plugin.cluster.ClusterId\"}, {\$set:{payload:{cluster_id:\"$cluster_id\"}}});"
 
 # Add keytool binary to sudo's secure_path so user can run command with sudo w/o specifying full path:
 sed -E -i 's%secure_path="(.*?)"%secure_path="\1:/usr/share/graylog-server/jvm/bin"%' /etc/sudoers
