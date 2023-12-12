@@ -1,9 +1,7 @@
 #!/bin/bash
-#load Vars from Strigo
-source /etc/profile
 
-# Install dependency jq:
-apt install jq -y 
+# Import env vars used throughout scripts runtime
+source /etc/profile
 
 #echo "Sleeping for random time up to 30 seconds to prevent DNS records from being over-written in cases of multiple labs starting at once" 
 #sleep $(( ( RANDOM % 30 )  + 1 ))
