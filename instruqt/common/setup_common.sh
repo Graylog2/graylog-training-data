@@ -2,7 +2,7 @@
 
 # Setup script common to all courses.
 # ONLY includes commands compatible with all course designs.
-# Assumes the debian-cloud/debian-12 GCR image as Instruqt Sandbox VM
+# Assumes an Ubuntu 22.04 GCP Image as Instruqt Sandbox VM
 
 
 
@@ -38,7 +38,7 @@ sudo mkdir -p /etc/apt/keyrings
 /common/dns.sh
 
 # Add login banner to bashrc
-cat <<EOF >> /home/admin/.bashrc
+cat <<EOF >> /root/.bashrc
 printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
 printf "\e[37m██╔════╝ ██╔══██╗██╔══██╗╚██╗ ██╔╝\e[31m██║     ██╔═══██╗██╔════╝ \n";
 printf "\e[37m██║  ███╗██████╔╝███████║ ╚████╔╝ \e[31m██║     ██║   ██║██║  ███╗\n";
