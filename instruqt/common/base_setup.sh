@@ -8,6 +8,18 @@ source /etc/profile
 printf "\n\n$(date)-Installing System Updates\n"
 sudo apt upgrade -y
 
+#Install common deps:
+printf "\n\n$(date)-Installing common dependencies\n"
+sudo apt install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    jq
+
+printf "\n\n$(date)-Adding keyring dir\n"
+sudo mkdir -p /etc/apt/keyrings
+
 #BashRC
 cat <<EOF >> /root/.bashrc
 printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
@@ -32,21 +44,11 @@ if [[ ${NODOCKER[@]} =~ "$CLASS" ]]; then
     exit
 fi
 
-#Add Docker Repo
-printf "\n\n$(date)-Adding Docker Repo\n"
-sudo apt install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release \
-    jq
-printf "\n\n$(date)-Adding keyring dir\n"
-sudo mkdir -p /etc/apt/keyrings
-printf "\n\n$(date)-$(date)adding gpg key\n"
+#Set up Docker repo
+printf "\n\n$(date)-Adding Docker gpg key\n"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-printf "\n\n$(date)-adding repo to apt\n"
+printf "\n\n$(date)-Adding Docker repo to apt sources list\n"
 printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-cat /etc/apt/sources.list.d/docker.list
 
 #Powershell
 printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"
