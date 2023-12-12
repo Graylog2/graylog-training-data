@@ -4,7 +4,7 @@
 source /etc/profile
 
 # Setup OliveTin:
-/common/setup/olivetin.sh
+/common/setup_olivetin.sh
 
 # Setup Greynoise:
 /common/setup_greynoise.sh
