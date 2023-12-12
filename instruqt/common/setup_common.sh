@@ -71,7 +71,7 @@ fi
 ### Graylog, MongoDB, and OpenSearch APIs are all accessible from this point forward! ###
 
 # Install Licenses:
-printf "\n\nAdding licenses\n"
+printf "\n\n$(date)-Adding licenses\n"
 curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.license/licenses" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d "$license_enterprise"
 curl -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/plugins/org.graylog.plugins.license/licenses" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d "$license_security"
 sleep 15s
@@ -81,7 +81,7 @@ sleep 15s
 #### Training Customizations ###
 
 # Header Badge:
-printf "\n\nAdding Header Badge\n"
+printf "\n\n$(date)-Adding Header Badge\n"
 curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/cluster_config/org.graylog.plugins.customization.HeaderBadge" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"badge_text":"TRAINING","badge_color":"#1a237e","badge_enable":true}'
 
 
