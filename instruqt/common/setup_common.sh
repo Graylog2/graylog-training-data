@@ -34,6 +34,9 @@ sudo apt install -y \
 printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
 sudo mkdir -p /etc/apt/keyrings
 
+# DNS registration (to populate $dns env var):
+/common/dns.sh
+
 # Add login banner to bashrc
 cat <<EOF >> /home/admin/.bashrc
 printf "\e[37m ██████╗ ██████╗  █████╗ ██╗   ██╗\e[31m██╗      ██████╗  ██████╗ \n";
