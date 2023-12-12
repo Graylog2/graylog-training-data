@@ -62,10 +62,10 @@ printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 # run the install_graylog_docker.sh script. Else, run install_graylog.sh:
 if [[ $NEEDS_DOCKER ]]; then
     printf "\n\n$(date)-Installing Graylog (Docker)\n"
-    ./install_graylog_docker.sh
+    /common/install_graylog_docker.sh
 else
     printf "\n\n$(date)-Installing Graylog (non-Docker)\n"
-    ./install_graylog.sh
+    /common/install_graylog.sh
 fi
 
 ### Graylog, MongoDB, and OpenSearch APIs are all accessible from this point forward! ###
