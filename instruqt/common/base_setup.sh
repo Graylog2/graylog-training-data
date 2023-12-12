@@ -17,7 +17,8 @@ sudo apt install -y \
     lsb-release \
     jq
 
-printf "\n\n$(date)-Adding keyring dir\n"
+# Setup gpg keyring for apt:
+printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
 sudo mkdir -p /etc/apt/keyrings
 
 #BashRC
@@ -44,11 +45,12 @@ if [[ ${NODOCKER[@]} =~ "$CLASS" ]]; then
     exit
 fi
 
-#Set up Docker repo
-printf "\n\n$(date)-Adding Docker gpg key\n"
+# Setup Docker repo
+printf "\n\n$(date)-$(date)adding gpg key\n"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-printf "\n\n$(date)-Adding Docker repo to apt sources list\n"
+printf "\n\n$(date)-adding repo to apt\n"
 printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+cat /etc/apt/sources.list.d/docker.list
 
 #Powershell
 printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"
