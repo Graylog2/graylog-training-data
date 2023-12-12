@@ -3,6 +3,15 @@
 # Import env vars used throughout scripts runtime
 source /etc/profile
 
+# Setup OliveTin:
+/common/setup/olivetin.sh
+
+# Setup Greynoise:
+/common/setup_greynoise.sh
+
+# Setup Maxmind GeoIP databases:
+/common/setup_geoip.sh
+
 #LogData
 sudo mv /$CLASS/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
