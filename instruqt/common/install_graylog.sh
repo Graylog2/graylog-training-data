@@ -37,11 +37,12 @@ echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
 # Start services:
 systemctl enable --now mongod.service opensearch.service
-echo "Waiting for Opensearch service to be ready before launching Graylog..." 
-until curl -s localhost:9200 
+
+# Wait for OpenSearch to be accessible before continuing
+while ! curl -s localhost:9200
 do
-    echo "Waiting for Opensearch API to come online..."
-    sleep 1
+    echo "Waiting for Opensearch API to come online before launching Graylog..."
+    sleep 5
 done
 
 systemctl enable --now graylog-server.service
