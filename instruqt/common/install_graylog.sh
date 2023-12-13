@@ -31,8 +31,6 @@ apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10.0
 # Set ownership+mode for /etc/graylog:
 sudo chown graylog.graylog -R /etc/graylog
 sudo chmod g+w -R /etc/graylog
-# Add admin to graylog group
-sudo usermod -aG graylog admin
 
 # Modify server.conf:
 cp "/$CLASS/configs/server.conf" /etc/graylog/server
