@@ -16,7 +16,7 @@ git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /c
 # Import & decode cert files:
 for i in /certs/*.enc
 do
-    openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/.pwd > "${i%.enc}"
+    openssl enc -in $i -aes-256-cbc -pbkdf2 -d -pass file:/root/.pwd > "${i%.enc}"
     echo "Decoded ${i%.pem.enc}"
 done
 
