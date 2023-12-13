@@ -32,7 +32,34 @@ mv /certs/*.pem /.ssl
 openssl x509 -inform PEM -in /.ssl/fullchain.pem -out /usr/local/share/ca-certificates/fullchain.crt
 update-ca-certificates
 
-# Create Inputs:
+# Modify server.conf:
+cp "/$CLASS/configs/server.conf" /etc/graylog/server
+sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
+
+# Modify opensearch.yml:
+cp "/$CLASS/configs/opensearch.yml" /etc/opensearch/
+# sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
+cp "/$CLASS/configs/jvm.options" /etc/opensearch/
+
+# Restart OpenSearch and Graylog to load changes to config files:
+systemctl stop graylog-server opensearch
+systemctl restart opensearch
+
+# Wait for OpenSearch to be accessible before continuing
+while ! curl -s localhost:9200
+do
+    echo "Waiting for Opensearch API to come online before launching Graylog..."
+    sleep 5
+done
+
+systemctl restart graylog-server
+# Wait for Graylog to be accessible before continuing
+while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+	printf "\n\nWaiting for Graylog to come online...\n"
+    sleep 5
+done
+
+# Create Graylog Inputs:
 curl -k -u 'admin:yabba dabba doo' -XPOST "http://localhost:9000/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.gelf.http.GELFHttpInput","configuration":{"bind_address":"0.0.0.0","port":12201,"recv_buffer_size":1048576,"number_worker_threads":1,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"enable_bulk_receiving":false,"enable_cors":true,"max_http_chunk_size":65536,"idle_writer_timeout":60,"override_source":null,"charset_name":"UTF-8","decompress_size_limit":8388608},"title":"GELF HTTP","global":true}'
 
 # Delete demo files:

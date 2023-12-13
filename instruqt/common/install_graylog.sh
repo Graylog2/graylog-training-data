@@ -32,15 +32,6 @@ apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10.0
 sudo chown graylog.graylog -R /etc/graylog
 sudo chmod g+w -R /etc/graylog
 
-# Modify server.conf:
-cp "/$CLASS/configs/server.conf" /etc/graylog/server
-sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
-
-# Modify opensearch.yml:
-cp "/$CLASS/configs/opensearch.yml" /etc/opensearch/
-# sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
-cp "/$CLASS/configs/jvm.options" /etc/opensearch/
-
 # Set java path for use by Opensearch Security plugin:
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 
@@ -51,7 +42,7 @@ until curl -s localhost:9200
 do
     echo "Waiting for Opensearch API to come online..."
     sleep 1
-done > /dev/null
+done
 
 systemctl enable --now graylog-server.service
 # Wait for Graylog to be accessible before continuing
