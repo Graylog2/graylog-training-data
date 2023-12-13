@@ -19,13 +19,17 @@ echo "export authemail=$authemail" >> /etc/profile
 echo "export dns=$dns" >> /etc/profile
 
 # Setup Class Information
-CLASS="analyst"
-TITLE="Graylog Analyst"
+# CLASS should be lowercase and match track's folder name in repo:
+CLASS=""
+# TITLE should match "pretty" track name in Instruqt and 
+# should use caps and spaces:
+TITLE=""
 echo "export CLASS=$CLASS" >> /etc/profile
 echo "export TITLE=$TITLE" >> /etc/profile
 
 # Uncomment below if this course needs a Graylog Docker environment:
-echo "export NEEDS_DOCKER=yes" >> /etc/profile
+# (Note: Setting this var to any value at all is interpreted as "yes")
+#echo "export NEEDS_DOCKER=yes" >> /etc/profile
 
 # Cert Decode File
 echo "${cert_pwd}" > /root/.pwd
