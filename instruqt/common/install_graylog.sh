@@ -46,14 +46,14 @@ while ! curl -s localhost:9200
 do
     echo "Waiting for Opensearch API to come online before launching Graylog..."
     sleep 5
-done
+done > /dev/null
 
 systemctl enable --now graylog-server.service
 # Wait for Graylog to be accessible before continuing
-while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+while ! curl -s http://localhost:9000/api; do
 	printf "\n\nWaiting for Graylog to come online...\n"
     sleep 5
-done
+done > /dev/null
 
 # Set Graylog Cluster ID:
 /usr/bin/mongosh graylog --eval "db.cluster_config.updateMany({\"type\":\"org.graylog2.plugin.cluster.ClusterId\"}, {\$set:{payload:{cluster_id:\"$cluster_id\"}}});"
