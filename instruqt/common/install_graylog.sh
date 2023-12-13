@@ -32,6 +32,9 @@ apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10.0
 sudo chown graylog.graylog -R /etc/graylog
 sudo chmod g+w -R /etc/graylog
 
+# Import common OpenSearch config:
+cp /common/configs/opensearch.yml /common/configs/jvm.options /etc/opensearch
+
 # Set java path for use by Opensearch Security plugin:
 echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
 

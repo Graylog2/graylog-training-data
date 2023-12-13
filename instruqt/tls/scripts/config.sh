@@ -36,22 +36,6 @@ update-ca-certificates
 cp "/$CLASS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
-# Modify opensearch.yml:
-cp "/$CLASS/configs/opensearch.yml" /etc/opensearch/
-# sed -i "s/STRIGO_RESOURCE_1_DNS/$STRIGO_RESOURCE_1_DNS/" /etc/opensearch/opensearch.yml
-cp "/$CLASS/configs/jvm.options" /etc/opensearch/
-
-# Restart OpenSearch and Graylog to load changes to config files:
-systemctl stop graylog-server opensearch
-systemctl restart opensearch
-
-# Wait for OpenSearch to be accessible before continuing
-while ! curl -s localhost:9200
-do
-    echo "Waiting for Opensearch API to come online before launching Graylog..."
-    sleep 5
-done
-
 systemctl restart graylog-server
 # Wait for Graylog to be accessible before continuing
 while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
