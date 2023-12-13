@@ -33,7 +33,6 @@ openssl x509 -inform PEM -in /.ssl/fullchain.pem -out /usr/local/share/ca-certif
 update-ca-certificates
 
 # Modify server.conf:
-cp "/$CLASS/configs/server.conf" /etc/graylog/server
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 systemctl restart graylog-server

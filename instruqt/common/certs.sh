@@ -2,7 +2,7 @@
 #load Vars from Strigo
 source /etc/profile
 
-# Make /etc/graylog dir if doesn't exist (e.g. non-Dan-AMI classes):
+# Make /etc/graylog dir if doesn't exist (e.g. Docker-base envs):
 if [ ! -d /etc/graylog ]; then
   sudo mkdir /etc/graylog
 fi
