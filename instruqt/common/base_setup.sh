@@ -102,7 +102,8 @@ sudo chmod +x /$CLASS/scripts/*.sh
 printf "\n\n$(date)-Starting Class Config Script\n"
 /$CLASS/scripts/config.sh
 
-
+# Cleanup
+/common/cleanup.sh 
 
 ### DONE ###
 printf "\n\n$(date)-Complete. Locked and loaded\n"
