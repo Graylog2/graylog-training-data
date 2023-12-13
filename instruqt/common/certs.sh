@@ -9,10 +9,7 @@ fi
 
 # Import certs:
 echo "Grabbing Certs" 
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" 
-echo "The present working directory is $(pwd)" 
-
-sudo mv certs /certs
+git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
 
 ## Copy Certs and Decode
 echo "Decoding Certs" 
@@ -26,7 +23,6 @@ chown root.root /etc/graylog/*.pem
 chmod 600 /etc/graylog/*.pem
 
 #Update OS and keystore with chain
-
 echo "Updating Keystore" 
 keytool -import -trustcacerts -alias letsencryptcaroot  -file /etc/graylog/fullchain.pem -keystore /etc/graylog/cacerts -storepass changeit -noprompt 
 
