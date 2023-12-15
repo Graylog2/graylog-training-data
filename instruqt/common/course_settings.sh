@@ -2,10 +2,6 @@
 #load Vars from Strigo
 source /etc/profile
 
-#Update MaxMind DA with updated DB Path
-echo "Updating MaxMind DA" 
-curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/cluster_config/org.graylog.plugins.map.config.GeoIpResolverConfig" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"enabled":true,"enforce_graylog_schema":true,"db_vendor_type":"MAXMIND","city_db_path":"/usr/share/graylog/data/config/GeoLite2-City.mmdb","asn_db_path":"/usr/share/graylog/data/config/GeoLite2-ASN.mmdb","refresh_interval_unit":"MINUTES","refresh_interval":10,"use_s3":false}' 
-
 #Disable Whitelist
 printf "\n\nDisable Whitelisting\n" 
 curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/urlwhitelist" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"entries":[],"disabled":true}' 
