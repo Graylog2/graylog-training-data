@@ -46,7 +46,7 @@ printf "\e[37m██║   ██║██╔══██╗██╔══██
 printf "\e[37m╚██████╔╝██║  ██║██║  ██║   ██║   \e[31m███████╗╚██████╔╝╚██████╔╝\n";
 printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
 printf "                                                                        \n";
-printf "\e[39m Hi,\n Welcome to $TITLE!\n"
+printf "\e[39m Hi,\n Welcome to ${TITLE}!\n"
 printf "\e[93m Your public DNS record is: https://$dns.logfather.org\n";
 
 EOF
