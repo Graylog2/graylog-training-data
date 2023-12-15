@@ -25,7 +25,7 @@ chmod +x /common/*.sh
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
-./common/docker_chg.sh >> /home/$LUSER/strigosuccess
+./common/docker_graylog_https.sh >> /home/$LUSER/strigosuccess
 
 #OT Theme
 ./common/ot_gl_theme.sh >> /home/$LUSER/strigosuccess

@@ -22,7 +22,7 @@ mkdir /etc/graylog
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
-#./common/docker_chg.sh >> /home/$LUSER/strigosuccess
+#./common/docker_graylog_https.sh >> /home/$LUSER/strigosuccess
 
 #Launch Docker to load changes in env file
 #echo "Running Docker Compose to update GL environment with new information" >> /home/$LUSER/strigosuccess

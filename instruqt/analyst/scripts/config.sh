@@ -38,7 +38,7 @@ curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
-/common/docker_chg.sh
+/common/docker_graylog_https.sh
 
 #Illuminate Install - moved to POST docker update. Illuminate doesn't seem to fetch first time graylog runs
 /common/inst_illuminate.sh 

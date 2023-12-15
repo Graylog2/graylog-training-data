@@ -34,7 +34,7 @@ sed -i '/^      - "12201:12201\/udp" # GELF UDP.*/a\      - "1514:1514\/tcp"   #
 
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
-./common/docker_chg.sh >> /home/$LUSER/strigosuccess
+./common/docker_graylog_https.sh >> /home/$LUSER/strigosuccess
 
 #Load Abe's SwapShop!
 echo "Setup docker containers" >> /home/$LUSER/strigosuccess
