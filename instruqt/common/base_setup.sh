@@ -19,7 +19,7 @@ source /etc/profile
 
 # Update all system packages first:
 printf "\n\n$(date)-Installing System Updates\n"
-sudo apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
 
 #Install common deps:
 printf "\n\n$(date)-Installing common dependencies\n"
