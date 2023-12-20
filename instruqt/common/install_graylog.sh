@@ -11,11 +11,12 @@ set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
 
+
 ### Install MongoDB:
 # Download GPG key:
 curl -fsSL https://pgp.mongodb.com/server-6.0.asc | gpg -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg --dearmor > /dev/null
 # Add repo:
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg] http://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+echo "deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 
 ### Install Graylog:
 wget https://packages.graylog2.org/repo/packages/graylog-5.1-repository_latest.deb
