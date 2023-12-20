@@ -6,7 +6,7 @@
 ### Script Setup ###
 
 # Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
-set -euxo pipefail
+set -exo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
 
