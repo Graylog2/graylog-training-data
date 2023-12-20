@@ -36,8 +36,8 @@ echo "${cert_pwd}" > /root/.pwd
 
 # Base Apps
 printf "\n\nGrabbing Base Apps"
-sudo apt update
-sudo apt install git-svn -y
+sudo apt-get update
+sudo apt-get install git-svn -y
 
 # common Scripts
 printf "\n\nGrabbing Common Scripts"

@@ -12,11 +12,11 @@ printf "\n\n$(date)-Adding Docker gpg key\n"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 printf "\n\n$(date)-Adding Docker repo to apt sources list\n"
 printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt update
+apt-get update
 
 # Install Docker
 printf "\n\n$(date)-Install Docker\n"
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
 
 # Import Docker Compose config and start Graylog enviroment
 printf "\n\n$(date)-Grab and get containers running\n"

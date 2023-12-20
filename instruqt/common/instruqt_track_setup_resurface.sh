@@ -12,8 +12,8 @@ echo "export TITLE=$TITLE" >> /etc/profile
 
 # Base Apps
 printf "\n=== Grabbing Base Apps ==="
-sudo apt update
-sudo apt install git-svn -y
+sudo apt-get update
+sudo apt-get install git-svn -y
 
 # common Scripts
 printf "\n=== Grabbing Common Scripts==="
@@ -28,18 +28,18 @@ mv /root/db /root/resurface_db
 
 # Add Docker's official GPG key:
 printf "\n=== Installing Docker ==="
-apt update
-apt install -y ca-certificates curl gnupg openjdk-17-jre-headless
+apt-get update
+apt-get install -y ca-certificates curl gnupg openjdk-17-jre-headless
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the repository to Apt sources:
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt update
+apt-get update
 
 # Install Docker:
-apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Install Resurface:
 # Note: Using non-latest .28 version bc .30 has a UI bug

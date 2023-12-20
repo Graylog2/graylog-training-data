@@ -26,7 +26,7 @@ curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
 
 # Install GL stack:
-apt update && apt install -y mongodb-org graylog-enterprise opensearch=2.10.0
+apt-get update && apt-get install -y mongodb-org graylog-enterprise opensearch=2.10.0
 
 # Set ownership+mode for /etc/graylog:
 sudo chown graylog.graylog -R /etc/graylog

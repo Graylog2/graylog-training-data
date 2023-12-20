@@ -9,8 +9,8 @@ source /etc/profile
 printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"
 sudo wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
-sudo apt update -y
-sudo apt install powershell -y
+sudo apt-get update -y
+sudo apt-get install powershell -y
 
 #Move "sendlogs" to default profile
 sudo mkdir /root/.config/powershell -p
