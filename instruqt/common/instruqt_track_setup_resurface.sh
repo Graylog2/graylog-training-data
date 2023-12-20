@@ -8,8 +8,10 @@
 
 # Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
 set -euxo pipefail
-# Import env vars used throughout scripts runtime
-source /etc/profile
+
+# To reduce issues with user prompts during package installation:
+export DEBIAN_FRONTEND=noninteractive
+echo "export DEBIAN_FRONTEND=noninteractive" >> /etc/profile
 
 # Setup Class Information
 # CLASS should be lowercase and match track's folder name in repo:
