@@ -12,13 +12,13 @@ echo "export TITLE=$TITLE" >> /etc/profile
 
 # Base Apps
 printf "\n=== Grabbing Base Apps ==="
-sudo apt-get update
-sudo apt-get install git-svn -y
+apt-get update
+apt-get install git-svn -y
 
 # common Scripts
 printf "\n=== Grabbing Common Scripts==="
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/common"
-sudo mv common /common
+mv common /common
 
 # Import pre-generated Resurface databases from repo
 printf "\n=== Importing Resurface Database ==="

@@ -36,14 +36,14 @@ echo "${cert_pwd}" > /root/.pwd
 
 # Base Apps
 printf "\n\nGrabbing Base Apps"
-sudo apt-get update
-sudo apt-get install git-svn -y
+apt-get update
+apt-get install git-svn -y
 
 # common Scripts
 printf "\n\nGrabbing Common Scripts"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/common"
-sudo mv common /common
-sudo chmod +x /common/*.sh
+mv common /common
+chmod +x /common/*.sh
 
 # Run Base Install
 printf "\n\nRunning Base Install"

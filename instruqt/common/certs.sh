@@ -4,7 +4,7 @@ source /etc/profile
 
 # Make /etc/graylog dir if doesn't exist (e.g. Docker-base envs):
 if [ ! -d /etc/graylog ]; then
-  sudo mkdir /etc/graylog
+  mkdir /etc/graylog
 fi
 
 # Import certs:
@@ -37,7 +37,7 @@ done
 
 ## Update Docker Container with certs
 printf "Copying certs into container"
-glc=$(sudo docker ps | grep graylog-enterprise | awk '{print $1}')
+glc=$(docker ps | grep graylog-enterprise | awk '{print $1}')
 docker cp /etc/graylog/cert.pem $glc:/usr/share/graylog/data/config/cert.pem
 docker cp /etc/graylog/privkey.pem $glc:/usr/share/graylog/data/config/privkey.pem
 docker cp /etc/graylog/fullchain.pem $glc:/usr/share/graylog/data/config/fullchain.pem

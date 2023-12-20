@@ -29,8 +29,8 @@ echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.op
 apt-get update && apt-get install -y mongodb-org graylog-enterprise opensearch=2.10.0
 
 # Set ownership+mode for /etc/graylog:
-sudo chown graylog.graylog -R /etc/graylog
-sudo chmod g+w -R /etc/graylog
+chown graylog.graylog -R /etc/graylog
+chmod g+w -R /etc/graylog
 
 # Import common OpenSearch config needed for first service start:
 cp /common/configs/opensearch.yml /common/configs/jvm.options /etc/opensearch

@@ -19,11 +19,11 @@ source /etc/profile
 
 # Update all system packages first:
 printf "\n\n$(date)-Installing System Updates\n"
-sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
+DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
 
 #Install common deps:
 printf "\n\n$(date)-Installing common dependencies\n"
-sudo apt install -y \
+apt-get install -y \
     ca-certificates \
     curl \
     gnupg \
@@ -32,7 +32,7 @@ sudo apt install -y \
 
 # Setup gpg keyring for apt:
 printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
-sudo mkdir -p /etc/apt/keyrings
+mkdir -p /etc/apt/keyrings
 
 # DNS registration (to populate $dns env var):
 /common/dns.sh
@@ -95,8 +95,8 @@ printf "\n\n$(date)-Grab Class Data\n"
 git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
 
 printf printf "\n\n$(date)-Move Class Data and make exec\n"
-sudo mv $CLASS /$CLASS
-sudo chmod +x /$CLASS/scripts/*.sh
+mv $CLASS /$CLASS
+chmod +x /$CLASS/scripts/*.sh
 
 # Execute Class-Specific Setup:
 printf "\n\n$(date)-Starting Class Config Script\n"
