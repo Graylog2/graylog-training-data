@@ -1,5 +1,15 @@
-set -eo pipefail
-export DEBIAN_FRONTEND=noninteractive
+#!/bin/bash
+
+# Instruqt Track Setup Lifecycle script.
+# First script ran during course initialization.
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
+
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
+# Import env vars used throughout scripts runtime
+source /etc/profile
 
 # Set License Details
 cluster_id=${cluster_id}

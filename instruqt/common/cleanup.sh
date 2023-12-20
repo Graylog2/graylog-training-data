@@ -1,5 +1,14 @@
 #!/bin/bash
-#load Vars from Strigo
+
+# Cleans up all repo files and sensitive env vars from during setup.
+# MUST RUN LAST!
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
+
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
+# Import env vars used throughout scripts runtime
 source /etc/profile
 
 #Cleanup

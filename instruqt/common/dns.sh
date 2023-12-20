@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Register environment's FQDN with CloureFlare, get publicly-resolvable URL for training env.
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
+
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
 

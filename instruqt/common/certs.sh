@@ -1,5 +1,13 @@
 #!/bin/bash
-#load Vars from Strigo
+
+# Install TLS certificates from repo for both Docker and non-Docker envs
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
+
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
+# Import env vars used throughout scripts runtime
 source /etc/profile
 
 # Make /etc/graylog dir if doesn't exist (e.g. Docker-base envs):

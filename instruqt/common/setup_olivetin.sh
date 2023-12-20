@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# Configure Powershell and Olivetin for use in log replay
+# Configure Powershell and Olivetin for use in log replay.
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
 
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
+
 
 #Powershell
 printf "\n\n$(date)-Installing Powershell for use with Olive-Tin\n"

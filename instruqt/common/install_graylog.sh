@@ -2,9 +2,12 @@
 
 # Install Graylog, MongoDB, and Opensearch
 # Only needed if using a non-Docker environment!
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
 
-# Avoids warnings during package installations
-export DEBIAN_FRONTEND=noninteractive
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
 

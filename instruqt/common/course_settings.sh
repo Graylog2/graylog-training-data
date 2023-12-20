@@ -1,5 +1,13 @@
 #!/bin/bash
-#load Vars from Strigo
+
+# Miscellaneous Graylog configuration settings.
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
+
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
+# Import env vars used throughout scripts runtime
 source /etc/profile
 
 #Disable Whitelist

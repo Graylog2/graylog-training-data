@@ -2,14 +2,15 @@
 
 # Setup script common to all courses.
 # ONLY includes commands compatible with all course designs.
-# Assumes an Ubuntu 22.04 GCP Image as Instruqt Sandbox VM
+# Based on the professional-services-406616/graylog-ubuntu2204 GCP Image
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
 
 
 
-### Env Vars ###
+### Script Setup ###
 
-# Avoids warnings during package installations
-export DEBIAN_FRONTEND=noninteractive
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
 

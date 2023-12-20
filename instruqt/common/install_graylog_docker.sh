@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# Install and configure Graylog in a Docker environment
+# Install and configure Graylog in a Docker environment.
+# ref: https://graylogdocumentation.atlassian.net/wiki/x/Q4A9t
 
-# Avoids warnings during package installations
-export DEBIAN_FRONTEND=noninteractive
+### Script Setup ###
+
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -euxo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
+
 
 # Set up Docker repo
 printf "\n\n$(date)-Adding Docker gpg key\n"
