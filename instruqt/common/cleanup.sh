@@ -12,7 +12,7 @@ set -exo pipefail
 source /etc/profile
 
 #Cleanup
-echo "Cleaning up" 
+printf "\n=== Cleaning up ===\n" 
 sed -i '/export apitoken=/d' /etc/profile
 sed -i '/export authemail=/d' /etc/profile
 sed -i '/license_enterprise=/d' /etc/profile
@@ -21,13 +21,15 @@ sed -i '/gn_api_key=/d' /etc/profile
 sed -i '/authemail=/d' /etc/profile
 sed -i '/apitoken=/d' /etc/profile
 
-rm -r /certs
-rm /root/.pwd
-rm -r /$CLASS
-rm -r /common
+[ -d /certs ] && rm -r /certs
+[ -e /root/.pwd ] && rm /root/.pwd
+[ -d /$CLASS ] && rm -r /$CLASS
+[ -d /common ] && rm -r /common
 
 #Opensearch Replica Cleanup
-curl -X PUT "http://127.0.0.1:9200/.opensearch-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
-curl -X PUT "http://127.0.0.1:9200/.plugins-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+if curl localhost:9200; then
+    curl -X PUT "http://127.0.0.1:9200/.opensearch-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+    curl -X PUT "http://127.0.0.1:9200/.plugins-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+fi
 
 echo "Cleanup complete!" 
