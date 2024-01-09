@@ -2,8 +2,8 @@
 #load Vars from Strigo
 source /etc/profile
 
-echo "Importing common scripts" >> /home/$LUSER/strigosuccess
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
+#echo "Importing common scripts" >> /home/$LUSER/strigosuccess
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
 
 # Create /etc/graylog so certs.sh works right:
