@@ -14,9 +14,9 @@ if [ ! -d /etc/graylog ]; then
 fi
 
 # Import certs:
-echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$LUSER/strigosuccess
-echo "The present working directory is $(pwd)" >> /home/$LUSER/strigosuccess
+#echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" >> /home/$LUSER/strigosuccess
+#echo "The present working directory is $(pwd)" >> /home/$LUSER/strigosuccess
 
 ## Copy Certs and Decode
 echo "Decoding Certs" >> /home/$LUSER/strigosuccess
