@@ -2,9 +2,9 @@
 #load Vars from Strigo
 source /etc/profile
 
-echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
+#echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
+#apt install git-svn -y
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
 chmod +x /common/*.sh
 
 # Create /etc/graylog so certs.sh works right:

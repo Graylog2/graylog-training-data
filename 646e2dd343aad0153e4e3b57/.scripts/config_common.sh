@@ -10,11 +10,11 @@ ln -s /$STRIGO_CLASS_ID/.scripts/cheat.sh /home/admin/cheat.sh
 # Apply proper ownership
 chown -R 1000:1000 /$STRIGO_CLASS_ID/
 
-echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn jq -y
+#echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
+#apt install git-svn jq -y
 #Certs
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
-chmod +x /common/*.sh
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
+#chmod +x /common/*.sh
 
 
 if [[ "$STRIGO_RESOURCE_NAME" == "Proxy" ]]; then
@@ -70,9 +70,9 @@ EOF
     sudo chown -R traefik:traefik /var/log/traefik
 
     #Certs
-    echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
-    apt install git-svn -y
-    git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
+    #echo "Grabbing Certs" >> /home/$LUSER/strigosuccess
+    #apt install git-svn -y
+    #git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs"
 
     ## Copy Certs and Decode
     sudo openssl enc -in /certs/privkey.pem.enc -aes-256-cbc -pbkdf2 -d -pass file:.pwd > /etc/traefik/certs/privkey.pem

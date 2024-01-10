@@ -2,11 +2,11 @@
 #load Vars from Strigo
 source /etc/profile
 
-echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
-apt install git-svn -y
+#echo "Grabbing common scripts" >> /home/$LUSER/strigosuccess
+#apt install git-svn -y
 #Certs
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
-chmod +x /common/*.sh
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
+#chmod +x /common/*.sh
 
 #Monitoring Class Changes
 ./"$STRIGO_CLASS_ID/scripts/config_monitoring.sh" >> /home/$LUSER/strigosuccess
