@@ -6,7 +6,7 @@ source /etc/profile
 #apt install git-svn -y
 #Certs
 #git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/common" >> /home/$LUSER/strigosuccess
-#chmod +x /common/*.sh
+chmod +x /common/*.sh
 
 #Monitoring Class Changes
 ./"$STRIGO_CLASS_ID/scripts/config_monitoring.sh" >> /home/$LUSER/strigosuccess
