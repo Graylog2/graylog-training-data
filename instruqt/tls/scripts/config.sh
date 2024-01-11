@@ -10,8 +10,9 @@ source /etc/profile
 printf "=== $(basename $0) === Starting...\n"
 
 # Import certs:
-echo "Grabbing Certs" 
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
+#echo "Grabbing Certs" 
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
+echo "Processing Certs"
 
 # Import & decode cert files:
 for i in /certs/*.enc
