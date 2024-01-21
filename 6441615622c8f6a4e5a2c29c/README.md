@@ -1,2 +1,2 @@
 # CTF Course Data
-Here lays the CTF course data and configuration scripts
+Here lies the CTF course data and configuration scripts
