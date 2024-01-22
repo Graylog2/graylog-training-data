@@ -43,5 +43,8 @@ actions:
   icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/The_Valdore21.png" width = "48px"/>'
   timeout: 900
 
-
+- title: Analyst
+  shell: pwsh -c 'Send-logs windowsfirewall'
+  icon: "&#128293"
+  timeout: 1200
   
