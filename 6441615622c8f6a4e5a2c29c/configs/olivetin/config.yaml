@@ -52,3 +52,9 @@ actions:
   shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/oh_bother.log
   icon: "&#127855"
   timeout: 900
+
+- title: Illuminate Compatible Logs (placeholder)
+  shell: /etc/graylog/log_data/illy.sh
+  icon: "&#128294"
+  timeout: 900
+
