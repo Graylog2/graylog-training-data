@@ -109,6 +109,7 @@ lxc exec multivac -- bash -c "$(cat /$STRIGO_CLASS_ID/scripts/multivac_config.sh
 #Stage Archive Data
 printf "Archive Data to Container"
 glc=$(docker ps | grep graylog-enterprise | awk '{print $1}')
+docker exec $glc mkdir -p /usr/share/graylog/data/archives/
 docker cp /$STRIGO_CLASS_ID/bin/graylog_3-20240121-200156-094 $glc:/usr/share/graylog/data/archives/graylog_3-20240121-200156-094
 
 #Wait for GL before api calls
