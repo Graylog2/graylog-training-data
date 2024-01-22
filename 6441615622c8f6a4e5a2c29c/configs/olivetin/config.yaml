@@ -48,3 +48,7 @@ actions:
   icon: "&#128293"
   timeout: 1200
   
+- title: Have you got any honey?
+  shell: while read x; do echo $x"\0" | ncat localhost 12201 -w50ms; done < /etc/graylog/log_data/oh_bother.log
+  icon: "&#127855"
+  timeout: 900
