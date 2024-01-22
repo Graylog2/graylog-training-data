@@ -132,6 +132,10 @@ mv "/$STRIGO_CLASS_ID/log_data/" /etc/graylog/
 mv "/$STRIGO_CLASS_ID/scripts/nerdy_log_gen.sh" /etc/graylog/log_data
 chmod +x /etc/graylog/log_data/nerdy_log_gen.sh
 
+# Move illuminate log data import script
+mv "/$STRIGO_CLASS_ID/scripts/illy.sh" /etc/graylog/log_data
+chmod +x /etc/graylog/log_data/illy.sh
+
 #Update OT Config 
 echo "Updating OT" >> /home/$LUSER/strigosuccess
 mv "/$STRIGO_CLASS_ID/configs/olivetin/config.yaml" /etc/OliveTin/config.yaml
