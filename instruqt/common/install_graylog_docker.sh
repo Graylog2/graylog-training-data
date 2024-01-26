@@ -11,16 +11,18 @@ set -exo pipefail
 source /etc/profile
 
 
+### Added to GCP Image MANUALLY
+### Automation via actions required log-term.
 # Set up Docker repo
-printf "\n\n$(date)-Adding Docker gpg key\n"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-printf "\n\n$(date)-Adding Docker repo to apt sources list\n"
-printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt-get update
+#printf "\n\n$(date)-Adding Docker gpg key\n"
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+#printf "\n\n$(date)-Adding Docker repo to apt sources list\n"
+#printf "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+#apt-get update
 
 # Install Docker
-printf "\n\n$(date)-Install Docker\n"
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
+#printf "\n\n$(date)-Install Docker\n"
+#sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin openjdk-17-jre-headless
 
 # Import Docker Compose config and start Graylog enviroment
 printf "\n\n$(date)-Grab and get containers running\n"
@@ -31,7 +33,7 @@ sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training
 sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
 
 # Wait for Graylog to be accessible before continuing
-while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
+while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; 
 	printf "\n\nWaiting for Graylog to come online...\n"
     sleep 5
 done
