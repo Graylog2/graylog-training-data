@@ -33,7 +33,7 @@ sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training
 sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
 
 # Wait for Graylog to be accessible before continuing
-while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; 
+while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
 	printf "\n\nWaiting for Graylog to come online...\n"
     sleep 5
 done
