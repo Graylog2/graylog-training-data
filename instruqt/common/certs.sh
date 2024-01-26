@@ -16,8 +16,8 @@ if [ ! -d /etc/graylog ]; then
 fi
 
 # Import certs:
-echo "Grabbing Certs" 
-git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
+#echo "Grabbing Certs" 
+#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/certs" /certs
 
 ## Copy Certs and Decode
 echo "Decoding Certs" 
