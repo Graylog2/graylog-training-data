@@ -28,9 +28,9 @@ source /etc/profile
 printf "\n\n$(date)-Grab and get containers running\n"
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/docker-compose-glservices.yml
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/graylog-training-changes.env
-#sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
-#sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env create
-#sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env create
+sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
 
 # Wait for Graylog to be accessible before continuing
 while ! curl -s -u 'admin:yabba dabba doo' http://localhost:9000/api/system/cluster/nodes; do
