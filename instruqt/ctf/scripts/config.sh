@@ -58,8 +58,8 @@ docker run -p 8080:8080 -d --restart always tarampampam/webhook-tester
 #Rick's Sysadmin stuffs!
 echo "Setup The Graybeard" 
 # Add a flag to the home directory passwords.txt
-echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Security' > /home/$LUSER/passwords.txt
-echo 'root@multivac - AlexanderAdell' >> /home/$LUSER/passwords.txt
+echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Security' > /home/ubuntu/passwords.txt
+echo 'root@multivac - AlexanderAdell' >> /home/ubuntu/passwords.txt
 chown ubuntu:ubuntu /home/ubuntu/passwords.txt
 # get the docker bridge so we can add the lxc container to it, pretty sure this is illegal in 12 states
 docker_bridge="br-"$(docker network list | grep 'graylog_default' | cut -f 1 -d ' ')

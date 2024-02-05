@@ -1,0 +1,571 @@
+{
+  "v": 1,
+  "id": "d1d32c7f-8583-439b-8c4e-f1037a34747a",
+  "rev": 1,
+  "name": "Analyst CTF CP",
+  "summary": "Analyst CTF CP",
+  "description": "",
+  "vendor": "GL",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "058dd503-8ba0-4e45-818a-f6c8a29087a6",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "analyst udp"
+        },
+        "configuration": {
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1500
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          },
+          "charset_name": {
+            "@type": "string",
+            "@value": "UTF-8"
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.udp.RawUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "e93c9cb2-9d28-4368-bae7-898371e37fdd",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Workstations - Firewall"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "A new pipeline!"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Workstations - Firewall\"\nstage 0 match pass\nrule \"Parse - Firewall - GROK\"\nstage 11 match pass\nrule \"Context - Desktop Firewalls - External Destination\"\nrule \"Context - Desktop Firewalls - External Source\"\nrule \"Context - Desktop Firewalls - Internal Destination\"\nrule \"Context - Desktop Firewalls - Internal Source\"\nstage 25 match pass\nrule \"Enrich - Destination - Asset Management\"\nrule \"Enrich - Destination - Threat Intelligence\"\nrule \"Enrich - Source - Asset Management\"\nrule \"Enrich - Source - Threat Intelligence\"\nstage 42 match either\nrule \"Context - Threat Info - Destination\"\nrule \"Context - Threat Info - Source\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "21e9a0a9-1a96-42c3-851a-911cbee742ad",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "80a7c6d6-aa16-4804-a4ee-5c93ae0ee407"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "asset"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "03c68a75-ab56-4928-a173-ddf8df06cb03"
+        },
+        "_scope": {
+          "@type": "string",
+          "@value": "DEFAULT"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Asset Management Lookup"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Lookup table to retrieve asset information from last known IP address"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "03c68a75-ab56-4928-a173-ddf8df06cb03",
+      "data": {
+        "_scope": {
+          "@type": "string",
+          "@value": "DEFAULT"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "asset-data"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "asset-data"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Asset Management Database"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "httpjsonpath"
+          },
+          "url": {
+            "@type": "string",
+            "@value": "https://825c0i6vl3.execute-api.us-east-2.amazonaws.com/v1/execute?key=${key}"
+          },
+          "single_value_jsonpath": {
+            "@type": "string",
+            "@value": "$.hostname"
+          },
+          "multi_value_jsonpath": {
+            "@type": "string",
+            "@value": "$"
+          },
+          "user_agent": {
+            "@type": "string",
+            "@value": "Graylog Lookup - https://www.graylog.org/"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "80a7c6d6-aa16-4804-a4ee-5c93ae0ee407",
+      "data": {
+        "_scope": {
+          "@type": "string",
+          "@value": "DEFAULT"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "asset-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Asset Cache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "1f2fc084-62ac-4551-a323-5a1dd84e7f69",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Threat Intelligence\"\nwhen\n    has_field(\"source_ip\") && \n    $message.source_is_external == true\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.source_ip)\n);\n\n//Set fields with enriched details\nset_field(\"source_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"source_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"source_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"Source - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.source_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d4dc9e0e-4e27-45aa-b192-a43544de1ffc",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Destination\"\nwhen\n    $message.threat_classification == \"malicious\" &&\n    $message.destination_is_external == true\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.destination_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "6d9e3c7d-71fd-48c9-9106-4097844781bd",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Destination\"\nwhen\n    has_field(\"destination_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "57b779b2-dcdb-4770-b01c-985d7de8439c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Threat Intelligence\"\nwhen\n    has_field(\"destination_ip\") && \n    $message.destination_is_external == true\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.destination_ip)\n);\n\n//Set fields with enriched details\nset_field(\"destination_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"destination_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"destination_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"destination - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.destination_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "92fda39b-80f3-4c78-aadc-a3a318e6ddd8",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - External Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - External Destination\"\nwhen\n    has_field(\"destination_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_external\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "4ff9c8d9-8fb1-4a93-95c9-5b4e27d4dbc1",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - External Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - External Source\"\nwhen\n    has_field(\"source_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_external\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "d5644277-8937-48e7-9cef-e3e5afab1296",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Source\"\nwhen\n    has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "4b1b84af-8939-4645-ad81-9a17dc970bef",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Asset Management\"\nwhen\n    has_field(\"destination_ip\") && \n    $message.destination_is_internal == true\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.destination_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"destination_\");\nset_field(\"lookup\",\"[Destination - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "853afe14-de0c-43cc-8d9a-5c1c7f15d274",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Asset Management\"\nwhen\n    has_field(\"source_ip\") && \n    $message.source_is_internal == true\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.source_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"source_\");\nset_field(\"lookup\",\"[Source - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "2ff4598c-6f45-4fc8-9965-03a50a3ffc56",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Firewall - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Firewall - GROK\"\n\nwhen\n\n    true\n    \nthen\n\nlet parsed = grok(\n    \n    pattern:\"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port})?( %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n\n    value: to_string($message.message),\n    \n    only_named_captures: true\n    );\n    \n    set_fields(\n    fields:parsed\n    );\n    \n    set_field(\n    field: \"Parse\",\n    value: \"Firewall - GROK\",\n    prefix:\"Awesome_\"\n    );\n    \nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "686cd232-0d43-421a-abb7-ad90e34d31fc",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Source\"\nwhen\n    $message.threat_classification == \"malicious\" && \n    $message.source_is_external == true\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.source_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=5.2.2+8eab621"
+        }
+      ]
+    }
+  ]
+}
