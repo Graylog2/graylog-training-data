@@ -38,6 +38,10 @@ curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices
 #OT Theme
 /common/ot_gl_theme.sh 
 
+#Update Docker Compose with required inputs
+sed -i '/^      - "12201:12201\/udp" # GELF UDP.*/a\      - "5555:5555\/tcp"   # Raw TCP 5555' /root/docker-compose-glservices.yml
+sed -i '/^      - "12201:12201\/udp" # GELF UDP.*/a\      - "1514:1514\/tcp"   # Raw TCP 1514' /root/docker-compose-glservices.yml
+
 #Update GL Docker Environment
 ## After this point everything will be HTTPS
 /common/docker_graylog_https.sh
@@ -128,4 +132,3 @@ done
 echo "Adding inputs to Graylog via API" 
 curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.raw.tcp.RawTCPInput","configuration":{"bind_address":"0.0.0.0","port":5555,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":false,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8"},"title":"RAW Data","global":true,"node":"93f01a3f-d051-436f-9bab-0c11f22cd55c"}'
 curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.syslog.tcp.SyslogTCPInput","configuration":{"bind_address":"0.0.0.0","port":1514,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":false,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8"},"title":"Syslog Data","global":true,"node":"93f01a3f-d051-436f-9bab-0c11f22cd55c"}'
-curl -k -u 'admin:yabba dabba doo' -XPOST "https://localhost/api/system/inputs" -H 'Content-Type: application/json' -H 'X-Requested-By: PS_TeamAwesome' -d '{"type":"org.graylog2.inputs.gelf.tcp.GELFTCPInput","configuration":{"bind_address":"0.0.0.0","port":12201,"recv_buffer_size":1048576,"number_worker_threads":2,"tls_cert_file":"","tls_key_file":"","tls_enable":false,"tls_key_password":"","tls_client_auth":"disabled","tls_client_auth_cert_file":"","tcp_keepalive":false,"use_null_delimiter":true,"max_message_size":2097152,"override_source":null,"charset_name":"UTF-8","decompress_size_limit":8388608},"title":"GELF TCP","global":true,"node":"3f46b40b-8399-46ad-80da-2deed2c29bd6"}'
