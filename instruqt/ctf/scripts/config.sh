@@ -10,7 +10,7 @@
 #LogData
 mkdir -p /etc/graylog/log_data
 mv "/$CLASS/log_data/" /etc/graylog/
-mv /etc/graylog/log_data/Data* /root/powershell/Data
+mv /etc/graylog/log_data/Data* /root/powershell/
 
 #Move Log Generating Scripts
 mv "/$CLASS/scripts/nerdy_log_gen.sh" /etc/graylog/log_data
