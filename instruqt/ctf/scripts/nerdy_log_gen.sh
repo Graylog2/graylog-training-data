@@ -11,11 +11,11 @@ do
     if [[ $((RANDOM % 100)) -eq 0 ]]; then
         sus="true"
         if [[ $1 == "kl" ]]; then
-            source_ip="203.0.113.1"
+            source_ip="203.0.113.2"
             source_department="unknown"
         else
             source_ip="0.0.0.1"
-            source_department="802a3d20c3844fb8da4c4173b907aaae"
+            source_department="895446f01ba99b9c0488c220ffe61c17"
         fi
     else
         source_ip="10.0.$((RANDOM%7+1)).$((RANDOM%30+1))"
