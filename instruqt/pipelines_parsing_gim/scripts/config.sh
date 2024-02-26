@@ -15,7 +15,7 @@ source /etc/profile
 #LogData
 sudo mv /$CLASS/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
-sudo mkdir -P /etc/graylog/log_data
+sudo mkdir -p /etc/graylog/log_data
 sudo mv /root/powershell/Data/firewall.log /etc/graylog/log_data/
 
 #Creating Indices
