@@ -12,8 +12,7 @@ actions:
   shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | ncat -w 1 localhost 1514
   icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
   timeout: 900
-
-actions:   
+  
 - title: Demo Log
   shell: pwsh -c 'send-logs demo'
   icon: backup
