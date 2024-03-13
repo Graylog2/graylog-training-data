@@ -59,7 +59,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"MQ-17J's Server Messages\"\nwhen\n  to_string($message.source) == \"multivac\"\nthen\n  let new_message = base64_decode(to_string($message.message));\n  let new_messagea = replace(new_message,\"ug\",\"wn\");\n  let new_messageb = replace(new_messagea,\"igan\",\"alac\");\n  let new_messagec = replace(new_messageb,\"r\",\"line\");\n  set_field(\"message\", new_messagec);\nend"
+          "@value": "rule \"MQ-17J's Server Messages\"\nwhen\n  to_string($message.source) == \"multivac\"\nthen\n  let new_message = base64_decode(to_string($message.message));\n  let new_messagea = replace(new_message,\"ipelines\",\"essimum\");\n  let new_messageb = replace(new_messagea,\"any\",\"ost\");\n  let new_messagec = replace(new_messageb,\"ispl\",\"el\");\n  set_field(\"message\", new_messagec);\nend"
         }
       },
       "constraints": [
