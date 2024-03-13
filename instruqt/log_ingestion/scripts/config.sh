@@ -31,7 +31,7 @@ curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices
 /common/course_settings.sh 
 
 #Add course CPs
-/common/cp_inst.sh 
+# /common/cp_inst.sh 
 
 #OT Theme
 /common/ot_gl_theme.sh 
