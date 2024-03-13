@@ -16,6 +16,7 @@ sed -i '1s/^/\n/' /etc/graylog/sidecar/sidecar.yml
 sed -i '1s/^/#Have a flag: mEl-wUz-hERe-cOding-PokEr\n/' /etc/graylog/sidecar/sidecar.yml
 sed -i '1s/^/#Who can remember all these config file names? I guess since you figured it out you can\n/' /etc/graylog/sidecar/sidecar.yml
 sed -i 's/^#tls_skip_verify: false/tls_skip_verify: true/' /etc/graylog/sidecar/sidecar.yml
+sed -i 's/^  - default/  - ctf/' /etc/graylog/sidecar/sidecar.yml
 sed -i 's|^#server_url: "http://127.0.0.1:9000/api/"|server_url: "https://graylog:443/api/"|' /etc/graylog/sidecar/sidecar.yml
 sed -i 's/server_api_token: ""/#server_api_token: "ZZZZZTOKENTOKENZZZZZ"/' /etc/graylog/sidecar/sidecar.yml
 graylog-sidecar -service install

@@ -110,7 +110,7 @@ network:
         addresses: [1.1.1.1]
 EOF
 # setup hosts file resolution for graylog container in multivac
-graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.graylog_default.IPAddress }}' graylog-graylog-1)
+graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.root_default.IPAddress }}' root-graylog-1)
 sed -i "s/ZZZZZGRAYLOGIPZZZZZ/$graylog_ip/" /$CLASS/scripts/multivac_config.sh
 #echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
 echo "172.18.10.10 multivac" >> /etc/hosts

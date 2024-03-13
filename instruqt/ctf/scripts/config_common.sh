@@ -50,7 +50,7 @@ echo 'Who stored this flag in a password document?: Incredibly#Bad#Password#Secu
 echo 'root@multivac - AlexanderAdell' >> /home/$LUSER/passwords.txt
 chown ubuntu:ubuntu /home/$LUSER/passwords.txt
 # get the docker bridge so we can add the lxc container to it, pretty sure this is illegal in 12 states
-docker_bridge="br-"$(docker network list | grep 'graylog_default' | cut -f 1 -d ' ')
+docker_bridge="br-"$(docker network list | grep 'root_default' | cut -f 1 -d ' ')
 # init LXD with a config
 cat <<EOF | lxd init --preseed
 config:
@@ -93,7 +93,7 @@ network:
         addresses: [1.1.1.1]
 EOF
 # setup hosts file resolution for graylog container in multivac
-graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.graylog_default.IPAddress }}' graylog-graylog-1)
+graylog_ip=$(docker container inspect -f '{{ .NetworkSettings.Networks.root_default.IPAddress }}' root-graylog-1)
 sed -i "s/ZZZZZGRAYLOGIPZZZZZ/$graylog_ip/" /$STRIGO_CLASS_ID/scripts/multivac_config.sh
 #echo "$graylog_ip graylog" >> /var/snap/lxd/common/lxd/containers/multivac/rootfs/etc/hosts
 echo "172.18.10.10 multivac" >> /etc/hosts
