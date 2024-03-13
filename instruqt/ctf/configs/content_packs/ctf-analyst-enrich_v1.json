@@ -529,7 +529,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"Parse - Firewall - GROK\"\n\nwhen\n\n    true\n    \nthen\n\nlet parsed = grok(\n    \n    pattern:\"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port})?( %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n\n    value: to_string($message.message),\n    \n    only_named_captures: true\n    );\n    \n    set_fields(\n    fields:parsed\n    );\n    \n    set_field(\n    field: \"Parse\",\n    value: \"Firewall - GROK\",\n    prefix:\"Awesome_\"\n    );\n    \nend"
+          "@value": "rule \"Parse - Firewall - GROK\"\n\nwhen\n\n    false\n    \nthen\n\nlet parsed = grok(\n    \n    pattern:\"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port})?( %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n\n    value: to_string($message.message),\n    \n    only_named_captures: true\n    );\n    \n    set_fields(\n    fields:parsed\n    );\n    \n    set_field(\n    field: \"Parse\",\n    value: \"Firewall - GROK\",\n    prefix:\"Awesome_\"\n    );\n    \nend"
         }
       },
       "constraints": [
