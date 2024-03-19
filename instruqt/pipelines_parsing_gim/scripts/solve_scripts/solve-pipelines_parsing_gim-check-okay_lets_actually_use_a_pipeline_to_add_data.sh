@@ -6,7 +6,10 @@ source /etc/profile
 
 #Get Training Pipeline ID
 pipeID=$(curl -k -XGET -u 'admin:yabba dabba doo' https://localhost/api/system/pipelines/pipeline | jq -r '.[] | select (.title=="Training").id')
+#Delete the pipeline
+curl -k -XDELETE -u 'admin:yabba dabba doo' https://localhost/api/system/pipelines/pipeline/$pipeID -H "X-Requested-By:Graylog Service Delivery"
 
+pipeID=$(curl -k -XGET -u 'admin:yabba dabba doo' https://localhost/api/system/pipelines/pipeline | jq -r '.[] | select (.title=="Routing").id')
 #Delete the pipeline
 curl -k -XDELETE -u 'admin:yabba dabba doo' https://localhost/api/system/pipelines/pipeline/$pipeID -H "X-Requested-By:Graylog Service Delivery"
 
