@@ -1,3 +1,9 @@
+#!/bin/bash
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -exo pipefail
+# Import env vars used throughout scripts runtime
+source /etc/profile
+
 pipeid=$(curl -u 'admin:yabba dabba doo' -k -XGET  "https://localhost/api/system/pipelines/pipeline" | jq -r '.[] | select(.title=="Routing") | .id')
 if [ -z "$pipeid" ];then 
     fail-message "Oops, it looks like you still need create your pipeline!";
