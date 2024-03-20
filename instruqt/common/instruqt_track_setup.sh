@@ -32,10 +32,10 @@ echo "export dns=$dns" >> /etc/profile
 
 # Setup Class Information
 # CLASS should be lowercase and match track's folder name in repo:
-CLASS="analyst"
+CLASS="<REPO-FOLDER-HERE>"
 # TITLE should match "pretty" track name in Instruqt and 
 # should use caps and spaces:
-TITLE="Graylog Analyst"
+TITLE="<TRACK-PRETTY-NAME>"
 echo "export CLASS=$CLASS" >> /etc/profile
 echo "export TITLE=$TITLE" >> /etc/profile
 
@@ -45,11 +45,6 @@ echo "export NEEDS_DOCKER=yes" >> /etc/profile
 
 # Cert Decode File
 echo "${cert_pwd}" > /root/.pwd
-
-# Base Apps
-printf "\n\nGrabbing Base Apps"
-sudo apt update
-sudo apt install git -y
 
 # Git Scripts Scripts
 git clone --depth 1 https://github.com/Graylog2/graylog-training-data.git /graylog-training-data
