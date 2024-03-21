@@ -39,9 +39,9 @@ TITLE="<TRACK-PRETTY-NAME>"
 echo "export CLASS=$CLASS" >> /etc/profile
 echo "export TITLE=$TITLE" >> /etc/profile
 
-# Uncomment below if this course needs a Graylog Docker environment:
-# (Note: Setting this var to any value at all is interpreted as "yes")
-echo "export NEEDS_DOCKER=yes" >> /etc/profile
+# By default, Graylog will be deployed in a Docker environment via Compose.
+# Uncomment the following line to NOT do this and instead deploy Graylog on the host VM:
+#echo "export NO_DOCKER=yes" >> /etc/profile
 
 # Cert Decode File
 echo "${cert_pwd}" > /root/.pwd
