@@ -23,15 +23,6 @@ printf "\n\n$(date)-Installing System Updates\n"
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
 
-#Install common deps:
-printf "\n\n$(date)-Installing common dependencies\n"
-apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release \
-    jq
-
 # Setup gpg keyring for apt:
 printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
 mkdir -p /etc/apt/keyrings
