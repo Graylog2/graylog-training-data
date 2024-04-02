@@ -17,6 +17,7 @@ sudo mv /$CLASS/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
 sudo mkdir -p /etc/graylog/log_data
 sudo mv /root/powershell/Data/firewall.log /etc/graylog/log_data/
+sudo mv /root/powershell/Data/kvp.log /etc/graylog/log_data/
 
 #Creating Indices
 printf "\n\n$(date)-Create General Desktop Events Index\n"
