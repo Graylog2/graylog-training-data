@@ -53,7 +53,7 @@ actions:
   icon: "&#128293"
   timeout: 1200
 
-- title: Mac Firewall Logs
-  shell: pwsh -c 'Send-logs macfirewall'
+- title: KVP Firewall Logs
+  shell: cat /etc/graylog/log_data/kvp.log | nc -w1 localhost 1514
   icon: "&#127879"
   timeout: 1200
