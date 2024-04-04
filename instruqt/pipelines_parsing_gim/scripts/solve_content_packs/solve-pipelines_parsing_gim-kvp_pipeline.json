@@ -1,0 +1,1 @@
+{"id":"660eec61faf32e49a3b50f45","title":"Training","description":"","source":"pipeline \"Training\"\nstage 50 match either\nrule \"Parse - UTM-KV\"\nrule \"Parse - Apache\"\nrule \"Context - Always True\"\nstage 75 match either\nstage 0 match either\nrule \"Route - Training\"\nrule \"Parse - Firewall - KVP\"\nend"}
