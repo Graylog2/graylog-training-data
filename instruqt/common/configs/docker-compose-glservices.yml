@@ -62,6 +62,7 @@ services:
       - "12201:12201/tcp" # GELF TCP
       - "12201:12201/udp" # GELF UDP
       - "1514:1514/tcp"   # RAW TCP
+      - "1515:1515/tcp"   # Syslog TCP
 
     volumes:
       - "graylog_data:/usr/share/graylog/data/data"

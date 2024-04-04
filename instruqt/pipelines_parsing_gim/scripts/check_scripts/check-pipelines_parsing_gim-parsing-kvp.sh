@@ -11,6 +11,7 @@ if [ -z "$ruleid" ];then
 fi
 
 pipeid=$(curl -u 'admin:yabba dabba doo' -k -XGET  "https://localhost/api/system/pipelines/pipeline" | jq -r '.[] | select(.title=="Training") | .id')
+pljson=$(curl -u 'admin:yabba dabba doo' -k -XGET  "https://localhost/api/system/pipelines/pipeline/$pipeid")
 plrules=$(echo $pljson | jq -r '.stages | .[].rules')
 if [[ $plrules != *"Parse - Firewall - KVP"* ]]; then
     fail-message "Oops, it looks like you still need to add your routing rule to the Training pipeline"
