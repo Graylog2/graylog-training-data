@@ -9,7 +9,7 @@ themeName: graylog-theme
 
 actions:   
 - title: PFSense Logs
-  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | ncat -w 1 localhost 1514
+  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | nc -w 1 localhost 1515
   icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
   timeout: 900
   
@@ -17,26 +17,6 @@ actions:
   shell: pwsh -c 'send-logs demo'
   icon: backup
   timeout: 900
-
-- title: Search Logs
-  shell: pwsh -c 'Send-logs search'
-  icon: ping
-  timeout: 1200
-
-- title: Dashboard Logs
-  icon: "&#128269"
-  shell: pwsh -c 'send-logs Dashboards'
-  timeout: 1200
-
-- title: Discovery Logs
-  icon: "&#63"
-  shell: pwsh -c 'send-logs discovery'
-  timeout: 1200
-
-- title: Alert Logs
-  icon: "&#128227"
-  shell: pwsh -c 'send-logs Alerts'
-  timeout: 1200
 
 - title: pipeline-intro Logs
   shell: pwsh -c 'Send-logs pipeline-intro'
