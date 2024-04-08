@@ -28,8 +28,10 @@ sed -i '/apitoken=/d' /etc/profile
 
 #Opensearch Replica Cleanup
 if curl localhost:9200; then
-    curl -X PUT "http://127.0.0.1:9200/.opensearch-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
-    curl -X PUT "http://127.0.0.1:9200/.plugins-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+    #curl -X PUT "http://127.0.0.1:9200/.opensearch-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+    #curl -X PUT "http://127.0.0.1:9200/.plugins-*/_settings" -H 'Content-Type: application/json' -d '{"index":{"number_of_replicas":0}}'
+    curl -XPUT "localhost:9200/.*/_settings" -H 'Content-Type: application/json' -d '{"index.number_of_replicas": 0}'
+    curl -XPUT "localhost:9200/*/_settings" -H 'Content-Type: application/json' -d '{"index.number_of_replicas": 0}'
 fi
 
 echo "Cleanup complete!" 
