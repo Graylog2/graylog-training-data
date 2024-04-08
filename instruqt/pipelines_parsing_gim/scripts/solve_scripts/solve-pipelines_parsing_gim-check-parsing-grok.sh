@@ -1,3 +1,9 @@
+#!/bin/bash
+# Set script to exit on any non-zero exit code and display extra debug info (per Instruqt's recommendation):
+set -exo pipefail
+# Import env vars used throughout scripts runtime
+source /etc/profile
+
 #Get Content Pack
 wget https://github.com/Graylog2/graylog-training-data/raw/main/instruqt/pipelines_parsing_gim/scripts/solve_content_packs/solve-pipelines_parsing_gim-pipelines-grok.json
 

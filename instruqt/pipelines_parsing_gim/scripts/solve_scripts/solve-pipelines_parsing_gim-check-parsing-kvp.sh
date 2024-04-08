@@ -15,4 +15,3 @@ wget https://github.com/Graylog2/graylog-training-data/raw/main/instruqt/pipelin
 #update pipelineID with sed
 sed -i "s/660eec61faf32e49a3b50f45/$pipeid/g" solve-pipelines_parsing_gim-kvp_pipeline.json
 curl -XPUT -u 'admin:yabba dabba doo' -k "https://localhost/api/system/pipelines/pipeline/$pipeid" -H 'Content-Type: application/json' -H 'X-Requested-By: skipper' -d @"solve-pipelines_parsing_gim-kvp_pipeline.json"
-
