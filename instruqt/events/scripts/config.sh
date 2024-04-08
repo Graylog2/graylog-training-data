@@ -6,6 +6,12 @@ source /etc/profile
 # Setup OliveTin:
 /common/setup_olivetin.sh
 
+# TESTING - change timestamps from nanoseconds to microseconds for GELF compliance,
+# and to potentially help with Events timing issues.
+# GELF Spec says timestamp should be Unix epoch seconds, optionally plus microseconds as decimals.
+# ref: GELF Payload Specification: https://archivedocs.graylog.org/en/latest/pages/gelf.html#gelf-payload-specification
+sed -i 's/  /root/.config/powershell/Microsoft.PowerShell_profile.ps1
+
 # Setup Greynoise:
 /common/setup_greynoise.sh
 
