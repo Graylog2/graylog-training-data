@@ -1,0 +1,23 @@
+# Docker Compose extension file for Graylog SMTP configuration.
+# Import this on a per-course basis if your course needs Graylog to send an email
+# to a local SMTP server and GUI email client.
+
+# ref: https://github.com/maildev/maildev/blob/master/docs/docker.md
+
+services:
+  graylog:
+    environment:
+      - GRAYLOG_TRANSPORT_EMAIL_ENABLED=true
+      - GRAYLOG_TRANSPORT_EMAIL_HOSTNAME=logfather.org
+      - GRAYLOG_TRANSPORT_EMAIL_PORT=1025
+      - GRAYLOG_TRANSPORT_EMAIL_USE_AUTH=false
+      - GRAYLOG_TRANSPORT_EMAIL_USE_TLS=false
+      - GRAYLOG_TRANSPORT_EMAIL_USE_SSL=false
+      - GRAYLOG_TRANSPORT_EMAIL_FROM_EMAIL=graylog-alerts@logfather.org
+
+  maildev:
+    container_name: logfather.org
+    image: maildev/maildev
+    ports:
+      - 1025:1025  # SMTP server
+      - 1080:1080  # Web UI
