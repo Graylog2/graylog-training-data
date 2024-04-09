@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import env vars used throughout scripts runtime
-source /etc/profile
+#source /etc/profile
 
 # Setup OliveTin:
 /common/setup_olivetin.sh
@@ -19,7 +19,7 @@ source /etc/profile
 /common/setup_geoip.sh
 
 # LogData
-sudo mv /$CLASS/log_data/* /root/powershell/Data
+sudo mv /events/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
 sudo mkdir -p /etc/graylog/log_data
 sudo mv /root/powershell/Data/firewall.log /etc/graylog/log_data/
