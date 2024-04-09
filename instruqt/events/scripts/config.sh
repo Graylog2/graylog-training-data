@@ -52,6 +52,6 @@ curl -u 'admin:yabba dabba doo' -XPOST 'http://localhost:9000/api/system/indices
 docker run -p 8080:8080 -d --restart always tarampampam/webhook-tester
 
 # Deploy maildev container for SMTP testing:
-docker run -p 1080:1080 -p 1025:1025 maildev/maildev
+docker run -p 1080:1080 -p 1025:1025 -d maildev/maildev
 
 echo "Complete!" 
