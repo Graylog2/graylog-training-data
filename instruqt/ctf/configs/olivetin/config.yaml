@@ -53,8 +53,8 @@ actions:
   icon: "&#127855"
   timeout: 900
 
-- title: Illuminate Compatible Logs (placeholder)
-  shell: /etc/graylog/log_data/illy.sh
-  icon: "&#128294"
-  timeout: 900
+#- title: Illuminate Compatible Logs (placeholder)
+#  shell: /etc/graylog/log_data/illy.sh
+#  icon: "&#128294"
+#  timeout: 900
 
