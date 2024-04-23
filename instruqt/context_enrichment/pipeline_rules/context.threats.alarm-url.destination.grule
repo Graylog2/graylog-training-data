@@ -1,0 +1,13 @@
+rule "Context - Threat Info - destination"
+when
+has_field("destination_threat_pulses")  AND
+to_long($message.destination_threat_pulses) > 0 
+then
+    set_field("threat_detected",true);
+    set_field("threat_indicator","destination_ip");
+    set_field("threat_info_url",concat(
+        first: "https://otx.alienvault.com/indicator/ip/",
+        second: to_string($message.destination_ip)
+            )
+        );
+end

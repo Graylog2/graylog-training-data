@@ -1,0 +1,28 @@
+// This pipeline is modified as part of the Pipeline Introduction Lab
+rule "Sample - Pipeline Demo"
+
+when
+    // This is where your logic goes
+    // to determine which messages this rule applies to 
+    // WITHIN the assigned Pipeline Stage
+    
+    // This sample message simply passes the value true, 
+    // which means it will be processed on any message that it is assigned
+    true
+
+then
+
+    // This is where the actions to be taken within this rule are created
+    // These actions are performed using the functions, 
+    // listed and explained on the right
+    
+    // The most common pitfalls in pipeline rule creation are:
+    //   1.  Omitting Escape characters 
+    //      (C:\Windows instead of C:\\Windows)
+    
+    //   2.  Data types (Objects instead of Strings is VERY common)
+    //      For example, to set the username field to lowercase:
+    //          lowercase($message.username); is INVALID
+    //          lowercase(to_string($message.username)); is VALID
+
+end

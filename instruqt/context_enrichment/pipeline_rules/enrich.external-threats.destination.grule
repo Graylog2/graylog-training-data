@@ -1,0 +1,19 @@
+rule "Enrich - Destination - Threat Intelligence"
+when
+    has_field("destination_ip") && 
+    $message.destination_is_external == true
+then
+let intel = lookup(
+    lookup_table: "otx-api-ip",
+    key: to_string($message.destination_ip)
+);
+//set_fields(intel);
+
+set_field("destination_geo_city_name",intel.city);
+set_field("destination_geo_country_name",intel.country_name);
+set_field("destination_geo_latitude",intel.latitude);
+set_field("destination_geo_longitude",intel.longitude);
+set_field("destination_threat_pulses",intel.pulse_info.count);
+set_field("Enriched","Destination - Threat Intelligence");
+
+end

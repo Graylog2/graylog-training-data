@@ -1,0 +1,27 @@
+rule "Parse - Filebeat Apache"
+when
+    has_field("filebeat_service_type") && 
+    to_string($message.filebeat_service_type) == "apache" 
+then
+let parsed = grok(
+    pattern: "%{COMBINEDAPACHELOG}", 
+    value: to_string($message.message)
+); 
+set_fields(
+    fields: parsed, 
+    prefix: "apache_");
+
+
+remove_field("apache_MONTH");
+remove_field("apache_MONTHDAY");
+remove_field("apache_YEAR");
+remove_field("apache_TIME");
+remove_field("apache_HOUR");
+remove_field("apache_BASE10NUM");
+remove_field("apache_INT");
+remove_field("apache_SECOND");
+remove_field("apache_MINUTE");
+
+route_to_stream("Labs");
+
+end
