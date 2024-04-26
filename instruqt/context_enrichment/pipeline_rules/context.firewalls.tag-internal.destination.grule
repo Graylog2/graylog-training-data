@@ -1,0 +1,23 @@
+rule "Context - Desktop Firewalls - Internal Destination"
+when
+    has_field("destination_ip") &&
+    (   cidr_match(
+        cidr: "192.168.0.0/16", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "10.0.0.0/8", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "172.16.0.0/12", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "127.0.0.0/8", 
+        ip: to_ip($message.destination_ip)
+        ) 
+    )
+then
+set_field("destination_is_internal",true);
+end

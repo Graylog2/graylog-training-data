@@ -1,0 +1,13 @@
+rule "Route - Desktop Firewall - MS Logs"
+when
+    from_input(
+        name: "MS Logs")
+then
+    route_to_stream(
+        name: "Desktop Firewall Events", 
+        remove_from_default: true
+    );
+
+// Additional field to identify this rule
+set_field("message_route","Desktop Firewall - MS Logs");
+end

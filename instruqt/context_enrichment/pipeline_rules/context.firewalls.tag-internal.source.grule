@@ -1,0 +1,23 @@
+rule "Context - Desktop Firewalls - Internal Source"
+when
+    has_field("source_ip") &&
+    (   cidr_match(
+        cidr: "192.168.0.0/16", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "10.0.0.0/8", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "172.16.0.0/12", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "127.0.0.0/8", 
+        ip: to_ip($message.source_ip)
+        ) 
+    )
+then
+set_field("source_is_internal",true);
+end

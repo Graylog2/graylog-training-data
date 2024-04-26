@@ -1,0 +1,14 @@
+rule "Parse - WF - GROK"
+when
+    // Use routing message to select messages
+    to_string($message.message_route) == "Desktop Firewall - MS Logs"
+then
+let pf = grok(
+    pattern: "%{TIMESTAMP_ISO8601:event_timestamp} %{WORD:action} %{WORD:protocol} %{IP:src-ip} %{IP:dst-ip} %{INT:src-port} %{INT:dst-port} %{GREEDYDATA} %{WORD:path}",
+    value: to_string($message.message),
+    only_named_captures: true
+);
+set_fields(pf);
+// Add Parse field for easier message tracing
+set_field("parse","Parse - WF - GROK");
+end
