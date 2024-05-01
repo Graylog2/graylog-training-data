@@ -26,8 +26,8 @@ jobs:
         shell: "bash"
         run: |
           sudo apt update && sudo apt install python3-certbot certbot python3-certbot-nginx python3-certbot-dns-cloudflare python3-cloudflare -y
-          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "*.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos
-          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "osadmin.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos
+          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "*.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos --dns-cloudflare-propagation-seconds 300
+          sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare -d "osadmin.logfather.org" --preferred-challenges dns-01 --register-unsafely-without-email --agree-tos --dns-cloudflare-propagation-seconds 300
           echo "${{ secrets.CERT_ENC_PWD }}" > .pwd
           privkey=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/privkey.pem) && sudo openssl enc -in $privkey -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/privkey.pem.enc
           cert=$(sudo readlink -f /etc/letsencrypt/live/logfather.org/cert.pem) && sudo openssl enc -in $cert -aes-256-cbc -pbkdf2 -pass file:.pwd > certs/cert.pem.enc
