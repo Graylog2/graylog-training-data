@@ -1,4 +1,5 @@
 #!/bin/bash
+cd "$(dirname "$0")"
 
 # Install python 3.10
 # sudo apt install software-properties-common -y
