@@ -1,4 +1,4 @@
-version: "3.8"
+#version: "3.8"
 
 services:
   mongodb:
@@ -30,7 +30,7 @@ services:
     restart: "always"
 
   graylog:
-    image: "graylog/graylog-enterprise:5.2.6-1"
+    image: "graylog/graylog-enterprise:6.0.0-rc.4-1"
     depends_on:
       opensearch:
         condition: "service_started"
