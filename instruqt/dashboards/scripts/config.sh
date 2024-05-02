@@ -16,6 +16,10 @@ source /etc/profile
 sudo mv /$CLASS/log_data/* /root/powershell/Data
 sudo chown -R root.root /root
 
+# Event Replay
+chmod +x /$CLASS/apps/event_replay/installer/install.sh
+/$CLASS/apps/event_replay/installer/install.sh
+
 #Cert Injection
 /common/certs.sh
 
