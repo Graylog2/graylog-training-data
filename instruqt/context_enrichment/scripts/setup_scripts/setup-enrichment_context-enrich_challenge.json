@@ -1,0 +1,289 @@
+{
+  "v": "1",
+  "id": "f6ad6396-19e3-4211-bb3b-2859721727aa",
+  "rev": 2,
+  "name": "setup-enrichment_context-context_challenge",
+  "summary": "setup-enrichment_context-context_challenge",
+  "description": "",
+  "vendor": "Graylog Service Delivery",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "864a183f-a394-4151-b33d-786d02dac6fe",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Desktop Firewalls"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Desktop Firewalls\"\nstage 0 match either\nrule \"Parse - Firewall - GROK\"\nstage 1 match either\nrule \"Context - Desktop Firewalls - Internal Destination\"\nrule \"Context - Desktop Firewalls - Internal Source\"\nrule \"Context - Desktop Firewalls - External Destination\"\nrule \"Context - Desktop Firewalls - External Source\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "c351b40c-2574-407d-bfed-4fd941ae85f8"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "4f825bbc-f34c-4ed8-bac9-e45b79b30bb7",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Routing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Routing\"\nstage 0 match either\nrule \"Route - Desktop Firewall - MS Logs\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "715f88bc-4fec-4138-918e-f98bb750c66b"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a7865111-ac7f-44b6-a230-ed92a1d0a622",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - External Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - External Destination\"\nwhen\n    has_field(\"destination_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_external\",true);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "7859886e-02af-45f7-b430-acefe889c22b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - External Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - External Source\"\nwhen\n    has_field(\"source_ip\") && NOT\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_external\",true);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a6d1c58d-e64d-4ad5-ac38-690edf1a3d48",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Firewall - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Firewall - GROK\"\nwhen\n  ( has_field(\"route\") &&\nto_string($message.\"route\") == \"Desktop Firewall - MS Logs\"\n)\n\nthen\n  let gl2_fragment_grok_results = grok(\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n  value: to_string($message.\"message\"),\n  only_named_captures: true\n);\nset_fields(\n  fields: gl2_fragment_grok_results\n);\n  set_field(\n    field : \"parse\",\n    value : \"Firewall - GROK\",\n    clean_field : false\n  );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "9151a09d-38c2-405c-8797-3e1ebf03a455",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Destination\"\nwhen\n    has_field(\"destination_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "8bde56ab-c565-43e9-b142-ca4aefd3b5fc",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Source\"\nwhen\n    has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "77954ffc-8f2b-4873-82d0-569443d010aa",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MS Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n  grok(\n  value: to_string($message.\"message\"),\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:sre_ip} %{IP:dst_ip}( %{INT:src_port} %{INT:dst_port})? %{GREEDYDATA} %{WORD:path}\"\n).matches == true\nthen\n  route_to_stream(\n    name : \"Desktop Firewall Events\",\n    remove_from_default : true\n  );\n  set_field(\n    field : \"route\",\n    value : \"Desktop Firewall - MS Logs\"\n  );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "c351b40c-2574-407d-bfed-4fd941ae85f8",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Desktop Firewall Events"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "715f88bc-4fec-4138-918e-f98bb750c66b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Default Stream"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    }
+  ]
+}
