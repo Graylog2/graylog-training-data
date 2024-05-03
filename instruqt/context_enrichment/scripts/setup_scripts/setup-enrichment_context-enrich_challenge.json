@@ -235,7 +235,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n  grok(\n  value: to_string($message.\"message\"),\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:sre_ip} %{IP:dst_ip}( %{INT:src_port} %{INT:dst_port})? %{GREEDYDATA} %{WORD:path}\"\n).matches == true\nthen\n  route_to_stream(\n    name : \"Desktop Firewall Events\",\n    remove_from_default : true\n  );\n  set_field(\n    field : \"route\",\n    value : \"Desktop Firewall - MS Logs\"\n  );\nend"
+          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n  grok(\n  value: to_string($message.\"message\"),\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\"\n).matches == true\nthen\n  route_to_stream(\n    name : \"Desktop Firewall Events\",\n    remove_from_default : true\n  );\n  set_field(\n    field : \"route\",\n    value : \"Desktop Firewall - MS Logs\"\n  );\nend"
         }
       },
       "constraints": [

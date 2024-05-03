@@ -95,7 +95,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "rule \"Parse - Firewall - GROK\"\nwhen\n  ( has_field(\"route\") &&\nto_string($message.\"route\") == \"Desktop Firewall - MS Logs\"\n)\n\nthen\n  let gl2_fragment_grok_results = grok(\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:sre_ip} %{IP:dst_ip}( %{INT:src_port} %{INT:dst_port})? %{GREEDYDATA} %{WORD:path}\",\n  value: to_string($message.\"message\"),\n  only_named_captures: true\n);\nset_fields(\n  fields: gl2_fragment_grok_results\n);\n  set_field(\n    field : \"parse\",\n    value : \"Firewall - GROK\",\n    clean_field : false\n  );\nend"
+          "@value": "rule \"Parse - Firewall - GROK\"\nwhen\n  ( has_field(\"route\") &&\nto_string($message.\"route\") == \"Desktop Firewall - MS Logs\"\n)\n\nthen\n  let gl2_fragment_grok_results = grok(\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n  value: to_string($message.\"message\"),\n  only_named_captures: true\n);\nset_fields(\n  fields: gl2_fragment_grok_results\n);\n  set_field(\n    field : \"parse\",\n    value : \"Firewall - GROK\",\n    clean_field : false\n  );\nend"
         }
       },
       "constraints": [
