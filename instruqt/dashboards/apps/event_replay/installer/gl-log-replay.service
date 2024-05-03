@@ -1,0 +1,16 @@
+[Unit]
+Description=Log Replay Generator
+Requires=network.target
+After=network.target
+ConditionPathExists=/opt/graylog/log-replay
+
+[Service]
+User=gl_replay_service
+Group=gl_replay_service
+WorkingDirectory=/opt/graylog/log-replay
+Type=simple
+Restart=always
+ExecStart=/opt/graylog/log-replay/service-wrapper.sh
+
+[Install]
+WantedBy=multi-user.target
