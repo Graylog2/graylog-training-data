@@ -1,7 +1,8 @@
 name: "Manual DNS Cleanup"
 
 on:
-  workflow_dispatch
+  schedule:
+    - cron:  '0 0 * * *'    # At midnight, daily
     
 jobs:
   DNS_Cleanup:
