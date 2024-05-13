@@ -1,0 +1,19 @@
+rule "Enrich - Source - Threat Intelligence"
+when
+    has_field("source_ip") && 
+    $message.source_is_external == true
+then
+let intel = lookup(
+    lookup_table: "otx-api-ip",
+    key: to_string($message.source_ip)
+);
+//set_fields(intel);
+
+set_field("source_geo_city_name",intel.city);
+set_field("source_geo_country_name",intel.country_name);
+set_field("source_geo_latitude",intel.latitude);
+set_field("source_geo_longitude",intel.longitude);
+set_field("source_threat_pulses",intel.pulse_info.count);
+set_field("Enriched","Source - Threat Intelligence");
+
+end

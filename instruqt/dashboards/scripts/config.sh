@@ -12,6 +12,14 @@ source /etc/profile
 # Setup Maxmind GeoIP databases:
 /common/setup_geoip.sh
 
+#LogData
+sudo mv /$CLASS/log_data/* /root/powershell/Data
+sudo chown -R root.root /root
+
+# Event Replay
+chmod +x /$CLASS/apps/event_replay/installer/install.sh
+/$CLASS/apps/event_replay/installer/install.sh
+
 #Cert Injection
 /common/certs.sh
 
@@ -30,11 +38,5 @@ source /etc/profile
 
 #Illuminate Install - moved to POST docker update. Illuminate doesn't seem to fetch first time graylog runs
 /common/inst_illuminate.sh 
-
-#Temp switch to latest GL Version
-lgl=$(curl -L --fail "https://hub.docker.com/v2/repositories/graylog/graylog/tags/?page_size=1000" | jq '.results | .[] | .name' -r | sed 's/latest//' | sort --version-sort | tail -n 1)
-dcv=$(sed -n 's/image: "graylog\/graylog-enterprise://p' docker-compose-glservices.yml | tr -d '"' | tr -d " ")
-sed -i "s+enterprise\:$dcv+enterprise\:$lgl+g" docker-compose-glservices.yml
-docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
 
 echo "Complete!" 

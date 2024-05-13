@@ -1,0 +1,177 @@
+{
+  "v": 1,
+  "id": "f6ad6396-19e3-4211-bb3b-2859721727aa",
+  "rev": 1,
+  "name": "setup-enrichment_context-context_challenge",
+  "summary": "setup-enrichment_context-context_challenge",
+  "description": "",
+  "vendor": "Graylog Service Delivery",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "dd1c2d83-0eca-4625-acf4-b166529ffe6c",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Desktop Firewalls"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Desktop Firewalls\"\nstage 0 match either\nrule \"Parse - Firewall - GROK\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "c3f4cf19-562f-4778-b25a-7690db3fc947"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "544c2454-4e9e-4df4-b8c4-a60252c25a8e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Routing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Routing\"\nstage 0 match either\nrule \"Route - Desktop Firewall - MS Logs\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "513a3e5c-9c74-4eb1-85e8-7f93efde1002"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "4f380ab4-50dc-4481-85a0-26048196d4f4",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Firewall - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Firewall - GROK\"\nwhen\n  ( has_field(\"route\") &&\nto_string($message.\"route\") == \"Desktop Firewall - MS Logs\"\n)\n\nthen\n  let gl2_fragment_grok_results = grok(\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\",\n  value: to_string($message.\"message\"),\n  only_named_captures: true\n);\nset_fields(\n  fields: gl2_fragment_grok_results\n);\n  set_field(\n    field : \"parse\",\n    value : \"Firewall - GROK\",\n    clean_field : false\n  );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "c3f4cf19-562f-4778-b25a-7690db3fc947",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Desktop Firewall Events"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "4fcbc3f7-0840-4162-a35e-dae11caef808",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MS Logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MS Logs\"\nwhen\n  grok(\n  value: to_string($message.\"message\"),\n  pattern: \"%{TIMESTAMP_ISO8601:event_timestamp} %{NOTSPACE:action} %{NOTSPACE:protocol} %{IP:source_ip} %{IP:destination_ip}( %{INT:source_port} %{INT:destination_port})? %{GREEDYDATA} %{WORD:path}\"\n).matches == true\nthen\n  route_to_stream(\n    name : \"Desktop Firewall Events\",\n    remove_from_default : true\n  );\n  set_field(\n    field : \"route\",\n    value : \"Desktop Firewall - MS Logs\"\n  );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "513a3e5c-9c74-4eb1-85e8-7f93efde1002",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Default Stream"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.0.0-rc.4+062ad58"
+        }
+      ]
+    }
+  ]
+}

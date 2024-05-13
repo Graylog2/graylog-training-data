@@ -1,0 +1,51 @@
+rule "Context - Firewall - Incoming"
+when
+    has_field("destination_ip") && 
+    (   cidr_match(
+        cidr: "192.168.0.0/16", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "10.0.0.0/8", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "172.16.0.0/12", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "127.0.0.0/8", 
+        ip: to_ip($message.destination_ip)
+        ) OR
+        cidr_match(
+        cidr: "224.0.0.0/4", 
+        ip: to_ip($message.source_ip)
+        ) 
+    ) AND 
+       has_field("source_ip") && NOT
+    (   cidr_match(
+        cidr: "192.168.0.0/16", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "10.0.0.0/8", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "172.16.0.0/12", 
+        ip: to_ip($message.source_ip)
+        ) OR
+        cidr_match(
+        cidr: "127.0.0.0/8", 
+        ip: to_ip($message.source_ip)
+        )  OR
+        cidr_match(
+        cidr: "224.0.0.0/4", 
+        ip: to_ip($message.source_ip)
+        )
+    ) 
+then
+set_field("network_destination","internal");
+set_field("network_source","external");
+set_field("network_direction","incoming");
+end
