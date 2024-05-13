@@ -1,4 +1,4 @@
-name: "Manual DNS Cleanup"
+name: "Automatic DNS Cleanup"
 
 on:
   schedule:
