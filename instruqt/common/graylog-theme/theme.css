@@ -162,7 +162,7 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   fieldset#section-switcher::before {
-    background: url('./Graylog_Logo_2024_white_bg.svg') no-repeat;
+    background: url('./Graylog_Logo_2024.svg') no-repeat;
   }
 
   fieldset#section-switcher button.activeSection::before {
@@ -217,7 +217,7 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   fieldset#section-switcher::before {
-    background: url('./Graylog_Logo_2024_white_bg.svg') no-repeat;
+    background: url('./Graylog_Logo_2024.svg') no-repeat;
   }
 
   fieldset#section-switcher button.activeSection::before {
