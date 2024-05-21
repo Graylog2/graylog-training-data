@@ -194,22 +194,22 @@ fieldset#section-switcher button.activeSection::before {
 
 @media (prefers-color-scheme: dark) {
   @keyframes kf-action-success {
-    0% { background-color: #116914; }
-    100% { background-color: #116914; }
+    0% { background-color: #00E286; }
+    100% { background-color: #00E286; }
   }
 
   @keyframes kf-action-nonzero-exit {
-    0% { background-color: #9d6e00; }
-    100% { background-color: #9d6e00; }
+    0% { background-color: #FF8533; }
+    100% { background-color: #FF8533; }
   }
 
   @keyframes kf-action-failed {
-    0% { background-color: #970000; }
-    100% { background-color: #970000; }
+    0% { background-color: #4F3EC1; }
+    100% { background-color: #4F3EC1; }
   }
 
   body {
-    background-color: #1e0c0c;
+    background-color: #211A4D;
   }
 
   fieldset#section-switcher {
@@ -221,7 +221,7 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   fieldset#section-switcher button.activeSection::before {
-    border-color: #cacaca;
+    border-color: #EBEEF2;
   }
 
   #contentLogs table tr:hover td {
