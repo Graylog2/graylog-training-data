@@ -4,24 +4,24 @@
   font-display: swap;
   font-weight: 400;
   src:
-      local('DM Sans Regular'),
-      local('DMSans-Regular'),
-      url('./DMSans-Regular.ttf')
+      local('Poppins'),
+      local('Poppins-Regular'),
+      url('./Poppins-Regular.ttf')
 }
 
 @font-face {
-  font-family: 'Source Sans Pro';
+  font-family: 'DM Sans';
   font-style: normal;
   font-display: swap;
   font-weight: 400;
   src:
-      local('Source Sans Pro Regular'),
-      local('SourceSansPro-Regular'),
-      url('./SourceSans3-Regular.ttf')
+      local('DMSans'),
+      local('DMSans-Regular'),
+      url('./DMSans-Regular.ttf')
 }
 
 body, button {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Poppins", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
 
@@ -59,7 +59,7 @@ fieldset#section-switcher::after {
 }
 
 fieldset#section-switcher button {
-  font-family: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Poppins", "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.937rem;
   background: none;
   border: none;
@@ -230,7 +230,7 @@ fieldset#section-switcher button.activeSection::before {
 
   #contentActions button {
     border-color: #494949;
-    background-color: #697587;
+    background-color: #12172c;
     color: #fff;
   }
 
