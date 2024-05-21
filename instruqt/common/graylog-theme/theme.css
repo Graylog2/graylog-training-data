@@ -48,7 +48,7 @@ fieldset#section-switcher::before {
 }
 
 fieldset#section-switcher::after {
-  content: '– Logcenter';
+  content: 'Logcenter';
   left: 85px;
   top: 12px;
   font-size: 1.2rem;
@@ -230,17 +230,17 @@ fieldset#section-switcher button.activeSection::before {
 
   #contentActions button {
     border-color: #494949;
-    background-color: #303030;
+    background-color: #697587;
     color: #fff;
   }
 
   #contentActions button:hover {
-    background-color: #393939;
+    background-color: #553B8C;
   }
 
   #contentActions button::before {
-    background-color: #404040;
-    box-shadow: 0 0 0 2px #565656, 0 0.625em 0 0 #242424;
+    background-color: #3d4653;
+    box-shadow: 0 0 0 2px #6c7686, 0 0.625em 0 0 #242424;
   }
 
   .title.temporary-status-message {
