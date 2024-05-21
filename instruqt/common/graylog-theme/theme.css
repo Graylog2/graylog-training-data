@@ -213,7 +213,7 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   fieldset#section-switcher {
-    background-color: #303030;
+    background-color: #12172c;
   }
 
   fieldset#section-switcher::before {
@@ -225,7 +225,7 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   #contentLogs table tr:hover td {
-    background-color: #414040;
+    background-color: #12172c;
   }
 
   #contentActions button {
