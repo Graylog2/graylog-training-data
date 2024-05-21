@@ -204,12 +204,12 @@ fieldset#section-switcher button.activeSection::before {
   }
 
   @keyframes kf-action-failed {
-    0% { background-color: #4F3EC1; }
-    100% { background-color: #4F3EC1; }
+    0% { background-color: #222b43; }
+    100% { background-color: #222b43; }
   }
 
   body {
-    background-color: #211A4D;
+    background-color: #222b43;
   }
 
   fieldset#section-switcher {
