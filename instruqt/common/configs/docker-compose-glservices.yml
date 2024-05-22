@@ -52,6 +52,7 @@ services:
       GRAYLOG_HTTP_TLS_KEY_FILE: ${GLKEY}
       GRAYLOG_SERVER_JAVA_OPTS: ${GLJAVAOPTS}
       GRAYLOG_TELEMETRY_ENABLED: false
+      GRAYLOG_HTTP_COOKIE_SAME_SITE_STRICT: false
 
     ports:
       - "5044:5044/tcp"   # Beats
