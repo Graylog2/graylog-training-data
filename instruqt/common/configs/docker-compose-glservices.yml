@@ -17,7 +17,7 @@ services:
       action.auto_create_index: "false"
       DISABLE_INSTALL_DEMO_CONFIG: "true" # disables execution of install_demo_configuration.sh bundled with security plugin, which installs demo certificates and security configurations to OpenSearch
       DISABLE_SECURITY_PLUGIN: "true" # disables security plugin entirely in OpenSearch by setting plugins.security.
-    image: "opensearchproject/opensearch:2"
+    image: "opensearchproject/opensearch:2.12.0"
     ulimits:
       memlock:
         hard: -1
