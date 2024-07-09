@@ -25,9 +25,10 @@ jobs:
                 #printf "\nChecking DNS Record with ID:$id\n"
                 DNSRecord=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records/$id" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json")
                 DNSContent=$(echo $DNSRecord | jq -r '.result | .content')
+                DNSName=$(echo $DNSRecord | jq -r '.result | .name')
 
                 #Logic for Naming Convention goes here. We want to leave our other DNS records alone. Crazy {^^} converts to upper. It's a happy thing.
-                if [[ "${DNSContent}" == *".instruqt.io"* ]]; then
+                if [[ "${DNSContent}" == *".instruqt.io"* ]] || [[ "${DNSName}" == *-ctf* ]]; then
                     #printf "Record Matches Training Naming Convention\n"
                     DNSDateExp=$(date -d "$(echo $DNSRecord | jq -r '.result | .created_on')+7days")
                     printf "DNS Name:$DNSContent DNS Expiry Date:$DNSDateExp Current Date:$date\n"
