@@ -1,0 +1,429 @@
+windows:
+    AuthenticationPackageName: ["Kerberos", "NTLM", "Negotiate"]
+    Domain: ["acme.local", "acme.global"]
+    DomainShortName: ["ACME"]
+    EndUser: ["dmiranda", "kpearson", "jduffield", "jgross", "jdawson", "mgray", "tbuckner", "hguerra", "ewilkes", "lbates", "asheppard", "tfarley", "sheath", "tlott", "ecantrell", "tfry", "abritt", "zsims", "cmcknight", "cmustafa", "dbenitez", "ppadilla", "amcarthur", "mcottrell", "erhodes", "rwu", "adelarosa", "rferry", "jnorris", "gsadler", "jford", "glynn", "sfowler", "hkline", "lbusby"]
+    WindowsAdmin: ["Administrator", "s_dmiranda", "s_kpearson", "s_jduffield", "s_jgross", "s_jdawson"]
+    workstations: ["workstation1", "workstation2", "workstation3", "workstation4", "workstation5", "workstation6"]
+    domainControllers: ["DC01.acme.local", "DC02.acme.local", DC03.acme.local]
+    localSecGroups: ["administrators"]
+    domainSecGroups: ["workstationusers", "serverusers"]
+    LogonType: ["2", "3", "10"]
+    applockerGoodApps: ["%PROGRAMFILES%\\\\MICROSOFT\\\\EDGE\\\\APPLICATION\\\\MSEDGE.EXE", "%SYSTEM32%\\\\CONHOST.EXE", "%SYSTEM32%\\\\TASKHOSTW.EXE", "%SYSTEM32%\\\\NLTEST.EXE", "MICROSOFT.WINDOWS", "%SYSTEM32%\\\\WINDOWSPOWERSHELL\\\\V1.0\\\\POWERSHELL.EXE", "%SYSTEM32%\\\\WINDOWSPOWERSHELL\\\\V1.0\\\\MODULES\\\\MICROSOFT.POWERSHELL.SECURITY\\\\MICROSOFT.POWERSHELL.SECURITY.PSD1", "%SYSTEM32%\\\\CMD.EXE", "%SYSTEM32%\\\\SVCHOST.EXE", "MICROSOFT.AAD", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\KITTY_PORTABLE.EXE", "%SYSTEM32%\\\\CTFMON.EXE", "%SYSTEM32%\\\\DLLHOST.EXE", "%SYSTEM32%\\\\DWM.EXE", "%SYSTEM32%\\\\FONTDRVHOST.EXE", "%SYSTEM32%\\\\MUSNOTIFICATIONUX.EXE", "%SYSTEM32%\\\\WSCRIPT.EXE", "MICROSOFTWINDOWS.CLIENT", "%PROGRAMFILES%\\\\INTERNET EXPLORER\\\\IEXPLORE.EXE", "%SYSTEM32%\\\\MOBSYNC.EXE", "%SYSTEM32%\\\\PCAUI.EXE", "%SYSTEM32%\\\\RUNTIMEBROKER.EXE", "%SYSTEM32%\\\\SECURITYHEALTHSYSTRAY.EXE", "%SYSTEM32%\\\\SIHOST.EXE", "%SYSTEM32%\\\\SMARTSCREEN.EXE", "%SYSTEM32%\\\\USERINIT.EXE", "%SYSTEM32%\\\\WHOAMI.EXE", "%SYSTEM32%\\\\WLRMDR.EXE", "%WINDIR%\\\\EXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\SYS212644816\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\SYS2876111187\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\SYS3634281197\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\ADEXPLORER.EXE", "%PROGRAMFILES%\\\\COMMON FILES\\\\MICROSOFT SHARED\\\\INK\\\\MIP.EXE", "%PROGRAMFILES%\\\\WINDOWS MEDIA PLAYER\\\\SETUP_WM.EXE", "%PROGRAMFILES%\\\\WINDOWS MEDIA PLAYER\\\\WMPLAYER.EXE", "%PROGRAMFILES%\\\\WINDOWS NT\\\\ACCESSORIES\\\\WORDPAD.EXE", "%SYSTEM32%\\\\APPHOSTREGISTRATIONVERIFIER.EXE", "%SYSTEM32%\\\\CHARMAP.EXE", "%SYSTEM32%\\\\CLEANMGR.EXE", "%SYSTEM32%\\\\DEVICECENSUS.EXE", "%SYSTEM32%\\\\EFSUI.EXE", "%SYSTEM32%\\\\MMC.EXE", "%SYSTEM32%\\\\MSPAINT.EXE", "%SYSTEM32%\\\\MSTSC.EXE", "%SYSTEM32%\\\\MUSNOTIFYICON.EXE", "%SYSTEM32%\\\\NOTEPAD.EXE", "%SYSTEM32%\\\\RUNDLL32.EXE", "%SYSTEM32%\\\\SNIPPINGTOOL.EXE", "%SYSTEM32%\\\\WIN32CALC.EXE", "%SYSTEM32%\\\\WINDOWSPOWERSHELL\\\\V1.0\\\\POWERSHELL_ISE.EXE", "%SYSTEM32%\\\\XPSRCHVW.EXE"]
+    applockerBadApps: ["%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\ORIENTATION-POWER1.CMD", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\AUTORUNS64.EXE",  "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\PROCEXP.EXE", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\HELPFUL PORTABLE APPS\\\\PWTECH.EXE", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\ORIENTATION-POWER2.BAT", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\RECON-POWER.VBS", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\ORIENTATION-POWER11.PS1", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\ORIENTATION-POWER12.PS1", "%OSDRIVE%\\\\USERS\\\\PUBLIC\\\\DOCUMENTS\\\\MY PERSONAL SCRIPTS\\\\ORIENTATION-POWER13.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\PROCEXP64.EXE", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\SYS572139577\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_2QFXZPPO.DMF.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_C2D0SWIY.CXX.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_CK3TUJHA.MU1.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_FVR5S1MW.42C.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_GOXN241B.WDZ.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_JX2KI4S0.Z4E.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_MXBSRR0Q.YVV.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_MXDZOYKL.B12.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_NCTOOWOV.SVJ.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_VK01JOXL.XJB.PS1", "%OSDRIVE%\\\\USERS\\\\DAULWU\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_YTMIFEYC.WZD.PS1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_GBFWTNEA.FOG.PSM1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_N5JCMUXE.BCR.PSM1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_PA13M125.2OV.PSM1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_Q30FUB0M.RLN.PS1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_TPCYHXLK.VI3.PS1", "%OSDRIVE%\\\\USERS\\\\GRANAT\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_Z2NCIHAF.OGY.PS1", "%OSDRIVE%\\\\USERS\\\\JAUMMA\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\ADEXPLORER.EXE", "%OSDRIVE%\\\\USERS\\\\JAUMMA\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\PROCEXP64.EXE", "%OSDRIVE%\\\\USERS\\\\JAUMMA\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_NSVJHJUI.D1R.PS1", "%OSDRIVE%\\\\USERS\\\\JAUMMA\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_TE3LVWRX.FXA.PS1", "%OSDRIVE%\\\\USERS\\\\JAUMMA\\\\APPDATA\\\\LOCAL\\\\TEMP\\\\1\\\\__PSSCRIPTPOLICYTEST_US22UVE0.MF1.PS1"]
+cisco_asa:
+    CISCOAdmin: ["cisco", "root", "sa_ejones", "sa_smiller", "cusadmin"]
+    CISCOConnectionType: ["dynamic", "static"]
+    CISCOACLAction: ["permitted", "denied", "est-allowed"]
+    CISCOACLNames: ["internal_acl", "dmz_acl"]  
+generic:
+    Admin: ["admin", "root", "system", "sa_ejones", "Administrator"]
+    desktopIPRange: ["192.168.92.0"]
+    DMZIP: ["172.16.1.", "172.16.4.", "172.16.12."]
+    UntrustIP: ["113.11.1.", "141.123.2.", "141.123.2."]
+firewall_generic:
+    AllowedPorts: ["80", "8080", "53", "9000", "443", "8443", "514", "123"]
+    deniedPorts: ["22", "25", "1514", "445", "1100", "1302", "3000", "27", "333", "1000", "26", "28", "100", "101", "2000", "2001"]
+    HighSourcePort: ["6060", "7002", "90013", "6061", "7003", "65001", "43314", "62831", "51413", "36479", "36400"]
+    BadURL: ["www.XXXhouse.com", "www.terrorclub.af", "www.playboy.com", "www.hamster.com", "www.xxx.co.uk"]
+    GoodURL: ["www.google.com", "www.amazon.co.uk", "www.apple.com", "www.hpe.com", "www.ibm.co.uk"]
+    FWAction: ["drop", "permit"]
+    Protocol: ["TCP", "UDP"]
+    AMCEAgentAddress: ["10.10.0.13", "10.10.0.14", "10.10.0.15", "10.10.0.16"]
+    AMCEFireWallDeviceAddress: ["10.10.0.13", "10.10.0.14", "10.10.0.15", "10.10.0.16"]
+    FORTIGATEHostname: ["acme-fw1", "acme-fw2", "acme-fw3"]
+    CISCOASAHostName: ["acme-dmzouter-fw1", "acme-dmzouter-fw2", "acme-dmzinner-fw1", "acme-dmzinner-fw2", "acme-vpn-fw1"]
+    WATCHGUARDHostName: ["InitechDmzOuterFw1", "InitechDmzOuterFw2", "InitechDmzInnerFw1", "InitechDmzInnerFw2", "InitechVpnFw1"]
+    PublicAddress: ["213.154.64.1", "192.118.71.2", "80.247.136.3", "77.70.128.4", "8.8.8.8"]
+    InterfaceName: ["inside", "outside"]
+    ipv6_multicast:
+        values:
+            - "ff02::fb"
+            - "ff02::16"
+            - "ff02::c"
+            - "ff02::1:3"
+            - "ff02::1:ff05:2a26"
+            - "ff02::1:ff27:7a6"
+            - "ff02::1:ff82:22b8"
+            - "ff02::1:ffdd:6407"
+            - "ff02::2:ff60:a20a"
+            - "ff02::2:ff97:b9e1"
+            - "ff02::1"
+            - "ff02::2"
+            - "ff02::1:ff00:0"
+            - "ff02::1:ff05:a959"
+            - "ff02::1:ff6a:55e3"
+        weights:
+            - 846
+            - 98
+            - 56
+            - 10
+            - 10
+            - 10
+            - 10
+            - 10
+            - 10
+            - 10
+            - 9
+            - 9
+            - 9
+            - 9
+            - 9
+cloudflare:
+    BotScoreSrc: ["Not Computed", "Heuristics", "Machine Learning", "Behavioral Analysis", "Verified Bot", "JS Fingerprinting", "Cloudflare Service"]
+    CacheCacheStatus:
+        values: ["unknown", "miss", "expired", "updating", "stale", "hit", "ignored", "bypass", "revalidated", "dynamic", "stream_hit", "deferred"]
+        weights: [75, 5, 1, 1, 1, 10, 1, 1, 1, 1, 1, 1]
+    badClientAsnCountryIpIpClass: [
+        {ClientASN: "55933", ClientCountry: "cn", ClientIP: "103.66.219.219", ClientIPClass: "badHost"},
+        {ClientASN: "24295", ClientCountry: "jp", ClientIP: "103.243.240.181", ClientIPClass: "badHost"}
+    ]
+    clientRequestHost: "www.example.com"
+    ClientRequestUserAgent: 
+        values: [
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.124 Safari/537.36",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.1462.46 Safari/537.36 Edg/108.0.1462.46",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15"
+        ]
+        weights: [80, 10, 10]
+    BotClientRequestUserAgent:
+        values: [
+            "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)",
+            "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+            "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+            "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+            "Screaming Frog SEO Spider/5.1",
+            "Mozilla/5.0 (compatible; Dataprovider/6.92; +https://www.dataprovider.com/)"
+        ]
+        weights: [1, 3, 2, 2, 0.1, 0.2]
+    ClientSSLProtocol:
+        values: ["TLSv1.2", "TLSv1.3"]
+        weights: [60, 40]
+    ClientSSLCiphers:
+        ClientSSLCipherTLS12:
+            values: ["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"]
+            weights: [56, 30, 8.6, 2.85]
+        ClientSSLCipherTLS13:
+            values: ["TLS_AES_128_GCM_SHA256", "TLS_AES_256_GCM_SHA384", "TLS_CHACHA20_POLY1305_SHA256"]
+            weights: [53.2, 43.4, 3.42]
+    badEdgePathingOp:
+            values: ["ban", "wl"]
+            weights: [66.6, 33.3]
+    EdgeRequestHostPrefix: "acme-edge-"
+    EdgeServerIPPrefix: ["186.4.", "47.102.", "101.109.", "84.82.", "187.225.", "189.230."]
+    OriginIPPrefix: "10.254.19."
+    EdgeResponseContentType:
+        values: ["text/html", "application/json", "text/css", "text/javascript", "image/png"]
+        weights: [3, 1, 2, 2, 0.5]
+    ClientRequestProtocol:
+        values: ["HTTP/2", "HTTP/1.1"]
+        weights: [73.2, 26.5]
+    ClientRequestMethod:
+        values: ["GET", "POST"]
+        weights: [85, 15]
+    ClientRequestURI: ["/", "/home"]
+    EdgeResponseStatus:
+        values: [200, 302, 400, 403, 404, 405, 500, 502, 503]
+        weights: [400, 5, 0.5, 0.4, 1, 0.2, 0.01, 0.02, 0.03]
+dnsQueriesAndResponses:
+    values: [
+        {name: "changelogs.ubuntu.com", querytype: "AAAA", querytypevalue: "28"},
+        {name: "mobile.events.data.microsoft.com", querytype: "A", querytypevalue: "1"},
+        {name: "mps-mde-prd-cus3-20.centralus.cloudapp.azure.com", querytype: "A", querytypevalue: "1"},
+        {name: "gateway.fe.apple-dns.net", querytype: "HTTPS", querytypevalue: "65"},
+        {name: "gateway.fe.apple-dns.net", querytype: "A", querytypevalue: "1"},
+        {name: "e673.dsce9.akamaiedge.net", querytype: "A", querytypevalue: "1"},
+        {name: "us-v20.events.data.microsoft.com", querytype: "A", querytypevalue: "1"},
+        {name: "www.googleapis.com", querytype: "A", querytypevalue: "1"},
+        {name: "github.com", querytype: "A", querytypevalue: "1"}
+    ]
+    weights: [1,1,1,0.5,0.5,1,1,0.4,0.1]
+dnsBlockedQueriesAndResponses:
+    values: [
+        {name: "aa65ef.ch", querytype: "A", querytypevalue: "1"},
+        {name: "goalgoof.com", querytype: "A", querytypevalue: "1"},
+        {name: "blutmagie.de", querytype: "A", querytypevalue: "1"},
+        {name: "onion.lt", querytype: "A", querytypevalue: "1"},
+        {name: "playdr2.tw", querytype: "A", querytypevalue: "1"}
+    ]
+    weights: [1,0.9,0.8,0.7,0.6]
+nat_ip_subnet: "172.16.200.0/24"
+virus:
+    email:
+        values: [
+            {name: "EICAR_TEST_FILE", action: "attachment-removed"},
+            {name: "MSIL_EMAIL_GQ_TR", action: "attachment-removed"},
+            {name: "W32_EMAILADDRESSPRO_A", action: "attachment-removed"}
+        ]
+        weights: [1,1,1]
+severity_level:
+    ips:
+        values: ["critical", "emergency", "alert", "error", "warning"]
+        weights: [0.01, 0.05, 0.1, 0.5, 1]
+pfsense:
+    http_request_path:
+        post:
+            values:
+                - "/ifstats.php"
+                - "/getstats.php"
+                - "/widgets/widgets/disks.widget.php"
+                - "/widgets/widgets/interface_statistics.widget.php"
+                - "/widgets/widgets/interfaces.widget.php"
+            weights:
+                - 42
+                - 10
+                - 8
+                - 8
+                - 8
+        get:
+            values:
+                - "/"
+                - "/status_logs_settings.php"
+            weights:
+                - 2
+                - 2
+external_users:
+    values: [
+        {
+            "user_name": "lbusby@contoso.org",
+            "user_domain": "contoso.org",
+            "public_ip_addr": "97.122.211.139",
+            "user_guid": "acc54435-5205-41ce-9461-4d59eda1ca71",
+            "org_id": "42055b3e-a415-4eea-a7f2-23a1f26c7988",
+            "mailbox_owner_sid": "S-1-5-21-297511787-3888220427-3475151840-11131940",
+            "user_code": "10032002C0C0CB34",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+        },
+        {
+            "user_name": "hkline@contoso.org",
+            "user_domain": "contoso.org",
+            "public_ip_addr": "228.79.1.70",
+            "user_guid": "385ddf90-e3fc-401a-87ff-328dee40301c",
+            "org_id": "42055b3e-a415-4eea-a7f2-23a1f26c7988",
+            "mailbox_owner_sid": "S-1-5-21-297511787-3888220427-3475151840-11131941",
+            "user_code": "10032002C0C0CB35",
+            "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+        }
+    ]
+    weights: [1,1]
+m365_admin_users:
+    values: [
+        {
+            "user_name": "jmcnulty@contoso.org",
+            "user_domain": "contoso.org",
+            "user_guid": "062734c0-4d3f-4f66-ae59-2b685704f182",
+            "org_id": "42055b3e-a415-4eea-a7f2-23a1f26c7988",
+            "user_code": "10032002C0C0CB34",
+        }
+    ]
+    weights: [1]
+random_file_name:
+    values: [
+        {
+            "relative_url": "Documents",
+            "filename": "Quick Fox is Brown.docx",
+            "http_uri": "https://19zmpt-my.sharepoint.com/personal/user_19zmpt_onmicrosoft_com/"
+        },
+        {
+            "relative_url": "Documents",
+            "filename": "Quick Fox is Brown.doc",
+            "http_uri": "https://19zmpt-my.sharepoint.com/personal/user_19zmpt_onmicrosoft_com/"
+        },
+        {
+            "relative_url": "Shared Documents",
+            "filename": "smort numbr.xlsx",
+            "http_uri": "https://61mflh.sharepoint.com/sites/hello/"
+        }
+    ]
+    weights: [1,1,1]
+random_file_move_destination:
+    values: [
+        {
+            "relative_url": "Documents",
+            "name": "The slow gray sloth.docx",
+            "file_ext": "docx"
+        }
+    ]
+    weights: [1]
+
+input_types:
+    gelf_udp:
+        type: "org.graylog2.inputs.gelf.udp.GELFUDPInput"
+    syslog_tcp:
+        type: "org.graylog2.inputs.syslog.tcp.SyslogTCPInput"
+    palo9_tcp:
+        type: "org.graylog.integrations.inputs.paloalto9.PaloAlto9xInput"
+
+# NOTE: if adding new inputs, be sure to add them to the list `l_valid_event_types` in `sendevents.py`
+# Input type must match a valid input from above
+inputs:
+    global:
+        # default host to send messages to
+        # specify host for spcific inputs below to ovverride
+        host: 127.0.0.1
+    windows:
+        comments: "Requires a GELF input"
+        host: "127.0.0.1"
+        port: 2514
+        protocol: "UDP"
+        input_type: "gelf_udp"
+        events_file: "windows.events"
+        illuminate_packs: {
+            processing: [
+                "windows-security",                     # Processing Pack:  Microsoft Windows Security
+            ],
+            spotlight: [
+                "a9463b48-f009-4641-84e8-4245d3dc6e89", # Spotlight:        Microsoft Sysmon Spotlight
+                "b95c89b7-36e1-43b6-9714-b6b25e7cec04e" # Spotlight:        Microsoft Windows Security Spotlight
+            ]
+        }
+    applocker:
+        comments: "Requires a GELF input"
+        host: "127.0.0.1"
+        port: 2514
+        protocol: "UDP"
+        input_type: "gelf_udp"
+        events_file: "applocker.events"
+    cisco_asa:
+        comments: "Requires a SYSLOG input"
+        host: "127.0.0.1"
+        port: 2515
+        protocol: "TCP"
+        input_type: "syslog_tcp"
+        events_file: "cisco_asa.events"
+        illuminate_packs: {
+            processing: [
+                "ciscoasa-content-pack",                # Processing Pack:  Cisco ASA
+            ],
+            spotlight: [
+                "dbfc130d-d6d9-4111-b626-6b524c7061af", # Spotlight:        Cisco ASA Spotlight
+            ]
+        }
+    palo_alto:
+        comments: "Requires a Palo Alto Networks TCP (PAN-OS v9+) input"
+        host: "127.0.0.1"
+        port: 2516
+        protocol: "TCP"
+        input_type: "palo9_tcp"
+        events_file: "palo_alto.events"
+        illuminate_packs: {
+            processing: [
+                "palo-alto-91x",                        # Processing Pack:  Palo Alto 9.1x
+            ],
+            spotlight: [
+                "124fc4cd-5af6-464c-8844-3277388917a1"  # Spotlight:        Palo Alto Spotlight
+            ]
+        }
+    watchguard:
+        comments: "Requires a SYSLOG input"
+        host: "127.0.0.1"
+        port: 2515
+        protocol: "TCP"
+        input_type: "syslog_tcp"
+        events_file: "watchguard.events"
+        illuminate_packs: {
+            processing: [
+                "bb53bd77-3d3b-4f7c-a4b9-de05de837f93", # Processing Pack:  WatchGuard Firebox
+            ],
+            spotlight: [
+                "065740dd-bb85-41ee-9d2b-126488183e86"  # Spotlight:        Watchguard Firebox Spotlight
+            ]
+        }
+    cloudflare:
+        comments: "Requires a GELF input"
+        host: "127.0.0.1"
+        port: 2514
+        protocol: "UDP"
+        input_type: "gelf_udp"
+        events_file: "cloudflare.events"
+        msg_per_sec_range: [2,7]
+    fortinet:
+        comments: "Requires a SYSLOG input"
+        host: "127.0.0.1"
+        port: 2515
+        protocol: "TCP"
+        input_type: "syslog_tcp"
+        events_file: "fortinet.events"
+        msg_per_sec_range: [1,5]
+        illuminate_packs: {
+            processing: [
+                "fortigate-content-pack",               # Processing Pack:  Fortinet Fortigate
+            ],
+            spotlight: [
+                "557d2945-8d6d-445b-ae5e-9388ee89f128"  # Spotlight:        Fortinet Fortigate Spotlight
+            ]
+        }
+    pfsense:
+        comments: "Requires a SYSLOG input"
+        host: "127.0.0.1"
+        port: 2515
+        protocol: "TCP"
+        input_type: "syslog_tcp"
+        events_file: "pfsense.events"
+        msg_per_sec_range: [1,5]
+        illuminate_packs: {
+            processing: [
+                "dc8b6b6f-6235-4c0f-87e9-3a70a00203d6", # Processing Pack:  pfSense/OPNsense Firewall
+            ],
+            spotlight: [
+                "613f5f93-8498-4417-8458-8e6b2f18b323"  # Spotlight:        Fortinet Fortigate Spotlight
+            ]
+        }
+    m365:
+        enabled: True
+        comments: "Requires a GELF UDP input"
+        port: 2514
+        protocol: "UDP"
+        input_type: "gelf_udp"
+        events_file: "m365.events"
+        msg_per_sec_range: [1,1]
+        illuminate_packs: {
+            processing: [
+                "illuminate-o365",                      # Processing Pack:  Microsoft Office 365
+            ],
+            spotlight: [
+                "977b3617-be58-4f6c-9db6-06f72dbab306"  # Spotlight:        Microsoft Office 365 Spotlight
+            ]
+        }
+    used_for_additional_illuminate_packs:
+        enabled: False
+        illuminate_packs: {
+            processing: [
+                "core_anomaly_detection",               # Processing Pack:  Core:Anomaly Detection Add-on
+                "core-gim-enforcement"                  # Processing Pack:  Core:GIM Enforcement Add-on
+            ],
+            spotlight: [
+                "085d8f0e-2bee-44b2-b040-d7a11a1da2fe",  # Spotlight:       Core Spotlight
+                "3e6e738e-e447-4b2d-a937-b891401d4abf",  # Spotlight:       Core:Anomaly Detection Spotlight
+                "90e37be0-d112-44f8-afe7-eadcafbe4ba3",  # Spotlight:       Core:DNS Processing Spotlight
+                "52391e38-df23-4953-86e5-44e2bc667b97",  # Spotlight:       Event Definitions Rollup
+                "3e40d288-5794-44e9-88b4-b590de3514b8",  # Spotlight:       Message Summary Configurations
+            ]
+        }
+    # NOTE: this must be the same timezone as your graylog server
+    # https://www.joda.org/joda-time/timezones.html
+    syslog_timezone: "UTC"
+    # syslog_timezone: "America/Chicago"
+    syslog_rfc_timestamp_format: "3164"
+        # can be either:
+        #   3164    https://www.ietf.org/rfc/rfc3164.txt
+        #   5424    https://www.ietf.org/rfc/rfc5424.txt
+        # NOTE: this should be a string enclsoed in double quotes (")
+    random_eps_by_day_of_week:
+        enabled: False
+        multipliers: {"mon": 1, "tue": 1, "wed": 1, "thu": 1, "fri": 1, "sat": 0.33, "sun": 0.1}
+    random_eps_by_hour_of_day:
+        enabled: False
+        # key and value must be an int, do not enclose in double quotes
+        # Only defined keys will be used, no need to define all 24 hours of the day
+        multipliers: {
+            17: 10
+        }
+graylog_api:
+    https: False
+    host: "127.0.0.1"
+    port: "9000"
+    graylog_api_token: ""
+    # username/password will override a graylog token. Leave username/password empty to use token only.
+    username: "admin"
+    password: "admin"

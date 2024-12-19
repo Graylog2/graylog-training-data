@@ -1,2 +1,2 @@
-# Security Course Data
-Here lays the Security course data and configuration scripts
+# Dashboards Course Data
+Here lays the Dashboards course data and configuration scripts
