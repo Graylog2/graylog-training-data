@@ -7,23 +7,48 @@ showFooter: false
 showNewVersions: false
 themeName: graylog-theme
 
-actions:
+  actions:   
 - title: Demo Log
   shell: pwsh -c 'send-logs demo'
   icon: backup
   timeout: 900
+
+- title: Search Logs
+  shell: pwsh -c 'Send-logs search'
+  icon: ping
+  timeout: 1200
 
 - title: Dashboard Logs
   icon: "&#128269"
   shell: pwsh -c 'send-logs Dashboards'
   timeout: 1200
 
-- title: Log Playback On
-  shell: systemctl start gl-log-replay
-  icon: "&#9654;&#65039;"
+- title: Discovery Logs
+  icon: "&#63"
+  shell: pwsh -c 'send-logs discovery'
   timeout: 1200
 
-- title: Log Playback Off
-  shell: systemctl stop gl-log-replay
-  icon: "&#9209;&#65039"
+- title: Alert Logs
+  icon: "&#128227"
+  shell: pwsh -c 'send-logs Alerts'
+  timeout: 1200
+
+- title: pipeline-intro Logs
+  shell: pwsh -c 'Send-logs pipeline-intro'
+  icon: "&#128163" 
+  timeout: 1200
+
+- title: windowsfirewall-sample
+  shell: pwsh -c 'Send-logs windowsfirewall-sample'
+  icon: "&#128293"
+  timeout: 1200
+
+- title: Windows Firewall Logs
+  shell: pwsh -c 'Send-logs windowsfirewall'
+  icon: "&#128293"
+  timeout: 1200
+
+- title: Mac Firewall Logs
+  shell: pwsh -c 'Send-logs macfirewall'
+  icon: "&#127879"
   timeout: 1200
