@@ -7,7 +7,7 @@ showFooter: false
 showNewVersions: false
 themeName: graylog-theme
 
-  actions:   
+actions:   
 - title: Demo Log
   shell: pwsh -c 'send-logs demo'
   icon: backup
