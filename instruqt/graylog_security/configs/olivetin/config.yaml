@@ -28,8 +28,8 @@ actions:
   icon: "&#9209;&#65039"
   timeout: 1200
 
-- title: windows-sigma-events-sample
-  shell: cat /etc/graylog/log_data/simulated_gelflogs.json | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | ncat -w 1 localhost 12201
+- title: Windows Events
+  shell: python3 /root/powershell/Data/simulate_windows_events.py --host localhost --port 12201
   icon: "&#128293"
   timeout: 1200
 
