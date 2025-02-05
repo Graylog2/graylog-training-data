@@ -29,7 +29,7 @@ actions:
   timeout: 1200
 
 - title: Windows Events
-  shell: python3 /root/powershell/Data/simulate_windows_events.py --host localhost --port 12201
+  shell: python3 /root/powershell/Data/simulate_windows_events.py --host localhost --port 2514
   icon: "&#128293"
   timeout: 1200
 

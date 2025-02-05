@@ -147,12 +147,14 @@ def send_log_to_graylog(log):
 
 if __name__ == "__main__":
     print("Starting GELF log simulation...")
-    while True:
+    for _ in range(100):  # Limit to 100 log entries
         log_entry = generate_log()
         send_log_to_graylog(log_entry)
 
-        # Wait between 5 to 10 seconds to simulate real log flow
-        sleep_time = random.randint(5, 10)
+        # Wait between 15 to 30 seconds to simulate real log flow
+        sleep_time = random.randint(1, 3)
         print(f"Next log in {sleep_time} seconds...\n")
         time.sleep(sleep_time)
+    
+    print("Log simulation completed after 100 events.")
 
