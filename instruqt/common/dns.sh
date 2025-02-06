@@ -65,4 +65,5 @@ fi
 echo "Registered DNS record: $dns" 
 sed -i '/export dns=/d' /etc/profile
 echo "export dns=$dns" >> /etc/profile
+echo "export dns=$dns" >> /root/.bashrc
 echo "DNS setup complete!" 
