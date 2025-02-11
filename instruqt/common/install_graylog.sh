@@ -36,7 +36,8 @@ cp /common/configs/server.conf /etc/graylog/server/
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 # Start services:
-systemctl enable --now mongod.service
+systemctl enable mongod.service graylog-server.service graylog-datanode.service
+systemctl start mongod.service
 
 # Wait for OpenSearch to be accessible before continuing
 # while ! curl -s localhost:9200
