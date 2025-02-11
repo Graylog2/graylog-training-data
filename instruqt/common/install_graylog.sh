@@ -33,6 +33,7 @@ apt-get update && apt-get install -y mongodb-org graylog-enterprise graylog-data
 
 # Import common Graylog config needed for first service start:
 cp /common/configs/server.conf /etc/graylog/server/
+sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 # Start services:
 systemctl enable --now mongod.service graylog-datanode.service graylog-server.service
