@@ -54,12 +54,12 @@ printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 # ref: $NO_DOCKER env var set in Instruqt Track setup script.
 # If null (the default), deploy Graylog via Docker Compose.
 # If not null, deploy Graylog directly on the host VM.
-if [[ $NO_DOCKER ]]; then
-    printf "\n\n$(date)-Installing Graylog (non-Docker)\n"
-    /common/install_graylog.sh
-else
+if [ $NEEDS_DOCKER ]; then
     printf "\n\n$(date)-Installing Graylog (Docker)\n"
     /common/install_graylog_docker.sh
+else
+    printf "\n\n$(date)-Installing Graylog (non-Docker)\n"
+    /common/install_graylog.sh
 fi
 
 ### Graylog, MongoDB, and OpenSearch APIs are all accessible from this point forward! ###
