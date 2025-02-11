@@ -12,52 +12,39 @@ set -exo pipefail
 source /etc/profile
 GRAYLOG_VERSION="6.1"
 MONGODB_VERSION="6.0"
-OPENSEARCH_VERSION="2.15.0"
 
-### Install MongoDB:
+### Install MongoDB repo:
 # Download GPG key:
 curl -fsSL https://pgp.mongodb.com/server-$MONGODB_VERSION.asc | gpg -o /etc/apt/trusted.gpg.d/mongodb-server-$MONGODB_VERSION.gpg --dearmor > /dev/null
 # Add repo:
 echo "deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-$MONGODB_VERSION.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/$MONGODB_VERSION multiverse" | tee /etc/apt/sources.list.d/mongodb-org-$MONGODB_VERSION.list
 
-### Install Graylog:
+### Install Graylog repo:
 wget https://packages.graylog2.org/repo/packages/graylog-$GRAYLOG_VERSION-repository_latest.deb
 dpkg -i graylog-$GRAYLOG_VERSION-repository_latest.deb
 rm graylog-$GRAYLOG_VERSION-repository_latest.deb
 
-### Install Opensearch:
-# Download GPG key:
-curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /etc/apt/trusted.gpg.d/opensearch.gpg --dearmor > /dev/null
-# Add repo:
-echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
-
 # Install GL stack:
-apt-get update && apt-get install -y mongodb-org graylog-enterprise opensearch=$OPENSEARCH_VERSION
+apt-get update && apt-get install -y mongodb-org graylog-enterprise graylog-datanode
 
 # Set ownership+mode for /etc/graylog:
-chown graylog.graylog -R /etc/graylog
-chmod g+w -R /etc/graylog
-
-# Import common OpenSearch config needed for first service start:
-cp /common/configs/opensearch.yml /common/configs/jvm.options /etc/opensearch
+# chown graylog.graylog -R /etc/graylog
+# chmod g+w -R /etc/graylog
 
 # Import common Graylog config needed for first service start:
 cp /common/configs/server.conf /etc/graylog/server/
 
-# Set java path for use by Opensearch Security plugin:
-echo "export OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk" >> /etc/profile
-
 # Start services:
-systemctl enable --now mongod.service opensearch.service
+systemctl enable --now mongod.service graylog-datanode.service graylog-server.service
 
 # Wait for OpenSearch to be accessible before continuing
-while ! curl -s localhost:9200
-do
-    echo "Waiting for Opensearch API to come online before launching Graylog..."
-    sleep 5
-done
+# while ! curl -s localhost:9200
+# do
+#     echo "Waiting for Opensearch API to come online before launching Graylog..."
+#     sleep 5
+# done
 
-systemctl enable --now graylog-server.service
+# systemctl enable --now graylog-server.service
 # Wait for Graylog to be accessible before continuing
 while ! curl -s http://localhost:9000/api; do
 	printf "\n\nWaiting for Graylog to come online...\n"
