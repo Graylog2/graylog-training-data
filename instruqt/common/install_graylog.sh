@@ -10,18 +10,20 @@
 set -exo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
-
+GRAYLOG_VERSION="6.1"
+MONGODB_VERSION="6.0"
+OPENSEARCH_VERSION="2.15.0"
 
 ### Install MongoDB:
 # Download GPG key:
-curl -fsSL https://pgp.mongodb.com/server-6.0.asc | gpg -o /etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg --dearmor > /dev/null
+curl -fsSL https://pgp.mongodb.com/server-$MONGODB_VERSION.asc | gpg -o /etc/apt/trusted.gpg.d/mongodb-server-$MONGODB_VERSION.gpg --dearmor > /dev/null
 # Add repo:
-echo "deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+echo "deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-$MONGODB_VERSION.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/$MONGODB_VERSION multiverse" | tee /etc/apt/sources.list.d/mongodb-org-$MONGODB_VERSION.list
 
 ### Install Graylog:
-wget https://packages.graylog2.org/repo/packages/graylog-5.1-repository_latest.deb
-dpkg -i graylog-5.1-repository_latest.deb
-rm graylog-5.1-repository_latest.deb
+wget https://packages.graylog2.org/repo/packages/graylog-$GRAYLOG_VERSION-repository_latest.deb
+dpkg -i graylog-$GRAYLOG_VERSION-repository_latest.deb
+rm graylog-$GRAYLOG_VERSION-repository_latest.deb
 
 ### Install Opensearch:
 # Download GPG key:
@@ -30,7 +32,7 @@ curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg -o /
 echo "deb [signed-by=/etc/apt/trusted.gpg.d/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee -a /etc/apt/sources.list.d/opensearch-2.x.list > /dev/null
 
 # Install GL stack:
-apt-get update && apt-get install -y mongodb-org graylog-enterprise opensearch=2.10.0
+apt-get update && apt-get install -y mongodb-org graylog-enterprise opensearch=$OPENSEARCH_VERSION
 
 # Set ownership+mode for /etc/graylog:
 chown graylog.graylog -R /etc/graylog

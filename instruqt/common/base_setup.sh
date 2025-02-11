@@ -84,12 +84,7 @@ curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/cluster_
 
 printf "\n\n$(date)-Complete Base Setup -> Running class config\n"
 
-# Import Class Config
-#printf "\n\n$(date)-Grab Class Data\n"
-#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
-
-#printf printf "\n\n$(date)-Move Class Data and make exec\n"
-#mv $CLASS /$CLASS
+# Make Class scripts executable (should already be in Track setup script):
 chmod +x /$CLASS/scripts/*.sh
 
 # Execute Class-Specific Setup:
