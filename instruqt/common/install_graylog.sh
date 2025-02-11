@@ -36,7 +36,7 @@ cp /common/configs/server.conf /etc/graylog/server/
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
 
 # Start services:
-systemctl enable --now mongod.service graylog-datanode.service graylog-server.service
+systemctl enable --now mongod.service
 
 # Wait for OpenSearch to be accessible before continuing
 # while ! curl -s localhost:9200
@@ -47,10 +47,10 @@ systemctl enable --now mongod.service graylog-datanode.service graylog-server.se
 
 # systemctl enable --now graylog-server.service
 # Wait for Graylog to be accessible before continuing
-while ! curl -s http://localhost:9000/api; do
-	printf "\n\nWaiting for Graylog to come online...\n"
-    sleep 5
-done
+# while ! curl -s http://localhost:9000/api; do
+# 	printf "\n\nWaiting for Graylog to come online...\n"
+#     sleep 5
+# done
 
 # Set Graylog Cluster ID:
 /usr/bin/mongosh graylog --eval "db.cluster_config.updateMany({\"type\":\"org.graylog2.plugin.cluster.ClusterId\"}, {\$set:{payload:{cluster_id:\"$cluster_id\"}}});"
