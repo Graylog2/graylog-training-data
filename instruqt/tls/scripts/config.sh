@@ -43,3 +43,6 @@ chmod +x /root/generate_certs.sh
 # Add student CNAME to /etc/cloud/templates/hosts.debian.tmpl to prevent "Unable to call proxied resource" errors in server.log
 # as well as allow apps to resolve this hostname after instance pause & resume:
 #echo "127.0.0.1 $dns.instruqt.io" >> /etc/cloud/templates/hosts.debian.tmpl
+
+# Stop Graylog and Data Node processes to prevent ugly browser popup asking you to immediately log in to Graylog:
+systemctl stop graylog-server.service graylog-datanode.service
