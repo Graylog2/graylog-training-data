@@ -55,8 +55,6 @@ done
 # Set Graylog Cluster ID:
 /usr/bin/mongosh graylog --eval "db.cluster_config.updateMany({\"type\":\"org.graylog2.plugin.cluster.ClusterId\"}, {\$set:{payload:{cluster_id:\"$cluster_id\"}}});"
 
-# Stop Graylog server and Data Node for better UX on startup"
-systemctl stop graylog-server graylog-datanode
 
 # Add keytool binary to sudo's secure_path so user can run command with sudo w/o specifying full path:
 sed -E -i 's%secure_path="(.*?)"%secure_path="\1:/usr/share/graylog-server/jvm/bin"%' /etc/sudoers
