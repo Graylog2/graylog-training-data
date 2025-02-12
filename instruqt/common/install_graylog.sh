@@ -13,6 +13,10 @@ source /etc/profile
 GRAYLOG_VERSION="6.1"
 MONGODB_VERSION="6.0"
 
+# Set vm.max_map_count:
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+sysctl -p
+
 ### Install MongoDB repo:
 # Download GPG key:
 curl -fsSL https://pgp.mongodb.com/server-$MONGODB_VERSION.asc | gpg -o /etc/apt/trusted.gpg.d/mongodb-server-$MONGODB_VERSION.gpg --dearmor > /dev/null
@@ -34,6 +38,9 @@ apt-get update && apt-get install -y mongodb-org graylog-enterprise graylog-data
 # Import common Graylog config needed for first service start:
 cp /common/configs/server.conf /etc/graylog/server/
 sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
+
+# Import common Data Node config for first service start:
+cp /common/configs/datanode.conf /etc/graylog/datanode/
 
 # Start services:
 systemctl enable --now mongod.service graylog-server.service graylog-datanode.service
