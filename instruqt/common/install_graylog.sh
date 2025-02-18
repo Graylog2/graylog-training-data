@@ -41,6 +41,8 @@ cp /common/configs/server.conf /etc/graylog/server/
 # Set http_external_uri so web interface works behind Instruqt proxy
 # ref: https://docs.instruqt.com/reference/platform/networking#web-proxy-subdomain
 sed -i "s/#http_external_uri =/http_external_uri = https:\/\/graylog-9000-${_SANDBOX_ID}.env.play.instruqt.com\//" /etc/graylog/server/server.conf
+# Remove placeholder for http_publish_uri that we don't need at all:
+sed -i "s/http_publish_uri = http:\/\/PUBLICDNS:9000\///" /etc/graylog/server/server.conf
 
 # Import common Data Node config for first service start:
 cp /common/configs/datanode.conf /etc/graylog/datanode/
