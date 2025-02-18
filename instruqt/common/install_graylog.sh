@@ -37,7 +37,10 @@ apt-get update && apt-get install -y mongodb-org graylog-enterprise graylog-data
 
 # Import common Graylog config needed for first service start:
 cp /common/configs/server.conf /etc/graylog/server/
-sed -i "s/PUBLICDNS/$dns.logfather.org/" /etc/graylog/server/server.conf
+
+# Set http_external_uri so web interface works behind Instruqt proxy
+# ref: https://docs.instruqt.com/reference/platform/networking#web-proxy-subdomain
+sed -i "s/#http_external_uri =/http_external_uri = https:\/\/graylog-9000-${_SANDBOX_ID}.env.play.instruqt.com\//" /etc/graylog/server/server.conf
 
 # Import common Data Node config for first service start:
 cp /common/configs/datanode.conf /etc/graylog/datanode/
