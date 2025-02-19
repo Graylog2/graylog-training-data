@@ -65,6 +65,7 @@ while ! curl -s http://localhost:9000/api; do
 done
 
 # Set Graylog Cluster ID:
+printf "\n\nChanging Graylog cluster ID to: $cluster_id...\n"
 /usr/bin/mongosh graylog --eval "db.cluster_config.updateMany({\"type\":\"org.graylog2.plugin.cluster.ClusterId\"}, {\$set:{payload:{cluster_id:\"$cluster_id\"}}});"
 
 
