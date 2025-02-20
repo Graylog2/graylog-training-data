@@ -18,9 +18,10 @@ GRAYLOG_PORT = args.port
 LOG_TEMPLATES = [
     {
         "version": "1.1",
-        "host": "Server-E",
+        "host": "CEO-NedDesktop",
         "short_message": "Event logging service has shut down",
         "full_message": "The event logging service has been shut down on the system.",
+	"destination_hostname": "CEO-NedDesktop",
         "_EventID": 1100,
         "_collector_node_id": "WIN-SERVERC",
         "_Severity": "INFO",
@@ -35,7 +36,7 @@ LOG_TEMPLATES = [
     },
     {
         "version": "1.1",
-        "host": "Server-A",
+        "host": "prd-markDesktop",
         "short_message": "Audit events dropped by the transport",
         "full_message": "Audit events have been dropped due to a buffer overflow.",
         "_EventID": 1101,
@@ -52,9 +53,10 @@ LOG_TEMPLATES = [
     },
     {
         "version": "1.1",
-        "host": "Server-C",
+        "host": "PrdOwner-TullyDesktop",
         "short_message": "User logon successful",
         "full_message": "A user has successfully logged on to the system.",
+	"destination_hostname": "PrdOwner-TullyDesktop",
         "_EventID": 4624,
         "_collector_node_id": "WIN-SERVERD",
         "_Severity": "INFO",
@@ -69,7 +71,7 @@ LOG_TEMPLATES = [
     },
     {
         "version": "1.1",
-        "host": "Server-D",
+        "host": "CEO-NedDesktop",
         "short_message": "Failed login attempt detected",
         "full_message": "A failed login attempt was detected on the system.",
         "_EventID": 4625,
@@ -86,7 +88,7 @@ LOG_TEMPLATES = [
     },
     {
         "version": "1.1",
-        "host": "Server-F",
+        "host": "Sec-MatDesktop",
         "short_message": "System reboot initiated",
         "full_message": "The system is shutting down for a reboot.",
         "_EventID": 1074,
@@ -102,9 +104,10 @@ LOG_TEMPLATES = [
     },
     {
         "version": "1.1",
-        "host": "Server-G",
+        "host": "CEO-NedDesktop",
         "short_message": "Logon attempt using explicit credentials",
         "full_message": "A logon was attempted using explicit credentials.",
+        "destination_hostname": "CEO-NedDesktop",
         "_EventID": 4648,
         "_collector_node_id": "WIN-SERVERG",
         "_Severity": "INFO",
@@ -147,14 +150,12 @@ def send_log_to_graylog(log):
 
 if __name__ == "__main__":
     print("Starting GELF log simulation...")
-    for _ in range(100):  # Limit to 100 log entries
+    while True:
         log_entry = generate_log()
         send_log_to_graylog(log_entry)
 
-        # Wait between 15 to 30 seconds to simulate real log flow
-        sleep_time = random.randint(1, 3)
+        # Wait between 5 to 10 seconds to simulate real log flow
+        sleep_time = random.randint(1, 2)
         print(f"Next log in {sleep_time} seconds...\n")
         time.sleep(sleep_time)
-    
-    print("Log simulation completed after 100 events.")
 
