@@ -40,7 +40,7 @@ printf "\e[37m╚██████╔╝██║  ██║██║  ██�
 printf "\e[37m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   \e[31m╚══════╝ ╚═════╝  ╚═════╝ \n";
 printf "                                                                        \n";
 printf "\e[39m Hi,\n Welcome to ${TITLE}!\n"
-printf "\e[93m Your public DNS record is: https://$dns.logfather.org\n";
+printf "\e[93m Your public URL is: https://$dns.logfather.org\n";
 
 EOF
 
@@ -54,12 +54,12 @@ printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
 # ref: $NO_DOCKER env var set in Instruqt Track setup script.
 # If null (the default), deploy Graylog via Docker Compose.
 # If not null, deploy Graylog directly on the host VM.
-if [[ $NO_DOCKER ]]; then
-    printf "\n\n$(date)-Installing Graylog (non-Docker)\n"
-    /common/install_graylog.sh
-else
+if [ $NEEDS_DOCKER ]; then
     printf "\n\n$(date)-Installing Graylog (Docker)\n"
     /common/install_graylog_docker.sh
+else
+    printf "\n\n$(date)-Installing Graylog (non-Docker)\n"
+    /common/install_graylog.sh
 fi
 
 ### Graylog, MongoDB, and OpenSearch APIs are all accessible from this point forward! ###
@@ -84,12 +84,7 @@ curl -u 'admin:yabba dabba doo' -XPUT "http://localhost:9000/api/system/cluster_
 
 printf "\n\n$(date)-Complete Base Setup -> Running class config\n"
 
-# Import Class Config
-#printf "\n\n$(date)-Grab Class Data\n"
-#git svn clone "https://github.com/Graylog2/graylog-training-data/trunk/instruqt/$CLASS"
-
-#printf printf "\n\n$(date)-Move Class Data and make exec\n"
-#mv $CLASS /$CLASS
+# Make Class scripts executable (should already be in Track setup script):
 chmod +x /$CLASS/scripts/*.sh
 
 # Execute Class-Specific Setup:
