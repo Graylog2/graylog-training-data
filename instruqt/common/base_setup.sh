@@ -46,7 +46,7 @@ EOF
 
 # Minor vim behavior tweak to fix undesireable copying/pasting behavior:
 printf "set paste\n" >> ~/.vimrc
-printf "source \$VIMRUNTIME/defaults.vim" >> ~/.vimrc
+printf "source \$VIMRUNTIME/defaults.vim\n" >> ~/.vimrc
 printf "set mouse-=a\n" >> ~/.vimrc
 
 
