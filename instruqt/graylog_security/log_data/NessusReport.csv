@@ -2148,32 +2148,32 @@ The terminal services encryption level is set to :
 66173,,,None,Sec-MatDesktop,tcp,3389,RDP Screenshot,It is possible to take a screenshot of the remote login screen.,"This script attempts to connect to the remote host via RDP (Remote Desktop Protocol) and attempts to take a screenshot of the login screen.
 
 While this is not a vulnerability by itself, some versions of Windows display the names of the users who can connect and which ones are connected already.",n/a,,It was possible to gather the following screenshot of the remote login screen.
-10107,,,None,ceo-nedDesktop,tcp,80,HTTP Server Type and Version,A web server is running on the remote host.,This plugin attempts to determine the type and the version of the remote web server.,n/a,,"The remote web server type is :
+10107,,,None,CEO-NedDesktop,tcp,80,HTTP Server Type and Version,A web server is running on the remote host.,This plugin attempts to determine the type and the version of the remote web server.,n/a,,"The remote web server type is :
 
 Microsoft-IIS/7.5"
-10150,,,None,ceo-nedDesktop,udp,137,Windows NetBIOS / SMB Remote Host Information Disclosure,It is possible to obtain the network name of the remote host.,"The remote host listens on UDP port 137 or TCP port 445 and replies to NetBIOS nbtscan or SMB requests.
+10150,,,None,CEO-NedDesktop,udp,137,Windows NetBIOS / SMB Remote Host Information Disclosure,It is possible to obtain the network name of the remote host.,"The remote host listens on UDP port 137 or TCP port 445 and replies to NetBIOS nbtscan or SMB requests.
 
 Note that this plugin gathers information to be used in other plugins but does not itself generate a report.",n/a,,"The following 3 NetBIOS names have been gathered :
 
- ceo-nedDesktop         = Computer name
+ CEO-NedDesktop         = Computer name
  RB               = Workgroup / Domain name
- ceo-nedDesktop         = File Server Service
+ CEO-NedDesktop         = File Server Service
 
 The remote host has the following MAC address on its adapter :
 
    00:50:56:81:01:dc"
-10287,,,None,ceo-nedDesktop,udp,0,Traceroute Information,It was possible to obtain traceroute information.,Makes a traceroute to the remote host.,n/a,,"For your information, here is the traceroute from 172.16.138.174 to 10.31.112.23 :
+10287,,,None,CEO-NedDesktop,udp,0,Traceroute Information,It was possible to obtain traceroute information.,Makes a traceroute to the remote host.,n/a,,"For your information, here is the traceroute from 172.16.138.174 to 10.31.112.23 :
 172.16.138.174
 172.16.138.2
 10.31.112.23
 "
-10394,,,None,ceo-nedDesktop,tcp,445,Microsoft Windows SMB Log In Possible,It is possible to log into the remote host.,"The remote host is running Microsoft Windows operating system or Samba, a CIFS/SMB server for Unix.  It was possible to log into it using one of the following accounts :
+10394,,,None,CEO-NedDesktop,tcp,445,Microsoft Windows SMB Log In Possible,It is possible to log into the remote host.,"The remote host is running Microsoft Windows operating system or Samba, a CIFS/SMB server for Unix.  It was possible to log into it using one of the following accounts :
 
 - NULL session
 - Guest account
 - Given Credentials",n/a,"http://support.microsoft.com/kb/143474
 http://support.microsoft.com/kb/246261",#NAME?
-10736,,,None,ceo-nedDesktop,tcp,135,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,135,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available locally :
 
@@ -2687,7 +2687,7 @@ Type : Local RPC service
 Named pipe : eventlog
 
 "
-10736,,,None,ceo-nedDesktop,tcp,445,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,445,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available remotely :
 
@@ -2696,14 +2696,14 @@ UUID : d95afe70-a6d5-4259-822e-2c84da1ddb0d, version 1.0
 Description : Unknown RPC service
 Type : Remote RPC service
 Named pipe : \PIPE\InitShutdown
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : b08669ee-8cb5-43a5-a017-84fe00000000
 UUID : 76f226c3-ec14-4325-8a99-6a46348418af, version 1.0
 Description : Unknown RPC service
 Type : Remote RPC service
 Named pipe : \PIPE\InitShutdown
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 12345778-1234-abcd-ef00-0123456789ac, version 1.0
@@ -2711,7 +2711,7 @@ Description : Security Account Manager
 Windows process : lsass.exe
 Type : Remote RPC service
 Named pipe : \pipe\lsass
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 12345778-1234-abcd-ef00-0123456789ac, version 1.0
@@ -2719,7 +2719,7 @@ Description : Security Account Manager
 Windows process : lsass.exe
 Type : Remote RPC service
 Named pipe : \PIPE\protected_storage
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 3473dd4d-2e88-4006-9cba-22570909dd10, version 5.0
@@ -2727,7 +2727,7 @@ Description : Unknown RPC service
 Annotation : WinHttp Auto-Proxy Service
 Type : Remote RPC service
 Named pipe : \PIPE\W32TIME_ALT
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 1ff70682-0a51-30e8-076d-740be8cee98b, version 1.0
@@ -2735,7 +2735,7 @@ Description : Scheduler Service
 Windows process : svchost.exe
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 378e52b0-c0a9-11cf-822d-00aa0051e40f, version 1.0
@@ -2743,14 +2743,14 @@ Description : Scheduler Service
 Windows process : svchost.exe
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 86d35949-83c9-4044-b424-db363231fd0c, version 1.0
 Description : Unknown RPC service
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : a398e520-d59a-4bdd-aa7a-3c1e0303a511, version 1.0
@@ -2758,7 +2758,7 @@ Description : Unknown RPC service
 Annotation : IKE/Authip API
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 552d076a-cb29-4e44-8b6a-d15e59e2c0af, version 1.0
@@ -2766,7 +2766,7 @@ Description : Unknown RPC service
 Annotation : IP Transition Configuration endpoint
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 98716d03-89ac-44c7-bb8c-285824e51c4a, version 1.0
@@ -2774,7 +2774,7 @@ Description : Unknown RPC service
 Annotation : XactSrv service
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 73736573-6f69-656e-6e76-000000000000
 UUID : c9ac6db5-82b7-4e55-ae8a-e464ed7b4277, version 1.0
@@ -2782,7 +2782,7 @@ Description : Unknown RPC service
 Annotation : Impl friendly name
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 73736573-6f69-656e-6e76-000000000000
 UUID : c9ac6db5-82b7-4e55-ae8a-e464ed7b4277, version 1.0
@@ -2790,21 +2790,21 @@ Description : Unknown RPC service
 Annotation : Impl friendly name
 Type : Remote RPC service
 Named pipe : \PIPE\srvsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 30b044a5-a225-43f0-b3a4-e060df91f9c1, version 1.0
 Description : Unknown RPC service
 Type : Remote RPC service
 Named pipe : \PIPE\atsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 30b044a5-a225-43f0-b3a4-e060df91f9c1, version 1.0
 Description : Unknown RPC service
 Type : Remote RPC service
 Named pipe : \PIPE\srvsvc
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : f6beaff7-1e19-4fbb-9f8f-b89e2018337c, version 1.0
@@ -2812,7 +2812,7 @@ Description : Unknown RPC service
 Annotation : Event log TCPIP
 Type : Remote RPC service
 Named pipe : \pipe\eventlog
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 30adc50c-5cbc-46ce-9a0e-91914789e23c, version 1.0
@@ -2820,7 +2820,7 @@ Description : Unknown RPC service
 Annotation : NRP server endpoint
 Type : Remote RPC service
 Named pipe : \pipe\eventlog
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d6, version 1.0
@@ -2828,7 +2828,7 @@ Description : Unknown RPC service
 Annotation : DHCPv6 Client LRPC Endpoint
 Type : Remote RPC service
 Named pipe : \pipe\eventlog
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 Object UUID : 00000000-0000-0000-0000-000000000000
 UUID : 3c4728c5-f0ab-448b-bda1-6ce01eb0a6d5, version 1.0
@@ -2837,10 +2837,10 @@ Windows process : svchost.exe
 Annotation : DHCP Client LRPC Endpoint
 Type : Remote RPC service
 Named pipe : \pipe\eventlog
-Netbios name : \\ceo-nedDesktop
+Netbios name : \\CEO-NedDesktop
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49152,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49152,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49152 :
 
@@ -2852,7 +2852,7 @@ TCP Port : 49152
 IP : 10.31.112.23
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49153,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49153,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49153 :
 
@@ -2890,7 +2890,7 @@ TCP Port : 49153
 IP : 10.31.112.23
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49154,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49154,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49154 :
 
@@ -2941,7 +2941,7 @@ TCP Port : 49154
 IP : 10.31.112.23
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49176,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49176,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49176 :
 
@@ -2954,7 +2954,7 @@ TCP Port : 49176
 IP : 10.31.112.23
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49252,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49252,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49252 :
 
@@ -2966,7 +2966,7 @@ TCP Port : 49252
 IP : 10.31.112.23
 
 "
-10736,,,None,ceo-nedDesktop,tcp,49253,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
+10736,,,None,CEO-NedDesktop,tcp,49253,DCE Services Enumeration,A DCE/RPC service is running on the remote host.,"By sending a Lookup request to the portmapper (TCP 135 or epmapper PIPE) it was possible to enumerate the Distributed Computing Environment (DCE) services running on the remote port.
 Using this information it is possible to connect and bind to each service by sending an RPC request to the remote port/pipe.",n/a,,"
 The following DCERPC services are available on TCP port 49253 :
 
@@ -2988,11 +2988,11 @@ TCP Port : 49253
 IP : 10.31.112.23
 
 "
-10785,,,None,ceo-nedDesktop,tcp,445,Microsoft Windows SMB NativeLanManager Remote System Information Disclosure,It is possible to obtain information about the remote operating system.,It is possible to get the remote operating system name and version (Windows and/or Samba) by sending an authentication request to port 139 or 445.,n/a,,"The remote Operating System is : Windows Server 2008 R2 Standard 7601 Service Pack 1
+10785,,,None,CEO-NedDesktop,tcp,445,Microsoft Windows SMB NativeLanManager Remote System Information Disclosure,It is possible to obtain information about the remote operating system.,It is possible to get the remote operating system name and version (Windows and/or Samba) by sending an authentication request to port 139 or 445.,n/a,,"The remote Operating System is : Windows Server 2008 R2 Standard 7601 Service Pack 1
 The remote native lan manager is : Windows Server 2008 R2 Standard 6.1
 The remote SMB Domain Name is : RB
 "
-10919,,,None,ceo-nedDesktop,tcp,0,Open Port Re-check,Previously open ports are now closed.,"One of several ports that were previously open are now closed or unresponsive.
+10919,,,None,CEO-NedDesktop,tcp,0,Open Port Re-check,Previously open ports are now closed.,"One of several ports that were previously open are now closed or unresponsive.
 
 There are several possible reasons for this :
 
@@ -3012,57 +3012,57 @@ In any case, the audit of the remote host might be incomplete and may need to be
 Port 3389 was detected as being open but is now unresponsive
 Port 80 was detected as being open but is now unresponsive
 "
-10940,,,None,ceo-nedDesktop,tcp,3389,Remote Desktop Protocol Service Detection,The remote Windows host has Terminal Services enabled.,"Terminal Services allows a Windows user to remotely obtain a graphical login (and therefore act as a local user on the remote host).
+10940,,,None,CEO-NedDesktop,tcp,3389,Remote Desktop Protocol Service Detection,The remote Windows host has Terminal Services enabled.,"Terminal Services allows a Windows user to remotely obtain a graphical login (and therefore act as a local user on the remote host).
 
 If an attacker gains a valid login and password, he may be able to use this service to gain further access on the remote host.  An attacker may also use this service to mount a dictionary attack against the remote host to try to log in remotely.
 
 Note that RDP (the Remote Desktop Protocol) is vulnerable to Man-in-the-middle attacks, making it easy for attackers to steal the credentials of legitimate users by impersonating the Windows server.","Disable Terminal Services if you do not use it, and do not allow this service to run across the Internet.",,
-11011,,,None,ceo-nedDesktop,tcp,139,Microsoft Windows SMB Service Detection,A file / print sharing service is listening on the remote host.,"The remote service understands the CIFS (Common Internet File System) or Server Message Block (SMB) protocol, used to provide shared access to files, printers, etc between nodes on a network.",n/a,,"
+11011,,,None,CEO-NedDesktop,tcp,139,Microsoft Windows SMB Service Detection,A file / print sharing service is listening on the remote host.,"The remote service understands the CIFS (Common Internet File System) or Server Message Block (SMB) protocol, used to provide shared access to files, printers, etc between nodes on a network.",n/a,,"
 An SMB server is running on this port.
 "
-11011,,,None,ceo-nedDesktop,tcp,445,Microsoft Windows SMB Service Detection,A file / print sharing service is listening on the remote host.,"The remote service understands the CIFS (Common Internet File System) or Server Message Block (SMB) protocol, used to provide shared access to files, printers, etc between nodes on a network.",n/a,,"
+11011,,,None,CEO-NedDesktop,tcp,445,Microsoft Windows SMB Service Detection,A file / print sharing service is listening on the remote host.,"The remote service understands the CIFS (Common Internet File System) or Server Message Block (SMB) protocol, used to provide shared access to files, printers, etc between nodes on a network.",n/a,,"
 A CIFS server is running on this port.
 "
-11219,,,None,ceo-nedDesktop,tcp,80,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
+11219,,,None,CEO-NedDesktop,tcp,80,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
 It shall be reasonably quick even against a firewalled target.
 
 Note that SYN scanners are less intrusive than TCP (full connect) scanners against broken services, but they might kill lame misconfigured firewalls. They might also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 80/tcp was found to be open
-11219,,,None,ceo-nedDesktop,tcp,135,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
+11219,,,None,CEO-NedDesktop,tcp,135,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
 It shall be reasonably quick even against a firewalled target.
 
 Note that SYN scanners are less intrusive than TCP (full connect) scanners against broken services, but they might kill lame misconfigured firewalls. They might also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 135/tcp was found to be open
-11219,,,None,ceo-nedDesktop,tcp,139,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
+11219,,,None,CEO-NedDesktop,tcp,139,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
 It shall be reasonably quick even against a firewalled target.
 
 Note that SYN scanners are less intrusive than TCP (full connect) scanners against broken services, but they might kill lame misconfigured firewalls. They might also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 139/tcp was found to be open
-11219,,,None,ceo-nedDesktop,tcp,445,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
+11219,,,None,CEO-NedDesktop,tcp,445,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
 It shall be reasonably quick even against a firewalled target.
 
 Note that SYN scanners are less intrusive than TCP (full connect) scanners against broken services, but they might kill lame misconfigured firewalls. They might also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 445/tcp was found to be open
-11219,,,None,ceo-nedDesktop,tcp,3389,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
+11219,,,None,CEO-NedDesktop,tcp,3389,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.
 It shall be reasonably quick even against a firewalled target.
 
 Note that SYN scanners are less intrusive than TCP (full connect) scanners against broken services, but they might kill lame misconfigured firewalls. They might also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 3389/tcp was found to be open
-11422,,,None,ceo-nedDesktop,tcp,80,Web Server Unconfigured - Default Install Page Present,The remote web server is not configured or is not properly configured.,The remote web server uses its default welcome page.  It probably means that this server is not used at all or is serving content that is meant to be hidden.,Disable this service if you do not use it.,,"
+11422,,,None,CEO-NedDesktop,tcp,80,Web Server Unconfigured - Default Install Page Present,The remote web server is not configured or is not properly configured.,The remote web server uses its default welcome page.  It probably means that this server is not used at all or is serving content that is meant to be hidden.,Disable this service if you do not use it.,,"
 The default welcome page is from IIS.
 "
-11936,,,None,ceo-nedDesktop,tcp,0,OS Identification,It is possible to guess the remote operating system.,"Using a combination of remote probes (TCP/IP, SMB, HTTP, NTP, SNMP, etc...), it is possible to guess the name of the remote operating system in use. It is also sometimes possible to guess the version of the operating system.",n/a,,"
+11936,,,None,CEO-NedDesktop,tcp,0,OS Identification,It is possible to guess the remote operating system.,"Using a combination of remote probes (TCP/IP, SMB, HTTP, NTP, SNMP, etc...), it is possible to guess the name of the remote operating system in use. It is also sometimes possible to guess the version of the operating system.",n/a,,"
 Remote operating system : Microsoft Windows Server 2008 R2 Standard Service Pack 1
 Confidence Level : 99
 Method : MSRPC
 
 
 The remote host is running Microsoft Windows Server 2008 R2 Standard Service Pack 1"
-12053,,,None,ceo-nedDesktop,tcp,0,Host Fully Qualified Domain Name (FQDN) Resolution,It was possible to resolve the name of the remote host.,Nessus was able to resolve the FQDN of the remote host.,n/a,,"
-10.31.112.23 resolves as ceo-nedDesktop.
+12053,,,None,CEO-NedDesktop,tcp,0,Host Fully Qualified Domain Name (FQDN) Resolution,It was possible to resolve the name of the remote host.,Nessus was able to resolve the FQDN of the remote host.,n/a,,"
+10.31.112.23 resolves as CEO-NedDesktop.
 "
-18405,CVE-2005-1794,5.1,Medium,ceo-nedDesktop,tcp,3389,Remote Desktop Protocol Server Man-in-the-Middle Weakness,It may be possible to get access to the remote host.,"The remote version of the Remote Desktop Protocol Server (Terminal Service) is vulnerable to a man-in-the-middle (MiTM) attack. The RDP client makes no effort to validate the identity of the server when setting up encryption. An attacker with the ability to intercept traffic from the RDP server can establish encryption with the client and server without being detected. A MiTM attack of this nature would allow the attacker to obtain any sensitive information transmitted, including authentication credentials.
+18405,CVE-2005-1794,5.1,Medium,CEO-NedDesktop,tcp,3389,Remote Desktop Protocol Server Man-in-the-Middle Weakness,It may be possible to get access to the remote host.,"The remote version of the Remote Desktop Protocol Server (Terminal Service) is vulnerable to a man-in-the-middle (MiTM) attack. The RDP client makes no effort to validate the identity of the server when setting up encryption. An attacker with the ability to intercept traffic from the RDP server can establish encryption with the client and server without being detected. A MiTM attack of this nature would allow the attacker to obtain any sensitive information transmitted, including authentication credentials.
 
 This flaw exists because the RDP server stores a hardcoded RSA private key in the mstlsapi.dll library. Any local user with access to this file (on any Windows system) can retrieve the key and use it for this attack.","- Force the use of SSL as a transport layer for this service if supported, or/and
 - Select the 'Allow connections only from computers running Remote Desktop with Network Level Authentication' setting if it is available.","http://www.oxid.it/downloads/rdp-gbu.pdf
 http://www.nessus.org/u?e2628096
 http://technet.microsoft.com/en-us/library/cc782610.aspx",
-19506,,,None,ceo-nedDesktop,tcp,0,Nessus Scan Information,Information about the Nessus scan.,"This script displays, for each tested host, information about the scan itself :
+19506,,,None,CEO-NedDesktop,tcp,0,Nessus Scan Information,Information about the Nessus scan.,"This script displays, for each tested host, information about the scan itself :
 
  - The version of the plugin set
  - The type of plugin feed (HomeFeed or ProfessionalFeed)
@@ -3099,11 +3099,11 @@ Allow post-scan editing: Yes
 Scan Start Date : 2013/7/1 11:33
 Scan duration : 711 sec
 "
-20094,,,None,ceo-nedDesktop,tcp,0,VMware Virtual Machine Detection,The remote host seems to be a VMware virtual machine.,"According to the MAC address of its network adapter, the remote host is a VMware virtual machine.
+20094,,,None,CEO-NedDesktop,tcp,0,VMware Virtual Machine Detection,The remote host seems to be a VMware virtual machine.,"According to the MAC address of its network adapter, the remote host is a VMware virtual machine.
 
 Since it is physically accessible through the network, ensure that its configuration matches your organization's security policy.",n/a,,
-22964,,,None,ceo-nedDesktop,tcp,80,Service Detection,The remote service could be identified.,It was possible to identify the remote service by its banner or by looking at the error message it sends when it receives an HTTP request.,n/a,,A web server is running on this port.
-24260,,,None,ceo-nedDesktop,tcp,80,HyperText Transfer Protocol (HTTP) Information,Some information about the remote HTTP configuration can be extracted.,"This test gives some information about the remote HTTP protocol - the version used, whether HTTP Keep-Alive and HTTP pipelining are enabled, etc...
+22964,,,None,CEO-NedDesktop,tcp,80,Service Detection,The remote service could be identified.,It was possible to identify the remote service by its banner or by looking at the error message it sends when it receives an HTTP request.,n/a,,A web server is running on this port.
+24260,,,None,CEO-NedDesktop,tcp,80,HyperText Transfer Protocol (HTTP) Information,Some information about the remote HTTP configuration can be extracted.,"This test gives some information about the remote HTTP protocol - the version used, whether HTTP Keep-Alive and HTTP pipelining are enabled, etc...
 
 This test is informational only and does not denote any security problem.",n/a,,"
 Protocol version : HTTP/1.1
@@ -3122,31 +3122,31 @@ Headers :
   Content-Length: 689
 
 "
-24786,,,None,ceo-nedDesktop,tcp,0,Nessus Windows Scan Not Performed with Admin Privileges,The Nessus scan of this host may be incomplete due to insufficient privileges provided.,"The Nessus scanner testing the remote host has been given SMB credentials to log into the remote host, however these credentials do not have administrative privileges.
+24786,,,None,CEO-NedDesktop,tcp,0,Nessus Windows Scan Not Performed with Admin Privileges,The Nessus scan of this host may be incomplete due to insufficient privileges provided.,"The Nessus scanner testing the remote host has been given SMB credentials to log into the remote host, however these credentials do not have administrative privileges.
 
 Typically, when Nessus performs a patch audit, it logs into the remote host and reads the version of the DLLs on the remote host to determine if a given patch has been applied or not.  This is the method Microsoft recommends to determine if a patch has been applied.
 
 If your Nessus scanner does not have administrative privileges when doing a scan, then Nessus has to fall back to perform a patch audit through the registry which may lead to false positives (especially when using third-party patch auditing tools) or to false negatives (not all patches can be detected through the registry).",Reconfigure your scanner to use credentials with administrative privileges.,,"
-It was not possible to connect to '\\ceo-nedDesktop\ADMIN$' with the supplied credentials.
+It was not possible to connect to '\\CEO-NedDesktop\ADMIN$' with the supplied credentials.
 "
-26917,,,None,ceo-nedDesktop,tcp,445,Microsoft Windows SMB Registry : Nessus Cannot Access the Windows Registry,Nessus is not able to access the remote Windows Registry.,"It was not possible to connect to PIPE\winreg on the remote host.
+26917,,,None,CEO-NedDesktop,tcp,445,Microsoft Windows SMB Registry : Nessus Cannot Access the Windows Registry,Nessus is not able to access the remote Windows Registry.,"It was not possible to connect to PIPE\winreg on the remote host.
 
 If you intend to use Nessus to perform registry-based checks, the registry checks will not work because the 'Remote Registry Access' service (winreg) has been disabled on the remote host or can not be connected to with the supplied credentials.",n/a,,"Could not connect to the registry because:
 Could not connect to \winreg"
-30218,,2.6,Low,ceo-nedDesktop,tcp,3389,Terminal Services Encryption Level is not FIPS-140 Compliant,The remote host is not FIPS-140 compliant.,The encryption setting used by the remote Terminal Services service is not FIPS-140 compliant.,"Change RDP encryption level to :
+30218,,2.6,Low,CEO-NedDesktop,tcp,3389,Terminal Services Encryption Level is not FIPS-140 Compliant,The remote host is not FIPS-140 compliant.,The encryption setting used by the remote Terminal Services service is not FIPS-140 compliant.,"Change RDP encryption level to :
 
  4. FIPS Compliant",,"
 The terminal services encryption level is set to :
 
 2. Medium (Client Compatible)"
-35716,,,None,ceo-nedDesktop,tcp,0,Ethernet Card Manufacturer Detection,The manufacturer can be deduced from the Ethernet OUI.,"Each ethernet MAC address starts with a 24-bit 'Organizationally Unique Identifier'.
+35716,,,None,CEO-NedDesktop,tcp,0,Ethernet Card Manufacturer Detection,The manufacturer can be deduced from the Ethernet OUI.,"Each ethernet MAC address starts with a 24-bit 'Organizationally Unique Identifier'.
 These OUI are registered by IEEE.",n/a,"http://standards.ieee.org/faqs/OUI.html
 http://standards.ieee.org/regauth/oui/index.shtml","
 The following card manufacturers were identified :
 
 00:50:56:81:01:dc : VMware, Inc.
 "
-43111,,,None,ceo-nedDesktop,tcp,80,HTTP Methods Allowed (per directory),This plugin determines which HTTP methods are allowed on various CGI directories.,"By calling the OPTIONS method, it is possible to determine which HTTP methods are allowed on each directory.
+43111,,,None,CEO-NedDesktop,tcp,80,HTTP Methods Allowed (per directory),This plugin determines which HTTP methods are allowed on various CGI directories.,"By calling the OPTIONS method, it is possible to determine which HTTP methods are allowed on each directory.
 
 As this list may be incomplete, the plugin also tests - if 'Thorough tests' are enabled or 'Enable web applications tests' is set to 'yes' in the scan policy - various known HTTP methods on each directory and considers them as unsupported if it receives a response code of 400, 403, 405, or 501.
 
@@ -3157,7 +3157,7 @@ Note that the plugin output is only informational and does not necessarily indic
     /
 
 "
-45590,,,None,ceo-nedDesktop,tcp,0,Common Platform Enumeration (CPE),It is possible to enumerate CPE names that matched on the remote system.,"By using information obtained from a Nessus scan, this plugin reports CPE (Common Platform Enumeration) matches for various hardware and software products found on a host.
+45590,,,None,CEO-NedDesktop,tcp,0,Common Platform Enumeration (CPE),It is possible to enumerate CPE names that matched on the remote system.,"By using information obtained from a Nessus scan, this plugin reports CPE (Common Platform Enumeration) matches for various hardware and software products found on a host.
 
 Note that if an official CPE is not available for the product, this plugin computes the best possible CPE based on the information available from the scan.",n/a,http://cpe.mitre.org/,"
 The remote operating system matched the following CPE :
@@ -3168,18 +3168,18 @@ Following application CPE matched on the remote system :
 
   cpe:/a:microsoft:iis:7.5 -> Microsoft Internet Information Services (IIS) 7.5
 "
-46215,,,None,ceo-nedDesktop,tcp,0,Inconsistent Hostname and IP Address,The remote host's hostname is not consistent with DNS information.,"The name of this machine either does not resolve or resolves to a different IP address.
+46215,,,None,CEO-NedDesktop,tcp,0,Inconsistent Hostname and IP Address,The remote host's hostname is not consistent with DNS information.,"The name of this machine either does not resolve or resolves to a different IP address.
 
 This may come from a badly configured reverse DNS or from a host file in use on the Nessus scanning host.
 
-As a result, URLs in plugin output may not be directly usable in a web browser and some web tests may be incomplete.",Fix the reverse DNS or host file.,,The host name 'ceo-nedDesktop' does not resolve to an IP address
-54615,,,None,ceo-nedDesktop,tcp,0,Device Type,It is possible to guess the remote device type.,"Based on the remote operating system, it is possible to determine what the remote system type is (eg: a printer, router, general-purpose computer, etc).",n/a,,"Remote device type : general-purpose
+As a result, URLs in plugin output may not be directly usable in a web browser and some web tests may be incomplete.",Fix the reverse DNS or host file.,,The host name 'CEO-NedDesktop' does not resolve to an IP address
+54615,,,None,CEO-NedDesktop,tcp,0,Device Type,It is possible to guess the remote device type.,"Based on the remote operating system, it is possible to determine what the remote system type is (eg: a printer, router, general-purpose computer, etc).",n/a,,"Remote device type : general-purpose
 Confidence level : 99
 "
-57608,,5,Medium,ceo-nedDesktop,tcp,445,SMB Signing not required,Signing is disabled on the remote SMB server.,Signing is disabled on the remote SMB server.  This can allow man-in-the-middle attacks against the SMB server.,"Enforce message signing in the host's configuration.  On Windows, this is found in the Local Security Policy.  On Samba, the setting is called 'server signing'.  See the 'see also' links for further details.","http://support.microsoft.com/kb/887429
+57608,,5,Medium,CEO-NedDesktop,tcp,445,SMB Signing not required,Signing is disabled on the remote SMB server.,Signing is disabled on the remote SMB server.  This can allow man-in-the-middle attacks against the SMB server.,"Enforce message signing in the host's configuration.  On Windows, this is found in the Local Security Policy.  On Samba, the setting is called 'server signing'.  See the 'see also' links for further details.","http://support.microsoft.com/kb/887429
 http://www.nessus.org/u?74b80723
 http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html",
-57690,,4.3,Medium,ceo-nedDesktop,tcp,3389,Terminal Services Encryption Level is Medium or Low,The remote host is using weak cryptography.,"The remote Terminal Services service is not configured to use strong cryptography.
+57690,,4.3,Medium,CEO-NedDesktop,tcp,3389,Terminal Services Encryption Level is Medium or Low,The remote host is using weak cryptography.,"The remote Terminal Services service is not configured to use strong cryptography.
 
 Using weak cryptography with this service may allow an attacker to eavesdrop on the communications more easily and obtain screenshots and/or keystrokes.","Change RDP encryption level to one of :
 
@@ -3189,7 +3189,7 @@ Using weak cryptography with this service may allow an attacker to eavesdrop on 
 The terminal services encryption level is set to :
 
 2. Medium"
-66173,,,None,ceo-nedDesktop,tcp,3389,RDP Screenshot,It is possible to take a screenshot of the remote login screen.,"This script attempts to connect to the remote host via RDP (Remote Desktop Protocol) and attempts to take a screenshot of the login screen.
+66173,,,None,CEO-NedDesktop,tcp,3389,RDP Screenshot,It is possible to take a screenshot of the remote login screen.,"This script attempts to connect to the remote host via RDP (Remote Desktop Protocol) and attempts to take a screenshot of the login screen.
 
 While this is not a vulnerability by itself, some versions of Windows display the names of the users who can connect and which ones are connected already.",n/a,,It was possible to gather the following screenshot of the remote login screen.
 10107,,,None,qa3app04,tcp,80,HTTP Server Type and Version,A web server is running on the remote host.,This plugin attempts to determine the type and the version of the remote web server.,n/a,,"The remote web server type is :
