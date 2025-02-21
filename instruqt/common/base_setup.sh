@@ -44,9 +44,10 @@ printf "\e[93m Your public URL is: https://$dns.logfather.org\n";
 
 EOF
 
-# Minor vim behavior tweak to fix undesireable pasting behavior:
-printf "set paste\nsource \$VIMRUNTIME/defaults.vim\n" > ~/.vimrc
-
+# Minor vim behavior tweak to fix undesireable copying/pasting behavior:
+printf "set paste\n" > ~/.vimrc
+printf "source \$VIMRUNTIME/defaults.vim\n" >> ~/.vimrc
+printf "set mouse-=a\n" >> ~/.vimrc
 
 
 ### Graylog Install ###
