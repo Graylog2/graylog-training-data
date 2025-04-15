@@ -24,6 +24,3 @@ ilinst=$(curl -u 'admin:yabba dabba doo' -XPOST -k "https://localhost/api/plugin
 printf "\n\nDownload Version $ilver - result: $ilinst\n" 
 bunact=$(curl -u 'admin:yabba dabba doo' -XPOST -k "https://localhost/api/plugins/org.graylog.plugins.illuminate/bundles/$ilver" -H 'X-Requested-By: PS_TeamAwesome')
 printf "\n\nInstallation Result: $bunact\n" 
-
-# Add installed Illuminate bundle to /etc/profile for use in track & challenge lifecycle scripts:
-printf "\nilluminate_ver=$ilver" >> /etc/profile
