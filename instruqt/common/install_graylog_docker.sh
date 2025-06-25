@@ -30,7 +30,7 @@ wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instr
 wget https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/instruqt/common/configs/graylog-training-changes.env
 
 if [[ ! -z "${GL_VER_OVERRIDE}" ]]; then
-  sed -i "s|graylog/graylog-enterprise:.*|graylog/graylog-enterprise:$GL_VER_OVERRIDE|" docker-compose-glservices.yml
+  sed -i "s|graylog/graylog-enterprise:.*|graylog/graylog-enterprise:$GL_VER_OVERRIDE\"|" docker-compose-glservices.yml
 fi
 
 #sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
