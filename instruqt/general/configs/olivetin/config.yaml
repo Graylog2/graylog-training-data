@@ -1,0 +1,39 @@
+# Listen on all addresses available, port 1337
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337 
+
+# Choose from INFO (default), WARN and DEBUG
+logLevel: "DEBUG"
+showFooter: false
+showNewVersions: false
+themeName: graylog-theme
+
+actions:   
+- title: PFSense Logs
+  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | nc -w 1 localhost 1515
+  icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
+  timeout: 900
+  
+- title: Demo Log
+  shell: pwsh -c 'send-logs demo'
+  icon: backup
+  timeout: 900
+
+- title: pipeline-intro Logs
+  shell: pwsh -c 'Send-logs pipeline-intro'
+  icon: "&#128163" 
+  timeout: 1200
+
+- title: windowsfirewall-sample
+  shell: pwsh -c 'Send-logs windowsfirewall-sample'
+  icon: "&#128293"
+  timeout: 1200
+
+- title: Windows Firewall Logs
+  shell: pwsh -c 'Send-logs windowsfirewall'
+  icon: "&#128293"
+  timeout: 1200
+
+- title: KVP Firewall Logs
+  shell: cat /etc/graylog/log_data/kvp.log | nc -w1 localhost 1514
+  icon: "&#127879"
+  timeout: 1200
