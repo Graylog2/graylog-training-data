@@ -19,9 +19,14 @@ source /etc/profile
 ### Common Host Config ###
 
 # Update all system packages first:
-printf "\n\n$(date)-Installing System Updates\n"
+#printf "\n\n$(date)-Installing System Updates\n"
 #apt-get update
 #DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
+
+printf "\n\n$(date)-Disabling Automatic Upgrades\n"
+systemctl disable --now unattended-upgrades
+echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
+echo 'APT::Periodic::Unattended-Upgrade "0";' >> /etc/apt/apt.conf.d/20auto-upgrades
 
 # Setup gpg keyring for apt:
 printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
