@@ -20,8 +20,8 @@ source /etc/profile
 
 # Update all system packages first:
 printf "\n\n$(date)-Installing System Updates\n"
-apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
+#apt-get update
+#DEBIAN_FRONTEND=noninteractive apt-get upgrade -q -y -u -o Dpkg::Options::="--force-confdef" --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-change-held-packages --allow-unauthenticated
 
 # Setup gpg keyring for apt:
 printf "\n\n$(date)-Adding gpg keyring dir for apt\n"
