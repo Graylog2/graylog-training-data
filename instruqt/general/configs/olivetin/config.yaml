@@ -28,6 +28,11 @@ actions:
     icon: "&#128293"
     timeout: 1200
 
+  - title: Geolocation Test - tcp/12201
+    shell: echo '{"version":1.1,"source_ip":"209.85.200.104","host":"graylog","short_message":"source ip test"}' | tr '\n' '\0' | nc -q0 localhost 12201
+    icon: "&#127760"
+    timeout: 1200
+
   - title: PFSense Logs - tcp/1515
     shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | nc -w 1 localhost 1515
     icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
