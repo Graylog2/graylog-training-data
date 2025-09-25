@@ -1,0 +1,205 @@
+{
+  "v": 1,
+  "id": "0cd3d0ac-2fd5-495a-8117-3e894de0e786",
+  "rev": 1,
+  "name": "BD Training Day 3",
+  "summary": "BD Training Day 3",
+  "description": "BD Training Day 3",
+  "vendor": "Team Awesome",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "568cab41-dae0-46a4-9f34-ebd854fd587b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Firewall Routing Pipeline"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Route firewall logs to Firewall Stream"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Firewall Routing Pipeline\"\nstage 0 match either\nrule \"Route - Firewall Logs - Route to Firewall Stream\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "95b4fe20-52f4-4559-9357-93f72b863a7e"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "92f9b165-f029-49c7-bfe4-80de4426ff0b",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Firewall Logs Processing"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Process Firewall logs"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Firewall Logs Processing\"\nstage 1 match either\nrule \"Parse - Firewall Logs - Base Parser\"\nstage 2 match either\nrule \"Route - Firewall Logs - Reroute logs\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "d312daf9-14fc-4e0b-ad06-c5a9f1eaccbf"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "68bfa6f5-3b43-4f54-a60d-919ed1b3c337",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Firewall Logs - Route to Firewall Stream"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Route firewall logs to Firewall Stream"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Firewall Logs - Route to Firewall Stream\"\nwhen\n    contains(\n        value: to_string($message.message),\n        search: \"zone=LAB\"\n    )\nthen\n    route_to_stream(\n        name: \"Firewall Stream\",\n        remove_from_default: true\n    );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "95b4fe20-52f4-4559-9357-93f72b863a7e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Default Stream"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "280b7fb8-3ce2-4f3a-8b1a-dd1537625fe0",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Firewall Logs - Reroute logs"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Reroute logs"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Firewall Logs - Reroute logs\"\nwhen\n    $message.action != \"ALLOW\"\nthen\n    drop_message();\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "6b506b75-4964-49b6-847e-bad925212e01",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Firewall Logs - Base Parser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Parse Firewall Logs"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Firewall Logs - Base Parser\"\nwhen\n    true\nthen\n    let x = key_value(\n        value: to_string($message.message),\n        trim_value_chars: '\"'\n    );\n    \n    set_fields(x);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream_title",
+        "version": "1"
+      },
+      "id": "d312daf9-14fc-4e0b-ad06-c5a9f1eaccbf",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Firewall Stream"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=6.3.1+7bd8532"
+        }
+      ]
+    }
+  ]
+}
