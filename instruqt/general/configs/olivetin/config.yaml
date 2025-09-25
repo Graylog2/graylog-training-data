@@ -52,3 +52,8 @@ actions:
     shell: cat /etc/graylog/log_data/kvp.log | nc -uCw 1 localhost 2514
     icon: "&#127879"
     timeout: 1200
+
+  - title: Day 3 Lab
+    shell: cat /etc/graylog/log_data/bd-day3.log | nc -w1 localhost 5514
+    icon: "&#127879"
+    timeout: 1200

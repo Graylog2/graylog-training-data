@@ -66,6 +66,7 @@ services:
       - "1515:1515/tcp"   # Syslog TCP
       - "2514:2514/udp"   # GELF UDP (Log Replay)
       - "2515:2515/tcp"   # Syslog TCP (Log Replay)
+      - "5514:5514/tcp"   # Input for BD Training Day 3 Lab 1
 
     volumes:
       - "graylog_data:/usr/share/graylog/data/data"
