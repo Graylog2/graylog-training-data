@@ -33,6 +33,10 @@ if [[ ! -z "${GL_VER_OVERRIDE}" ]]; then
   sed -i "s|graylog/graylog-enterprise:.*|graylog/graylog-enterprise:$GL_VER_OVERRIDE\"|" docker-compose-glservices.yml
 fi
 
+if [[ ! -z "${MONGO_VER_OVERRIDE}" ]]; then
+  sed -i "s|mongo:.*|mongo:$MONGO_VER_OVERRIDE\"|" docker-compose-glservices.yml
+fi
+
 #sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env pull -q
 sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env create
 sudo docker compose -f docker-compose-glservices.yml --env-file graylog-training-changes.env up -d
