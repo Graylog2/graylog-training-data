@@ -10,8 +10,6 @@
 set -exo pipefail
 # Import env vars used throughout scripts runtime
 source /etc/profile
-GRAYLOG_VERSION="6.3"
-MONGODB_VERSION="6.0"
 
 # Set vm.max_map_count:
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
