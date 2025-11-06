@@ -1,0 +1,1406 @@
+{
+  "v": "1",
+  "id": "9ed5c337-e4f0-49a5-9943-3227e8bbd128",
+  "rev": 2,
+  "name": "GL Academy - Analyst",
+  "summary": "Majority of the Content for the Analyst Training",
+  "description": "",
+  "vendor": "GL-Academy",
+  "url": "",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "6cd2d8f0-703a-493f-bcc8-195e5f88c06d",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "Watching the Watchers of the Watch"
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "02f0c181-01bc-4893-91de-264b227fa698",
+              "timerange": {
+                "type": "relative",
+                "range": 300
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": null,
+                  "timerange": null,
+                  "offset": 0,
+                  "streams": [],
+                  "filter": null,
+                  "decorators": [],
+                  "type": "messages",
+                  "id": "7a0b92f6-ae68-4feb-b92c-85e05060e8e8",
+                  "limit": 150
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 3600
+                  },
+                  "streams": [
+                    "ffffffffffffffffffffffff"
+                  ],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message Count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "ab08d132-74f9-4d74-9a71-30353a007557",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "request",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "dbfef531-5230-4cb8-abec-d98db865ae1b",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": {
+                    "type": "elasticsearch",
+                    "query_string": ""
+                  },
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 7200
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count(verb)",
+                      "field": "verb"
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "verb",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "66d87bfd-aac2-46ad-bf8c-df7b98682bde",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "clientip",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "86371b34-a619-4a6d-b988-1695b9f00fcf",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2020-11-24T15:34:23.448Z"
+        },
+        "created_at": "2020-11-24T15:27:58.110Z",
+        "requires": {},
+        "state": {
+          "02f0c181-01bc-4893-91de-264b227fa698": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "b04f22e8-7f6e-4db7-b11d-bc726fddf4c2": "Message Table",
+                "d6dcebb0-c556-47ac-aadb-d66c3854ff2d": "API Requests",
+                "63c43c55-a5cf-4d97-b736-ea29072fc378": "Total Requests",
+                "590ebc8f-a2c8-4993-9cbe-0fd1eaa0fe46": "Traffic by Source IP",
+                "06d20fe0-e543-4db2-8b4f-11183a386217": "Requests by Verb"
+              },
+              "tab": {
+                "title": "API Health"
+              }
+            },
+            "widgets": [
+              {
+                "id": "b04f22e8-7f6e-4db7-b11d-bc726fddf4c2",
+                "type": "messages",
+                "filter": null,
+                "timerange": null,
+                "query": null,
+                "streams": [],
+                "config": {
+                  "fields": [
+                    "timestamp",
+                    "verb",
+                    "referrer",
+                    "request"
+                  ],
+                  "show_message_row": false,
+                  "show_summary": null,
+                  "decorators": [],
+                  "sort": [
+                    {
+                      "type": "pivot",
+                      "field": "timestamp",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "06d20fe0-e543-4db2-8b4f-11183a386217",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 7200
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "verb",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count(verb)"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "d6dcebb0-c556-47ac-aadb-d66c3854ff2d",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "area",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "request",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "interpolation": "step-after"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "63c43c55-a5cf-4d97-b736-ea29072fc378",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 3600
+                },
+                "query": {
+                  "type": "elasticsearch",
+                  "query_string": ""
+                },
+                "streams": [
+                  "ffffffffffffffffffffffff"
+                ],
+                "config": {
+                  "visualization": "numeric",
+                  "event_annotation": false,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message Count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              },
+              {
+                "id": "590ebc8f-a2c8-4993-9cbe-0fd1eaa0fe46",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "bar",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "clientip",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "63c43c55-a5cf-4d97-b736-ea29072fc378": [
+                "ab08d132-74f9-4d74-9a71-30353a007557"
+              ],
+              "06d20fe0-e543-4db2-8b4f-11183a386217": [
+                "66d87bfd-aac2-46ad-bf8c-df7b98682bde"
+              ],
+              "b04f22e8-7f6e-4db7-b11d-bc726fddf4c2": [
+                "7a0b92f6-ae68-4feb-b92c-85e05060e8e8"
+              ],
+              "590ebc8f-a2c8-4993-9cbe-0fd1eaa0fe46": [
+                "86371b34-a619-4a6d-b988-1695b9f00fcf"
+              ],
+              "d6dcebb0-c556-47ac-aadb-d66c3854ff2d": [
+                "dbfef531-5230-4cb8-abec-d98db865ae1b"
+              ]
+            },
+            "positions": {
+              "63c43c55-a5cf-4d97-b736-ea29072fc378": {
+                "col": 5,
+                "row": 4,
+                "height": 3,
+                "width": 3
+              },
+              "06d20fe0-e543-4db2-8b4f-11183a386217": {
+                "col": 8,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              },
+              "b04f22e8-7f6e-4db7-b11d-bc726fddf4c2": {
+                "col": 1,
+                "row": 7,
+                "height": 6,
+                "width": 11
+              },
+              "590ebc8f-a2c8-4993-9cbe-0fd1eaa0fe46": {
+                "col": 1,
+                "row": 4,
+                "height": 3,
+                "width": 4
+              },
+              "d6dcebb0-c556-47ac-aadb-d66c3854ff2d": {
+                "col": 1,
+                "row": 1,
+                "height": 3,
+                "width": 11
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Graylog Metrics Monitor"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": ""
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "da46a9c4-c680-4d01-82cd-d29687cf005e",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MS Logs"
+        },
+        "configuration": {
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1500
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.udp.RawUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "bc5b00c1-33d0-4e5c-b7fe-1c0f46a561e1",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Global GELF"
+        },
+        "configuration": {
+          "tls_key_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12201
+          },
+          "tls_enable": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "use_null_delimiter": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "tcp_keepalive": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "tls_client_auth_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "tls_cert_file": {
+            "@type": "string",
+            "@value": ""
+          },
+          "max_message_size": {
+            "@type": "integer",
+            "@value": 2097152
+          },
+          "tls_client_auth": {
+            "@type": "string",
+            "@value": "disabled"
+          },
+          "decompress_size_limit": {
+            "@type": "integer",
+            "@value": 8388608
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "tls_key_password": {
+            "@type": "string",
+            "@value": ""
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.gelf.tcp.GELFTCPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "0ae2a517-8965-4b5d-9a95-c82ede862d02",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "MacOS Logs"
+        },
+        "configuration": {
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 1501
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 2
+          }
+        },
+        "static_fields": {},
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.raw.udp.RawUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": []
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "6587fbae-0623-43a6-8922-d9c3500e95e5",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip-maxmind"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "maxmind_geoip"
+          },
+          "path": {
+            "@type": "string",
+            "@value": "/usr/share/graylog/data/config/GeoLite2-City.mmdb"
+          },
+          "database_type": {
+            "@type": "string",
+            "@value": "MAXMIND_CITY"
+          },
+          "check_interval": {
+            "@type": "long",
+            "@value": 1
+          },
+          "check_interval_unit": {
+            "@type": "string",
+            "@value": "MINUTES"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "6f991f11-cceb-4c47-8272-7f958a9d21fa",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "asset-data"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "asset-data"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Asset Management Database"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "httpjsonpath"
+          },
+          "url": {
+            "@type": "string",
+            "@value": "https://825c0i6vl3.execute-api.us-east-2.amazonaws.com/v1/execute?key=${key}"
+          },
+          "single_value_jsonpath": {
+            "@type": "string",
+            "@value": "$.hostname"
+          },
+          "multi_value_jsonpath": {
+            "@type": "string",
+            "@value": "$"
+          },
+          "user_agent": {
+            "@type": "string",
+            "@value": "Graylog Lookup - https://www.graylog.org/"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "eb4a5c1b-fa38-4cd5-b5b6-4c06252e318c",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip-maxmind-databases-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "b7fdfc65-ea4e-4cc2-bae7-b6f094961491",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "asset-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Asset Cache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "13749705-abc5-4ee2-9b65-098f2718d2a2",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "eb4a5c1b-fa38-4cd5-b5b6-4c06252e318c"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "geo-ip"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "6587fbae-0623-43a6-8922-d9c3500e95e5"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Geo IP - MaxMind™ Databases"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "893732d0-c453-44c4-a70f-1afd55aba466",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "b7fdfc65-ea4e-4cc2-bae7-b6f094961491"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "asset"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "6f991f11-cceb-4c47-8272-7f958a9d21fa"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Asset Management Lookup"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Lookup table to retrieve asset information from last known IP address"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "60a4240f-c46c-426b-ab03-3fad2194d0f1",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Training"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"Training\"\nstage 50 match either\nrule \"Parse - UTM-KV\"\nrule \"Parse - Apache\"\nstage 75 match either\nstage 0 match either\nrule \"Route - Training\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "b52c7c72-66c9-4c4e-9303-a374b54bf8cb",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Asset Management\"\nwhen\n    has_field(\"source_ip\") && \n    $message.source_is_internal == true\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.source_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"source_\");\nset_field(\"lookup\",\"[Source - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "6cf2bc3e-f0e6-4767-8b39-443db500339a",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Sample - Pipeline Demo"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "// This pipeline is modified as part of the Pipeline Introduction Lab\nrule \"Sample - Pipeline Demo\"\n\nwhen\n    // This is where your logic goes\n    // to determine which messages this rule applies to \n    // WITHIN the assigned Pipeline Stage\n    \n    // This sample message simply passes the value true, \n    // which means it will be processed on any message that it is assigned\n    true\n\nthen\n\n    // This is where the actions to be taken within this rule are created\n    // These actions are performed using the functions, \n    // listed and explained on the right\n    \n    // The most common pitfalls in pipeline rule creation are:\n    //   1.  Omitting Escape characters \n    //      (C:\\Windows instead of C:\\\\Windows)\n    \n    //   2.  Data types (Objects instead of Strings is VERY common)\n    //      For example, to set the username field to lowercase:\n    //          lowercase($message.username); is INVALID\n    //          lowercase(to_string($message.username)); is VALID\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3e836cd9-95fe-44d2-873b-91394577c831",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Destination\"\nwhen\n    has_field(\"destination_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.destination_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.destination_ip)\n        ) \n    )\nthen\nset_field(\"destination_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "3559bfdb-e564-4cab-9036-a6b239bf0e37",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Threat Intelligence\"\nwhen\n    has_field(\"destination_ip\") && \n    $message.destination_is_external == true\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.destination_ip)\n);\n\n//Set fields with enriched details\nset_field(\"destination_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"destination_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"destination_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"destination - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.destination_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "4b55ed9f-7e32-492e-95d9-54beef61cf08",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Destination"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Destination\"\nwhen\n    $message.threat_classification == \"malicious\" &&\n    $message.destination_is_external == true\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.destination_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "94e1cb8d-f837-498f-ac63-3347688a0c37",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Destination - Asset Management"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Destination - Asset Management\"\nwhen\n    has_field(\"destination_ip\") && \n    $message.destination_is_internal == true\nthen\n\nlet assetdata = lookup(\n    lookup_table: \"asset\",\n    key: to_string($message.destination_ip)\n    );\nset_fields(\n    fields: assetdata,\n    prefix: \"destination_\");\nset_field(\"lookup\",\"[Destination - Asset Management]\");\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "9d45ba1e-d4f9-4929-9a60-1372720c52bf",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Desktop Firewalls - Internal Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Desktop Firewalls - Internal Source\"\nwhen\n    has_field(\"source_ip\") &&\n    (   cidr_match(\n        cidr: \"192.168.0.0/16\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"10.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"172.16.0.0/12\", \n        ip: to_ip($message.source_ip)\n        ) OR\n        cidr_match(\n        cidr: \"127.0.0.0/8\", \n        ip: to_ip($message.source_ip)\n        ) \n    )\nthen\nset_field(\"source_is_internal\",true);\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "5ac3e492-239c-4452-a413-ae982c1722ad",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Context - Threat Info - Source"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Context - Threat Info - Source\"\nwhen\n    $message.threat_classification == \"malicious\" && \n    $message.source_is_external == true\nthen\n    set_field(\"threat_detected\",true);\n    set_field(\"threat_info_url\",concat(\n        first: \"https://www.greynoise.io/viz/ip/\",\n        second: to_string($message.source_ip)\n            )\n        );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "e8c25eee-e1dc-4474-9fc3-51357562923a",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Desktop Firewall - MacOS"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Desktop Firewall - MacOS\"\nwhen\n    from_input(\n        name: \"MacOS Logs\")\nthen\n    route_to_stream(\n        name: \"Desktop Firewall Events\", \n        remove_from_default: true\n    );\n\n// Additional field to identify this rule\nset_field(\"message_route\",\"Desktop Firewall - MacOS\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "0d717793-1e78-440e-9cc9-8f2f344df065",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Enrich - Source - Threat Intelligence"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Enrich - Source - Threat Intelligence\"\nwhen\n    has_field(\"source_ip\") && \n    $message.source_is_external == true\nthen\n\n//Grab Geo Details\nlet geo = lookup(\n    lookup_table: \"geo-ip\",\n    key: to_string($message.source_ip)\n);\n\n//Set fields with enriched details\nset_field(\"source_geo_city_name\",geo[\"city\"].names.en);\nset_field(\"source_geo_country_name\",geo[\"country\"].names.en);\nset_field(\"source_geo_coordinates\",geo[\"coordinates\"]);\nset_field(\"Enriched\",\"Source - Threat Intelligence\");\n\n//Check for threat on IP\nlet intel = lookup(\n    lookup_table: \"greynoise-lookup\",\n    key: to_string($message.source_ip)\n);\n\n//Set classification Detail from Graynoise\nset_field(\"threat_classification\",intel[\"classification\"]);\n\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "70f04722-6f41-4042-aea9-b207e9e58824",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - MacFW - GROK"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - MacFW - GROK\"\nwhen\n    to_string($message.message_route) == \"Desktop Firewall - MacOS\"\nthen\nlet pf = grok(\n    pattern: \"tcp%{INT:ip_stack} %{IP:source_ip}:%{INT:source_port}<->%{IP:destination_ip}:%{INT:destination_port},%{DATA:interface},%{INT:sent_bytes},%{INT:recv_bytes},%{NUMBER:average_rtt} %{WORD:average_rtt_unit},\",\n    value: to_string($message.message),\n    only_named_captures: true\n);\nset_fields(pf);\n// Add Parse field for easier message tracing\nset_field(\"parse\",\"Parse - MacFW - GROK\");\nset_field(\"host_operating_system\",\"MacOS\");\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "cf08d75d-d4fe-48fa-9467-baceff0a47e3",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - UTM-KV"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - UTM-KV\"\nwhen\n    to_string($message.log_category) == \"UTM\"\nthen\n    let parsekv = key_value(\n        value: to_string($message.message),\n        trim_value_chars: '\"', \n        ignore_empty_values: true\n        );\n    set_fields(parsekv);\n    set_field(\n        field: \"parser\", \n        value: \"Parse - UTM-KV\"\n    );\nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "6e965306-c984-4632-a147-5151745188d8",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Parse - Apache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Parse - Apache\"\nwhen\n    has_field(\"log_pack\") &&\n    to_string($message.log_pack) == \"002-gl.json\"\nthen\n let parsegrok = grok(\n        pattern: \"%{COMBINEDAPACHELOG}\",\n        value: to_string($message.message), \n        only_named_captures: true\n        ); \n set_fields(parsegrok); \n    set_field(\n        field: \"bytes\", \n        value: to_long($message.bytes)\n    );\n    set_field(\n        field: \"parser\", \n        value: \"apache_grok\"\n    );\nset_field(\n    field: \"timestamp\",\n    value: now()\n    );\nset_field(\n    field: \"cluster_node\",\n    value: to_string($message.filebeat_host_name)\n    );\n    remove_field(\"filebeat_@timestamp\");\n    remove_field(\"filebeat_@timestamp\");\n    remove_field(\"filebeat_@metadata_beat\");\nremove_field(\"filebeat_@metadata_pipeline\");\nremove_field(\"filebeat_@metadata_type\");\nremove_field(\"filebeat_@metadata_version\");\nremove_field(\"filebeat_@timestamp\");\nremove_field(\"filebeat_agent_ephemeral_id\");\nremove_field(\"filebeat_agent_hostname\");\nremove_field(\"filebeat_agent_id\");\nremove_field(\"filebeat_agent_name\");\nremove_field(\"filebeat_agent_type\");\nremove_field(\"filebeat_agent_version\");\nremove_field(\"filebeat_ecs_version\");\nremove_field(\"filebeat_event_dataset\");\nremove_field(\"filebeat_event_module\");\nremove_field(\"filebeat_fileset_name\");\nremove_field(\"filebeat_host_architecture\");\nremove_field(\"filebeat_host_hostname\");\nremove_field(\"filebeat_host_id\");\n    \n    \nend\n"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "2fec1b82-dd40-4a8e-9931-345ec62a0161",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "Route - Training"
+        },
+        "description": {
+          "@type": "string",
+          "@value": ""
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"Route - Training\"\nwhen\n    has_field(\"log_pack\")\nthen\n    route_to_stream(\n        name: \"Training Logs\"\n        );\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "ffffffffffffffffffffffff",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Training Logs"
+        },
+        "stream_rules": [],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Used for parsing out logs specifically for building labs"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.3.5+32fa802"
+        }
+      ]
+    }
+  ]
+}
