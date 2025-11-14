@@ -9,7 +9,7 @@ themeName: graylog-theme
 
 actions:   
 - title: PFSense Logs
-  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | nc -w 1 localhost 1515
+  shell: cat /etc/graylog/log_data/firewall.log | sed "s/datetime/$(date +"%Y-%m-%dT%H:%M:%S%:z")/g" | sed "s/1337.haxorz.org/pfSense/" | nc -w 1 localhost 1515
   icon: '<img src = "https://raw.githubusercontent.com/Graylog2/graylog-training-data/main/6441615622c8f6a4e5a2c29c/images/pfsense-logo.png" width = "48px"/>'
   timeout: 900
   
