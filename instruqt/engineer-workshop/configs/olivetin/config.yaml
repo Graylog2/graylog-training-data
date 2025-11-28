@@ -8,6 +8,36 @@ showNewVersions: false
 themeName: graylog-theme
 
 actions:
+  - title: Exercise - Investigation
+    shell: >-
+        paste -d'\n' /etc/graylog/log_data/northstar_database_REPLACEME_logs.jsonl /etc/graylog/log_data/northstar_vpn_multi_badip_REPLACEME_logs.jsonl | sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
+    icon: backup
+    timeout: 900
+
+  - title: Exercise - Customer-Facing Deliverable
+    shell: >-
+        paste -d'\n' /etc/graylog/log_data/northstar_database_REPLACEME_logs.jsonl | sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
+    icon: backup
+    timeout: 900
+
+  - title: Exercise - Data Routing
+    shell: >-
+        paste -d'\n' /etc/graylog/log_data/northstar_firewall_REPLACEME_logs.jsonl /etc/graylog/log_data/northstar_vpn_REPLACEME_logs.jsonl /etc/graylog/log_data/northstar_hr_REPLACEME_logs.jsonl /etc/graylog/log_data/northstar_loadbalancer_REPLACEME_logs.jsonl | sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
+    icon: backup
+    timeout: 900
+
+  - title: Exercise - Enrichment
+    shell: >-
+        paste -d'\n' /etc/graylog/log_data/northstar_vpn_multi_badip_REPLACEME_logs.jsonl | sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
+    icon: backup
+    timeout: 900
+
+  - title: Database Logs - tcp/12201
+    shell: >-
+        sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' /etc/graylog/log_data/northstar_database_REPLACEME_logs.jsonl | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
+    icon: backup
+    timeout: 900
+
   - title: Cloud Lab Logs - tcp/12201
     shell: >-
         sed -e 's/"timestamp": "REPLACEME",//' -e 's/}$//' /etc/graylog/log_data/northstar_cloudlab_REPLACEME_logs.jsonl | awk -v seed=$RANDOM 'BEGIN {srand(seed);a=strftime("%s")-3600;} { a+=int((11 * rand())) ;print($0, ",\"timestamp\": \"" a "\"}"); }' | tr '\n' '\0' | nc -w 1 localhost 12201
