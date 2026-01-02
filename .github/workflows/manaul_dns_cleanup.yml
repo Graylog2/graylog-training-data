@@ -2,7 +2,11 @@ name: "Manual DNS Cleanup"
 
 on:
   workflow_dispatch
-    
+
+env:
+  authemail=${{ secrets.LF_DNS_AUTH_EMAIL }}
+  apitoken=${{ secrets.LF_DNS_API }}
+
 jobs:
   DNS_Cleanup:
     runs-on: "ubuntu-latest"
@@ -12,9 +16,8 @@ jobs:
       - name: "Run Cleanup via Bash" 
         shell: "bash"
         run: |
-            date=$(date)
-            authemail="${{ secrets.LF_DNS_AUTH_EMAIL }}"
-            apitoken="${{ secrets.LF_DNS_API }}"
+            date=$(date)          
+            echo $authemail
             echo "Set Var NP"
 
             #Get DNS Record IDs
