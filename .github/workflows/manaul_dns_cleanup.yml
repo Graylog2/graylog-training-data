@@ -15,17 +15,9 @@ jobs:
             date=$(date)
             authemail="${{ secrets.LF_DNS_AUTH_EMAIL }}"
             apitoken="${{ secrets.LF_DNS_API }}"          
-            echo $authemail >> secret.txt
-            cat secret.txt
-            echo "Set Var NP"
 
             #Get DNS Record IDs
-            DNSIDs=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?per_page=1000" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json")
-            echo "Managed to curl"
-            echo $DNSIDs
-            DNSIDs = $(echo $DNSIDs | jq -r '.result[] | .id')
-            echo "$DNSIDs"
-
+            DNSIDs=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?per_page=1000" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" | jq -r '.result[] | .id')
             printf "\nFound $(echo -n "$DNSIDs" | grep -c '^') IDs to process\n"
         
             for id in $DNSIDs
