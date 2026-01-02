@@ -18,8 +18,12 @@ jobs:
             echo "Set Var NP"
 
             #Get DNS Record IDs
-            DNSIDs=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?per_page=1000" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json" | jq -r '.result[] | .id')
+            DNSIDs=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/08be24924fc30f320e7329020986bad2/dns_records?per_page=1000" -H "X-Auth-Email: $authemail" -H "Authorization: Bearer $apitoken" -H "Content-Type: application/json")
             echo "Managed to curl"
+            echo $DNSIDs
+            DNSIDs = $(echo $DNSIDs | jq -r '.result[] | .id')
+            echo "$DNSIDs"
+
             printf "\nFound $(echo -n "$DNSIDs" | grep -c '^') IDs to process\n"
         
             for id in $DNSIDs
