@@ -4,8 +4,8 @@ on:
   workflow_dispatch
 
 env:
-  authemail=${{ secrets.LF_DNS_AUTH_EMAIL }}
-  apitoken=${{ secrets.LF_DNS_API }}
+  authemail="${{ secrets.LF_DNS_AUTH_EMAIL }}"
+  apitoken="${{ secrets.LF_DNS_API }}"
 
 jobs:
   DNS_Cleanup:
