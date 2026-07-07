@@ -1,0 +1,19 @@
+# OliveTin config for Academy Log Playback challenges. Ethan's per-challenge Instruqt
+# setup copies this over the live OliveTin config and runs `systemctl restart OliveTin`.
+# (Confirm the live config path on the VM — see the design spec's path caveat.)
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337
+logLevel: "INFO"
+showFooter: false
+showNewVersions: false
+themeName: graylog-theme
+
+actions:
+- title: Log Playback On
+  shell: systemctl start gl-log-replay
+  icon: "&#9654;&#65039;"
+  timeout: 1200
+
+- title: Log Playback Off
+  shell: systemctl stop gl-log-replay
+  icon: "&#9209;&#65039;"
+  timeout: 1200

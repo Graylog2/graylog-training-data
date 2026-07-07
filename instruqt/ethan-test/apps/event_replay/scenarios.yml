@@ -1,0 +1,14 @@
+# Log Playback feed registry. Exactly ONE feed enabled at a time.
+# The harness streams the enabled feed's events live into Graylog when the
+# learner clicks "Log Playback On" (systemctl start gl-log-replay).
+feeds:
+  stub:
+    enabled: true
+    description: "Heartbeat feed — proves live flow end-to-end."
+  # --- seams for deferred real generators (Task: post-PA) ---
+  palo_impossible:
+    enabled: false
+    description: "GlobalProtect impossible-travel (palo_globalproject_sim.py)."
+  suricata_mimikatz:
+    enabled: false
+    description: "Suricata Mimikatz alerts (raw EVE generator, TBD)."
