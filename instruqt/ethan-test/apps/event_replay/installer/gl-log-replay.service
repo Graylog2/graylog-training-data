@@ -1,0 +1,19 @@
+# gl-log-replay.service
+[Unit]
+Description=Lab Log Playback Generator
+Requires=network.target
+After=network.target
+ConditionPathExists=/opt/graylog/log-replay
+
+[Service]
+User=gl_replay_service
+Group=gl_replay_service
+WorkingDirectory=/opt/graylog/log-replay
+EnvironmentFile=-/opt/graylog/log-replay/playback.env
+Type=simple
+Restart=always
+RestartSec=3
+ExecStart=/opt/graylog/log-replay/service-wrapper.sh
+
+[Install]
+WantedBy=multi-user.target
