@@ -58,7 +58,15 @@ GL_API_URL="https://localhost" python3 /$CLASS/scripts/provision_mod5_impossible
 # GELF". Idempotent. (After docker_graylog_https.sh the API is HTTPS on 443.)
 GL_API_URL="https://localhost" TLS_VERIFY=0 python3 /$CLASS/scripts/provision_input.py
 
-# --- 5. Dataset load is LEARNER-TRIGGERED, not at boot ---
+# --- 5. Apply the class OliveTin config (buttons: Demo Log / Launch Dataset / Playback) ---
+# setup_olivetin.sh (step 1) installed the DEFAULT config; swap ours in + restart so the
+# buttons appear track-wide. Live path = /OliveTin-linux-amd64/config.yaml (symlink
+# /etc/OliveTin, capital). Service is `OliveTin`. (Per-challenge button variation, if ever
+# needed, is an Instruqt-UI challenge-setup step — not needed for Mod2, same buttons.)
+cp /$CLASS/configs/olivetin/playback.yaml /etc/OliveTin/config.yaml
+systemctl restart OliveTin
+
+# --- 6. Dataset load is LEARNER-TRIGGERED, not at boot ---
 # The learner clicks the OliveTin "Launch Dataset" button in challenge 1 to bulk-load
 # the module dataset ONCE (configs/olivetin/playback.yaml); the other challenges reuse
 # it. load_lab_data.py re-stamps to launch, preserves arrays/field types, waits for the
