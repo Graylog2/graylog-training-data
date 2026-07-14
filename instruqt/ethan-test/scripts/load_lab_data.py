@@ -76,6 +76,12 @@ DEFAULT_PREFIX    = "graylog"
 STRIP_PREFIX = ("gl2_",)
 STRIP_EXACT  = {"_id", "streams", "timestamp"}
 
+# Fields that the Illuminate/GIM mapping types as `long` but the cooked archive
+# carries as hex strings (e.g. "0xd24"). Coerce hex -> int so the bulk index does
+# not reject them (~7% of docs were dropped otherwise). Only these exact fields —
+# other hex-looking values (e.g. Windows logon_id) are legitimately kept as strings.
+HEX_INT_FIELDS = {"process_id", "process_parent_id"}
+
 
 def log(m): print(f"[load_lab_data] {m}", flush=True)
 
@@ -96,11 +102,23 @@ def _ctx_for(url):
 
 
 # ---- Graylog REST API (basic auth) ----------------------------------------
+def _auth_hdr():
+    return "Basic " + base64.b64encode(f"{USER}:{PASS}".encode()).decode()
+
+
 def api(path):
-    auth = base64.b64encode(f"{USER}:{PASS}".encode()).decode()
     r = urllib.request.Request(API + path, headers={
-        "Authorization": f"Basic {auth}", "Accept": "application/json",
+        "Authorization": _auth_hdr(), "Accept": "application/json",
         "X-Requested-By": "lab-loader"})
+    raw = urllib.request.urlopen(r, timeout=20, context=_ctx_for(API)).read().decode()
+    return json.loads(raw) if raw.strip() else {}
+
+
+def api_post(path, body=None):
+    data = json.dumps(body).encode() if body is not None else b""
+    r = urllib.request.Request(API + path, data=data, method="POST", headers={
+        "Authorization": _auth_hdr(), "Accept": "application/json",
+        "Content-Type": "application/json", "X-Requested-By": "lab-loader"})
     raw = urllib.request.urlopen(r, timeout=20, context=_ctx_for(API)).read().decode()
     return json.loads(raw) if raw.strip() else {}
 
@@ -158,6 +176,18 @@ def bulk(ndjson_bytes, key, ctx):
 def parse_ts(s): return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
 
 
+def _to_int(v):
+    """Coerce a hex ('0xd24') or decimal value to int; return unchanged on failure."""
+    if isinstance(v, list):
+        return [_to_int(x) for x in v]
+    if isinstance(v, str):
+        try:
+            return int(v, 16) if v.lower().startswith("0x") else int(v)
+        except ValueError:
+            return v
+    return v
+
+
 def prep(doc, delta, route):
     """strip internals, restamp, set streams; return (write_alias, doc)."""
     product = doc.get("event_source_product")
@@ -169,26 +199,71 @@ def prep(doc, delta, route):
     ts = parse_ts(doc["timestamp"]) + delta
     out["timestamp"] = ts.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
     out["streams"] = [stream_id]
+    # Coerce hex-string numeric fields the GIM mapping types as `long` (else dropped).
+    for f in HEX_INT_FIELDS:
+        if f in out:
+            out[f] = _to_int(out[f])
     return alias, out
 
 
+def default_index_set(index_sets):
+    """The writable default index set (id, prefix) — where auto-created streams write."""
+    for s in index_sets:
+        if s.get("default"):
+            return s["id"], s["index_prefix"]
+    # fallback: the 'graylog' prefixed set
+    for s in index_sets:
+        if s["index_prefix"] == DEFAULT_PREFIX:
+            return s["id"], s["index_prefix"]
+    return index_sets[0]["id"], index_sets[0]["index_prefix"]
+
+
+def create_stream(title, index_set_id):
+    """Create a stream on the given index set and resume it; return its id.
+
+    Bulk-indexed docs carry `streams=[id]`, so the stream only needs to EXIST (and
+    be running) for the UI/search to surface them — no stream rules are needed. This
+    is our fallback when Illuminate did not provision the named source streams."""
+    # GL 7.x wraps the create body ({"entity":..., "share_request":null}); a plain
+    # body 400s with "CreateEntityRequest: entity cannot be null".
+    entity = {"title": title, "description": "Auto-created by the Academy lab loader.",
+              "index_set_id": index_set_id, "remove_matches_from_default_stream": True}
+    body = {"entity": entity, "share_request": None}
+    sid = api_post("/api/streams", body).get("stream_id")
+    if sid:
+        try:
+            api_post(f"/api/streams/{sid}/resume")
+        except Exception as e:
+            log(f"  note: could not resume stream '{title}': {str(e)[:80]}")
+    return sid
+
+
 def build_routes():
-    """event_source_product -> (stream_id, '<prefix>_deflector')."""
+    """event_source_product -> (stream_id, '<prefix>_deflector').
+
+    If a named source stream is missing (Illuminate did not create it on this VM),
+    create it on the default index set so learners still get real, selectable streams
+    instead of everything piling into Default."""
+    index_sets = api("/api/system/indices/index_sets")["index_sets"]
+    setprefix = {s["id"]: s["index_prefix"] for s in index_sets}
+    def_set_id, def_prefix = default_index_set(index_sets)
+
     streams = {s["title"]: s for s in api("/api/streams")["streams"]}
-    setprefix = {s["id"]: s["index_prefix"]
-                 for s in api("/api/system/indices/index_sets")["index_sets"]}
     routes = {}
     for product, title in STREAM_TITLE_BY_PRODUCT.items():
         s = streams.get(title)
-        if not s:
-            log(f"WARNING: stream '{title}' not found — '{product}' docs -> Default")
+        if s:
+            prefix = setprefix.get(s["index_set_id"], def_prefix)
+            routes[product] = (s["id"], prefix + "_deflector")
+            log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector (existing)")
             continue
-        prefix = setprefix.get(s["index_set_id"])
-        if not prefix:
-            log(f"WARNING: index set for '{title}' not found — '{product}' docs -> Default")
-            continue
-        routes[product] = (s["id"], prefix + "_deflector")
-        log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector")
+        # Not found -> create it on the default index set.
+        sid = create_stream(title, def_set_id)
+        if sid:
+            routes[product] = (sid, def_prefix + "_deflector")
+            log(f"route {product:16} -> stream {sid} / {def_prefix}_deflector (created '{title}')")
+        else:
+            log(f"WARNING: could not create stream '{title}' — '{product}' docs -> Default")
     return routes
 
 
