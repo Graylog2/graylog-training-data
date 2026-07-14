@@ -55,6 +55,9 @@ HERE    = os.path.dirname(os.path.abspath(__file__))
 DATA    = os.environ.get("LOG_DATA_DIR", os.path.join(HERE, "..", "log_data"))
 LAUNCH  = os.environ.get("LAUNCH", "now")
 BATCH   = int(os.environ.get("BATCH", "1000"))
+# Illuminate installs its named source streams asynchronously; wait up to this many
+# seconds for them before falling back to auto-creating our own. 0 disables the wait.
+ILLUMINATE_WAIT = int(os.environ.get("ILLUMINATE_WAIT", "180"))
 
 # Auth mode for the OpenSearch bulk endpoint. "auto": use a JWT only when a
 # password_secret is supplied (datanode backend); otherwise no auth (Framework's
@@ -238,30 +241,57 @@ def create_stream(title, index_set_id):
     return sid
 
 
+def wait_for_illuminate_streams(titles, timeout):
+    """Poll /api/streams until every title exists, or timeout. Returns the last
+    {title: stream} snapshot. Illuminate creates these streams asynchronously, so a
+    short wait lets us route into the REAL Illuminate streams/index sets (needed by
+    later enrichment/asset modules) instead of immediately auto-creating duplicates."""
+    titles = list(titles)
+    deadline = time.time() + timeout
+    snap = {}
+    while True:
+        snap = {s["title"]: s for s in api("/api/streams")["streams"]}
+        missing = [t for t in titles if t not in snap]
+        if not missing:
+            log(f"Illuminate streams present ({len(titles)}/{len(titles)})")
+            return snap
+        if time.time() >= deadline:
+            log(f"Illuminate wait timed out ({len(titles) - len(missing)}/{len(titles)} "
+                f"present after {timeout}s); will auto-create the rest")
+            return snap
+        log(f"waiting for Illuminate streams… {len(titles) - len(missing)}/{len(titles)}")
+        time.sleep(5)
+
+
 def build_routes():
     """event_source_product -> (stream_id, '<prefix>_deflector').
 
-    If a named source stream is missing (Illuminate did not create it on this VM),
-    create it on the default index set so learners still get real, selectable streams
-    instead of everything piling into Default."""
+    Prefer the REAL Illuminate source streams (wait for them, since Illuminate creates
+    them asynchronously) so data lands in the typed Illuminate index sets that later
+    modules expect. If a stream is still missing after the wait, auto-create it on the
+    default index set so learners still get real, selectable streams (fallback)."""
     index_sets = api("/api/system/indices/index_sets")["index_sets"]
     setprefix = {s["id"]: s["index_prefix"] for s in index_sets}
     def_set_id, def_prefix = default_index_set(index_sets)
 
-    streams = {s["title"]: s for s in api("/api/streams")["streams"]}
+    if ILLUMINATE_WAIT > 0:
+        streams = wait_for_illuminate_streams(STREAM_TITLE_BY_PRODUCT.values(), ILLUMINATE_WAIT)
+    else:
+        streams = {s["title"]: s for s in api("/api/streams")["streams"]}
+
     routes = {}
     for product, title in STREAM_TITLE_BY_PRODUCT.items():
         s = streams.get(title)
         if s:
             prefix = setprefix.get(s["index_set_id"], def_prefix)
             routes[product] = (s["id"], prefix + "_deflector")
-            log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector (existing)")
+            log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector (Illuminate)")
             continue
-        # Not found -> create it on the default index set.
+        # Still missing after the wait -> create it on the default index set (fallback).
         sid = create_stream(title, def_set_id)
         if sid:
             routes[product] = (sid, def_prefix + "_deflector")
-            log(f"route {product:16} -> stream {sid} / {def_prefix}_deflector (created '{title}')")
+            log(f"route {product:16} -> stream {sid} / {def_prefix}_deflector (auto-created '{title}')")
         else:
             log(f"WARNING: could not create stream '{title}' — '{product}' docs -> Default")
     return routes
