@@ -8,6 +8,20 @@ showNewVersions: false
 themeName: graylog-theme
 
 actions:
+# Onboarding demo (Intro challenge): sends ONE sample message through the Global GELF
+# input so the learner sees it arrive in Search as "Received by: Global GELF".
+- title: Demo Log
+  shell: python3 /ethan-test/scripts/send_demo_log.py
+  icon: "&#128190;"
+  timeout: 60
+
+# Launch the module dataset ONCE (challenge 1): bulk-loads the Mod2/3 logs. The other
+# challenges reuse the same data — no need to re-run per challenge.
+- title: Launch Dataset
+  shell: GL_API_URL=https://localhost OS_URL=http://localhost:9200 TLS_VERIFY=0 python3 /ethan-test/scripts/load_lab_data.py
+  icon: "&#128229;"
+  timeout: 1200
+
 - title: Log Playback On
   shell: systemctl start gl-log-replay
   icon: "&#9654;&#65039;"

@@ -76,6 +76,12 @@ STREAM_TITLE_BY_PRODUCT = {
 DEFAULT_STREAM_ID = "000000000000000000000001"
 DEFAULT_PREFIX    = "graylog"
 
+# Cosmetic "Received by": stamp bulk-indexed docs with this input's id (+ the node id)
+# so they display as if they arrived through the Global GELF input. The data is still
+# bulk-indexed — real input-flow is deferred to the module that needs it. Must match
+# provision_input.py's TITLE. Set RECEIVED_BY_INPUT="" to disable stamping.
+RECEIVED_BY_INPUT = os.environ.get("RECEIVED_BY_INPUT", "Global GELF")
+
 STRIP_PREFIX = ("gl2_",)
 STRIP_EXACT  = {"_id", "streams", "timestamp"}
 
@@ -191,7 +197,36 @@ def _to_int(v):
     return v
 
 
-def prep(doc, delta, route):
+def received_by_fields():
+    """Resolve the Global GELF input + node ids for the cosmetic 'Received by' stamp.
+    Returns {} (no stamp) if disabled or the input is absent."""
+    if not RECEIVED_BY_INPUT:
+        return {}
+    try:
+        inputs = {i["title"]: i for i in api("/api/system/inputs").get("inputs", [])}
+        inp = inputs.get(RECEIVED_BY_INPUT)
+        if not inp:
+            log(f"note: input '{RECEIVED_BY_INPUT}' not found — docs get no received-by")
+            return {}
+        nresp = api("/api/system/cluster/nodes")
+        nlist = nresp.get("nodes", nresp)
+        if isinstance(nlist, dict):
+            node_id = next(iter(nlist), None)
+        elif isinstance(nlist, list) and nlist:
+            node_id = nlist[0].get("node_id")
+        else:
+            node_id = None
+        fields = {"gl2_source_input": inp["id"]}
+        if node_id:
+            fields["gl2_source_node"] = node_id
+        log(f"received-by: input {inp['id']} node {node_id}")
+        return fields
+    except Exception as e:
+        log(f"note: received-by lookup failed ({str(e)[:80]}) — skipping stamp")
+        return {}
+
+
+def prep(doc, delta, route, received_by):
     """strip internals, restamp, set streams; return (write_alias, doc)."""
     product = doc.get("event_source_product")
     if isinstance(product, list):
@@ -206,6 +241,8 @@ def prep(doc, delta, route):
     for f in HEX_INT_FIELDS:
         if f in out:
             out[f] = _to_int(out[f])
+    # Cosmetic "Received by <input> on <node>" (stripped gl2_* re-added intentionally).
+    out.update(received_by)
     return alias, out
 
 
@@ -320,6 +357,7 @@ def main():
 
     wait_for_graylog()
     routes = build_routes()
+    received_by = received_by_fields()
     log(f"OpenSearch {OS_URL} (auth={'jwt' if USE_JWT else 'none'})")
     key = jwt_key() if USE_JWT else b""
     ctx = _ctx_for(OS_URL)
@@ -331,7 +369,7 @@ def main():
             line = line.strip()
             if not line:
                 continue
-            alias, doc = prep(json.loads(line), delta, routes)
+            alias, doc = prep(json.loads(line), delta, routes, received_by)
             batch_lines.append(json.dumps({"index": {"_index": alias}}))
             batch_lines.append(json.dumps(doc))
             n_in_batch += 1
