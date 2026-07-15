@@ -35,6 +35,16 @@ sudo chown -R root:root /root
 chmod +x /$CLASS/apps/event_replay/installer/install.sh
 /$CLASS/apps/event_replay/installer/install.sh
 
+# --- 2c. Stage the dataset loader to a cleanup-proof path ---
+# /common/cleanup.sh runs LAST in setup and does `rm -r /$CLASS`, so the class
+# folder is GONE by lab runtime. The "Launch Dataset" OliveTin button is clicked by
+# the learner AFTER setup, so it cannot call /$CLASS/scripts/load_lab_data.py. Copy
+# the loader + its dataset to /opt/lab (which cleanup does not touch) and point the
+# button there. The loader resolves data as <script>/../log_data, so keep the same
+# scripts/ + log_data/ sibling layout under /opt/lab.
+mkdir -p /opt/lab
+cp -r /$CLASS/scripts /$CLASS/log_data /opt/lab/
+
 # --- 3. Course provisioning ---
 /common/certs.sh
 /common/course_settings.sh

@@ -23,7 +23,7 @@ actions:
 # short: Illuminate does not provision the named streams on this VM, so the loader
 # auto-creates them almost immediately instead of waiting the full default.
 - title: Launch Dataset
-  shell: GL_API_URL=https://localhost OS_URL=http://localhost:9200 TLS_VERIFY=0 ILLUMINATE_WAIT=15 python3 /ethan-test/scripts/load_lab_data.py
+  shell: GL_API_URL=https://localhost OS_URL=http://localhost:9200 TLS_VERIFY=0 ILLUMINATE_WAIT=15 python3 /opt/lab/scripts/load_lab_data.py
   icon: "&#128229;"
   timeout: 1200
 
