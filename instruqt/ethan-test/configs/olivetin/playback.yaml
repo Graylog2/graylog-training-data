@@ -8,12 +8,15 @@ showNewVersions: false
 themeName: graylog-theme
 
 actions:
-# Onboarding demo (Intro challenge): sends ONE sample message through the Global GELF
-# input so the learner sees it arrive in Search as "Received by: Global GELF".
+# Onboarding demo (Intro challenge): the Framework's Send-Logs ships ONE sample message
+# ("Demo Message" / "This is my little message from me to you. Enjoy your day!") over GELF
+# TCP to localhost:12201 (published by docker-compose-glservices.yml) → the Global GELF
+# input → learner sees it in Search as "Received by: Global GELF". Uses the pwsh profile
+# installed by setup_olivetin.sh (Default_Profile.ps1 defines Send-Logs + $env:GLServer).
 - title: Demo Log
-  shell: python3 /ethan-test/scripts/send_demo_log.py
+  shell: pwsh -c 'send-logs demo'
   icon: "&#128190;"
-  timeout: 60
+  timeout: 900
 
 # Launch the module dataset ONCE (challenge 1): bulk-loads the Mod2/3 logs. The other
 # challenges reuse the same data — no need to re-run per challenge.
