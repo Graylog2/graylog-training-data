@@ -381,9 +381,13 @@ def main():
         cnt, errs = bulk(("\n".join(batch_lines) + "\n").encode(), key, ctx)
         total += cnt; errors += errs
 
-    log(f"indexed {total} docs ({errors} errors) into the Illuminate index sets")
+    log(f"indexed {total} docs ({errors} errors)")
+    # Only a total failure should fail the OliveTin "Launch Dataset" button; a handful of
+    # per-doc index errors is non-fatal (the dataset still loaded).
+    if total == 0:
+        sys.exit("no documents indexed — check OpenSearch reachability / stream routing")
     if errors:
-        sys.exit(f"{errors} docs failed to index")
+        log(f"note: {errors} docs failed to index (non-fatal)")
 
 
 if __name__ == "__main__":
