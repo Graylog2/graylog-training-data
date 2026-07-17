@@ -53,17 +53,20 @@ cp -r /$CLASS/scripts /$CLASS/log_data /opt/lab/
 /common/docker_graylog_https.sh   # after this point everything is HTTPS
 /common/inst_illuminate.sh
 
-# --- 3a. Enable the Illuminate PROCESSING packs this class needs ---
-# inst_illuminate.sh installs the bundle but enables no packs, so the four source
-# streams (Windows Security / Sysmon / PowerShell / Suricata) would not exist until
-# the runtime loader auto-creates them on the DEFAULT index set — which caused the QA
-# stream-availability race (the picker caches its list at page load) and left the
-# Content Hub showing the packs disabled while streams existed. Enable the packs here
-# at boot so they legitimately create the streams on their typed index sets; the
-# Launch Dataset loader then just routes data into the real Illuminate streams.
-# Blocks until the four streams exist (STREAM_WAIT), so boot does not finish first.
-GL_API_URL="https://localhost" TLS_VERIFY=0 STREAM_WAIT=180 \
-  python3 /$CLASS/scripts/enable_illuminate_packs.py
+# --- 3a. Create the class's typed index sets + source streams at boot ---
+# The four source streams (Windows Security / Sysmon / PowerShell / Suricata) must EXIST,
+# on their typed index sets, before the learner opens the search page — otherwise the
+# runtime Launch Dataset loader auto-creates them on the DEFAULT index set, which causes
+# the QA stream-availability race (the picker caches its list at page load) and puts data
+# on the wrong index set. The "natural" path (enable the Illuminate PROCESSING packs)
+# needs the LICENSED Illuminate bundle; inst_illuminate.sh installs the +OPEN (community)
+# bundle, whose packs enable with HTTP 204 but create nothing. So we create the structure
+# directly here — a faithful copy of Illuminate's gl_* index sets + streams (verified
+# against gl_sandbox). License-independent, deterministic; the loader then routes data
+# into these real streams. Idempotent, so a future licensed bundle makes it a no-op.
+# (Enabling the packs is deferred to fix A: licensed-bundle / input-based future content.)
+GL_API_URL="https://localhost" TLS_VERIFY=0 \
+  python3 /$CLASS/scripts/provision_lab_streams.py
 
 # --- 3b. Mod5/6 Impossible Travel provisioning ---
 # Runs AFTER Illuminate so the `Illuminate:Palo Alto Messages` stream exists. Installs
