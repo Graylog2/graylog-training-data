@@ -1,0 +1,34 @@
+# OliveTin buttons for the Module 3 track. Applied ONCE, track-wide, by config.sh step 5
+# (copied over /etc/OliveTin/config.yaml followed by `systemctl restart OliveTin`), so
+# there is nothing to do per challenge in the Instruqt UI.
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337
+logLevel: "INFO"
+showFooter: false
+showNewVersions: false
+themeName: graylog-theme
+
+actions:
+# Onboarding demo (Intro challenge): the Framework's Send-Logs ships ONE sample message
+# ("Demo Message" / "This is my little message from me to you. Enjoy your day!") over GELF
+# TCP to localhost:12201 (published by docker-compose-glservices.yml) → the Global GELF
+# input → learner sees it in Search as "Received by: Global GELF". Uses the pwsh profile
+# installed by setup_olivetin.sh (Default_Profile.ps1 defines Send-Logs + $env:GLServer).
+- title: Demo Log
+  shell: pwsh -c 'send-logs demo'
+  icon: "&#128190;"
+  timeout: 900
+
+# Launch the module dataset ONCE (challenge 1): bulk-loads the Mod2/3 logs. The other
+# challenges reuse the same data — no need to re-run per challenge. ILLUMINATE_WAIT is
+# short: provision_lab_streams.py (config.sh step 3a) has already created the named
+# streams at boot, so the loader finds them immediately and never waits the full default.
+- title: Launch Dataset
+  shell: GL_API_URL=https://localhost OS_URL=http://localhost:9200 TLS_VERIFY=0 ILLUMINATE_WAIT=15 python3 /opt/lab/scripts/load_lab_data.py
+  icon: "&#128229;"
+  timeout: 1200
+
+# NOTE: the Module 2 class also carries Log Playback On/Off buttons, driven by the
+# gl-log-replay service its apps/event_replay installs. Module 3 has no live-replay
+# content, so neither the service nor the buttons exist here. If a future Module 3
+# challenge needs live arrival, port apps/event_replay across as well; the buttons
+# alone will fail with "unit not found".
