@@ -8,6 +8,25 @@ showNewVersions: false
 themeName: graylog-theme
 
 actions:
+# Onboarding demo (Intro challenge): the Framework's Send-Logs ships ONE sample message
+# ("Demo Message" / "This is my little message from me to you. Enjoy your day!") over GELF
+# TCP to localhost:12201 (published by docker-compose-glservices.yml) → the Global GELF
+# input → learner sees it in Search as "Received by: Global GELF". Uses the pwsh profile
+# installed by setup_olivetin.sh (Default_Profile.ps1 defines Send-Logs + $env:GLServer).
+- title: Demo Log
+  shell: pwsh -c 'send-logs demo'
+  icon: "&#128190;"
+  timeout: 900
+
+# Launch the module dataset ONCE (challenge 1): bulk-loads the Mod2/3 logs. The other
+# challenges reuse the same data — no need to re-run per challenge. ILLUMINATE_WAIT is
+# short: Illuminate does not provision the named streams on this VM, so the loader
+# auto-creates them almost immediately instead of waiting the full default.
+- title: Launch Dataset
+  shell: GL_API_URL=https://localhost OS_URL=http://localhost:9200 TLS_VERIFY=0 ILLUMINATE_WAIT=15 python3 /opt/lab/scripts/load_lab_data.py
+  icon: "&#128229;"
+  timeout: 1200
+
 - title: Log Playback On
   shell: systemctl start gl-log-replay
   icon: "&#9654;&#65039;"

@@ -55,6 +55,9 @@ HERE    = os.path.dirname(os.path.abspath(__file__))
 DATA    = os.environ.get("LOG_DATA_DIR", os.path.join(HERE, "..", "log_data"))
 LAUNCH  = os.environ.get("LAUNCH", "now")
 BATCH   = int(os.environ.get("BATCH", "1000"))
+# Illuminate installs its named source streams asynchronously; wait up to this many
+# seconds for them before falling back to auto-creating our own. 0 disables the wait.
+ILLUMINATE_WAIT = int(os.environ.get("ILLUMINATE_WAIT", "180"))
 
 # Auth mode for the OpenSearch bulk endpoint. "auto": use a JWT only when a
 # password_secret is supplied (datanode backend); otherwise no auth (Framework's
@@ -73,8 +76,20 @@ STREAM_TITLE_BY_PRODUCT = {
 DEFAULT_STREAM_ID = "000000000000000000000001"
 DEFAULT_PREFIX    = "graylog"
 
+# Cosmetic "Received by": stamp bulk-indexed docs with this input's id (+ the node id)
+# so they display as if they arrived through the Global GELF input. The data is still
+# bulk-indexed — real input-flow is deferred to the module that needs it. Must match
+# provision_input.py's TITLE. Set RECEIVED_BY_INPUT="" to disable stamping.
+RECEIVED_BY_INPUT = os.environ.get("RECEIVED_BY_INPUT", "Global GELF")
+
 STRIP_PREFIX = ("gl2_",)
 STRIP_EXACT  = {"_id", "streams", "timestamp"}
+
+# Fields that the Illuminate/GIM mapping types as `long` but the cooked archive
+# carries as hex strings (e.g. "0xd24"). Coerce hex -> int so the bulk index does
+# not reject them (~7% of docs were dropped otherwise). Only these exact fields —
+# other hex-looking values (e.g. Windows logon_id) are legitimately kept as strings.
+HEX_INT_FIELDS = {"process_id", "process_parent_id"}
 
 
 def log(m): print(f"[load_lab_data] {m}", flush=True)
@@ -96,11 +111,23 @@ def _ctx_for(url):
 
 
 # ---- Graylog REST API (basic auth) ----------------------------------------
+def _auth_hdr():
+    return "Basic " + base64.b64encode(f"{USER}:{PASS}".encode()).decode()
+
+
 def api(path):
-    auth = base64.b64encode(f"{USER}:{PASS}".encode()).decode()
     r = urllib.request.Request(API + path, headers={
-        "Authorization": f"Basic {auth}", "Accept": "application/json",
+        "Authorization": _auth_hdr(), "Accept": "application/json",
         "X-Requested-By": "lab-loader"})
+    raw = urllib.request.urlopen(r, timeout=20, context=_ctx_for(API)).read().decode()
+    return json.loads(raw) if raw.strip() else {}
+
+
+def api_post(path, body=None):
+    data = json.dumps(body).encode() if body is not None else b""
+    r = urllib.request.Request(API + path, data=data, method="POST", headers={
+        "Authorization": _auth_hdr(), "Accept": "application/json",
+        "Content-Type": "application/json", "X-Requested-By": "lab-loader"})
     raw = urllib.request.urlopen(r, timeout=20, context=_ctx_for(API)).read().decode()
     return json.loads(raw) if raw.strip() else {}
 
@@ -158,7 +185,48 @@ def bulk(ndjson_bytes, key, ctx):
 def parse_ts(s): return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
 
 
-def prep(doc, delta, route):
+def _to_int(v):
+    """Coerce a hex ('0xd24') or decimal value to int; return unchanged on failure."""
+    if isinstance(v, list):
+        return [_to_int(x) for x in v]
+    if isinstance(v, str):
+        try:
+            return int(v, 16) if v.lower().startswith("0x") else int(v)
+        except ValueError:
+            return v
+    return v
+
+
+def received_by_fields():
+    """Resolve the Global GELF input + node ids for the cosmetic 'Received by' stamp.
+    Returns {} (no stamp) if disabled or the input is absent."""
+    if not RECEIVED_BY_INPUT:
+        return {}
+    try:
+        inputs = {i["title"]: i for i in api("/api/system/inputs").get("inputs", [])}
+        inp = inputs.get(RECEIVED_BY_INPUT)
+        if not inp:
+            log(f"note: input '{RECEIVED_BY_INPUT}' not found — docs get no received-by")
+            return {}
+        nresp = api("/api/system/cluster/nodes")
+        nlist = nresp.get("nodes", nresp)
+        if isinstance(nlist, dict):
+            node_id = next(iter(nlist), None)
+        elif isinstance(nlist, list) and nlist:
+            node_id = nlist[0].get("node_id")
+        else:
+            node_id = None
+        fields = {"gl2_source_input": inp["id"]}
+        if node_id:
+            fields["gl2_source_node"] = node_id
+        log(f"received-by: input {inp['id']} node {node_id}")
+        return fields
+    except Exception as e:
+        log(f"note: received-by lookup failed ({str(e)[:80]}) — skipping stamp")
+        return {}
+
+
+def prep(doc, delta, route, received_by):
     """strip internals, restamp, set streams; return (write_alias, doc)."""
     product = doc.get("event_source_product")
     if isinstance(product, list):
@@ -169,26 +237,100 @@ def prep(doc, delta, route):
     ts = parse_ts(doc["timestamp"]) + delta
     out["timestamp"] = ts.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
     out["streams"] = [stream_id]
+    # Coerce hex-string numeric fields the GIM mapping types as `long` (else dropped).
+    for f in HEX_INT_FIELDS:
+        if f in out:
+            out[f] = _to_int(out[f])
+    # Cosmetic "Received by <input> on <node>" (stripped gl2_* re-added intentionally).
+    out.update(received_by)
     return alias, out
 
 
+def default_index_set(index_sets):
+    """The writable default index set (id, prefix) — where auto-created streams write."""
+    for s in index_sets:
+        if s.get("default"):
+            return s["id"], s["index_prefix"]
+    # fallback: the 'graylog' prefixed set
+    for s in index_sets:
+        if s["index_prefix"] == DEFAULT_PREFIX:
+            return s["id"], s["index_prefix"]
+    return index_sets[0]["id"], index_sets[0]["index_prefix"]
+
+
+def create_stream(title, index_set_id):
+    """Create a stream on the given index set and resume it; return its id.
+
+    Bulk-indexed docs carry `streams=[id]`, so the stream only needs to EXIST (and
+    be running) for the UI/search to surface them — no stream rules are needed. This
+    is our fallback when Illuminate did not provision the named source streams."""
+    # GL 7.x wraps the create body ({"entity":..., "share_request":null}); a plain
+    # body 400s with "CreateEntityRequest: entity cannot be null".
+    entity = {"title": title, "description": "Auto-created by the Academy lab loader.",
+              "index_set_id": index_set_id, "remove_matches_from_default_stream": True}
+    body = {"entity": entity, "share_request": None}
+    sid = api_post("/api/streams", body).get("stream_id")
+    if sid:
+        try:
+            api_post(f"/api/streams/{sid}/resume")
+        except Exception as e:
+            log(f"  note: could not resume stream '{title}': {str(e)[:80]}")
+    return sid
+
+
+def wait_for_illuminate_streams(titles, timeout):
+    """Poll /api/streams until every title exists, or timeout. Returns the last
+    {title: stream} snapshot. Illuminate creates these streams asynchronously, so a
+    short wait lets us route into the REAL Illuminate streams/index sets (needed by
+    later enrichment/asset modules) instead of immediately auto-creating duplicates."""
+    titles = list(titles)
+    deadline = time.time() + timeout
+    snap = {}
+    while True:
+        snap = {s["title"]: s for s in api("/api/streams")["streams"]}
+        missing = [t for t in titles if t not in snap]
+        if not missing:
+            log(f"Illuminate streams present ({len(titles)}/{len(titles)})")
+            return snap
+        if time.time() >= deadline:
+            log(f"Illuminate wait timed out ({len(titles) - len(missing)}/{len(titles)} "
+                f"present after {timeout}s); will auto-create the rest")
+            return snap
+        log(f"waiting for Illuminate streams… {len(titles) - len(missing)}/{len(titles)}")
+        time.sleep(5)
+
+
 def build_routes():
-    """event_source_product -> (stream_id, '<prefix>_deflector')."""
-    streams = {s["title"]: s for s in api("/api/streams")["streams"]}
-    setprefix = {s["id"]: s["index_prefix"]
-                 for s in api("/api/system/indices/index_sets")["index_sets"]}
+    """event_source_product -> (stream_id, '<prefix>_deflector').
+
+    Prefer the REAL Illuminate source streams (wait for them, since Illuminate creates
+    them asynchronously) so data lands in the typed Illuminate index sets that later
+    modules expect. If a stream is still missing after the wait, auto-create it on the
+    default index set so learners still get real, selectable streams (fallback)."""
+    index_sets = api("/api/system/indices/index_sets")["index_sets"]
+    setprefix = {s["id"]: s["index_prefix"] for s in index_sets}
+    def_set_id, def_prefix = default_index_set(index_sets)
+
+    if ILLUMINATE_WAIT > 0:
+        streams = wait_for_illuminate_streams(STREAM_TITLE_BY_PRODUCT.values(), ILLUMINATE_WAIT)
+    else:
+        streams = {s["title"]: s for s in api("/api/streams")["streams"]}
+
     routes = {}
     for product, title in STREAM_TITLE_BY_PRODUCT.items():
         s = streams.get(title)
-        if not s:
-            log(f"WARNING: stream '{title}' not found — '{product}' docs -> Default")
+        if s:
+            prefix = setprefix.get(s["index_set_id"], def_prefix)
+            routes[product] = (s["id"], prefix + "_deflector")
+            log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector (Illuminate)")
             continue
-        prefix = setprefix.get(s["index_set_id"])
-        if not prefix:
-            log(f"WARNING: index set for '{title}' not found — '{product}' docs -> Default")
-            continue
-        routes[product] = (s["id"], prefix + "_deflector")
-        log(f"route {product:16} -> stream {s['id']} / {prefix}_deflector")
+        # Still missing after the wait -> create it on the default index set (fallback).
+        sid = create_stream(title, def_set_id)
+        if sid:
+            routes[product] = (sid, def_prefix + "_deflector")
+            log(f"route {product:16} -> stream {sid} / {def_prefix}_deflector (auto-created '{title}')")
+        else:
+            log(f"WARNING: could not create stream '{title}' — '{product}' docs -> Default")
     return routes
 
 
@@ -215,6 +357,7 @@ def main():
 
     wait_for_graylog()
     routes = build_routes()
+    received_by = received_by_fields()
     log(f"OpenSearch {OS_URL} (auth={'jwt' if USE_JWT else 'none'})")
     key = jwt_key() if USE_JWT else b""
     ctx = _ctx_for(OS_URL)
@@ -226,7 +369,7 @@ def main():
             line = line.strip()
             if not line:
                 continue
-            alias, doc = prep(json.loads(line), delta, routes)
+            alias, doc = prep(json.loads(line), delta, routes, received_by)
             batch_lines.append(json.dumps({"index": {"_index": alias}}))
             batch_lines.append(json.dumps(doc))
             n_in_batch += 1
@@ -238,9 +381,13 @@ def main():
         cnt, errs = bulk(("\n".join(batch_lines) + "\n").encode(), key, ctx)
         total += cnt; errors += errs
 
-    log(f"indexed {total} docs ({errors} errors) into the Illuminate index sets")
+    log(f"indexed {total} docs ({errors} errors)")
+    # Only a total failure should fail the OliveTin "Launch Dataset" button; a handful of
+    # per-doc index errors is non-fatal (the dataset still loaded).
+    if total == 0:
+        sys.exit("no documents indexed — check OpenSearch reachability / stream routing")
     if errors:
-        sys.exit(f"{errors} docs failed to index")
+        log(f"note: {errors} docs failed to index (non-fatal)")
 
 
 if __name__ == "__main__":

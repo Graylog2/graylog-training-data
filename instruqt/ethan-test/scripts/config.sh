@@ -35,6 +35,16 @@ sudo chown -R root:root /root
 chmod +x /$CLASS/apps/event_replay/installer/install.sh
 /$CLASS/apps/event_replay/installer/install.sh
 
+# --- 2c. Stage the dataset loader to a cleanup-proof path ---
+# /common/cleanup.sh runs LAST in setup and does `rm -r /$CLASS`, so the class
+# folder is GONE by lab runtime. The "Launch Dataset" OliveTin button is clicked by
+# the learner AFTER setup, so it cannot call /$CLASS/scripts/load_lab_data.py. Copy
+# the loader + its dataset to /opt/lab (which cleanup does not touch) and point the
+# button there. The loader resolves data as <script>/../log_data, so keep the same
+# scripts/ + log_data/ sibling layout under /opt/lab.
+mkdir -p /opt/lab
+cp -r /$CLASS/scripts /$CLASS/log_data /opt/lab/
+
 # --- 3. Course provisioning ---
 /common/certs.sh
 /common/course_settings.sh
@@ -42,6 +52,21 @@ chmod +x /$CLASS/apps/event_replay/installer/install.sh
 /common/ot_gl_theme.sh
 /common/docker_graylog_https.sh   # after this point everything is HTTPS
 /common/inst_illuminate.sh
+
+# --- 3a. Create the class's typed index sets + source streams at boot ---
+# The four source streams (Windows Security / Sysmon / PowerShell / Suricata) must EXIST,
+# on their typed index sets, before the learner opens the search page — otherwise the
+# runtime Launch Dataset loader auto-creates them on the DEFAULT index set, which causes
+# the QA stream-availability race (the picker caches its list at page load) and puts data
+# on the wrong index set. The "natural" path (enable the Illuminate PROCESSING packs)
+# needs the LICENSED Illuminate bundle; inst_illuminate.sh installs the +OPEN (community)
+# bundle, whose packs enable with HTTP 204 but create nothing. So we create the structure
+# directly here — a faithful copy of Illuminate's gl_* index sets + streams (verified
+# against gl_sandbox). License-independent, deterministic; the loader then routes data
+# into these real streams. Idempotent, so a future licensed bundle makes it a no-op.
+# (Enabling the packs is deferred to fix A: licensed-bundle / input-based future content.)
+GL_API_URL="https://localhost" TLS_VERIFY=0 \
+  python3 /$CLASS/scripts/provision_lab_streams.py
 
 # --- 3b. Mod5/6 Impossible Travel provisioning ---
 # Runs AFTER Illuminate so the `Illuminate:Palo Alto Messages` stream exists. Installs
@@ -52,22 +77,26 @@ chmod +x /$CLASS/apps/event_replay/installer/install.sh
 # content packs / the detection needs a runtime-resolved stream id.)
 GL_API_URL="https://localhost" python3 /$CLASS/scripts/provision_mod5_impossible.py
 
-# --- 4. Replay our captured dataset LAST ---
-# Re-stamps to launch, strips internal fields, and bulk-indexes each cooked doc
-# straight into its Illuminate index set (routed by event_source_product), setting
-# the doc's `streams` field so it appears under the right named stream. Arrays and
-# field types (e.g. gim_event_type_code:integer) are preserved — required by later
-# modules.
-#
-# The Framework deploys plain OpenSearch with the security plugin DISABLED
-# (docker-compose-glservices.yml), so the bulk endpoint needs no auth — leave
-# GL_PASSWORD_SECRET unset and the loader auto-selects no-auth mode. (If a future
-# track moves to a datanode backend, set GL_PASSWORD_SECRET to the Graylog
-# password_secret and the loader switches to JWT automatically.)
-# The Graylog API is HTTPS on 443 after docker_graylog_https.sh; OpenSearch is the
-# compose 'opensearch' service published on 9200.
-export GL_API_URL="https://localhost"
-export OS_URL="http://localhost:9200"
-python3 /$CLASS/scripts/load_lab_data.py
+# --- 4. Provision the "Global GELF" input at boot ---
+# The Demo Log OliveTin button sends a sample message THROUGH this input (onboarding),
+# and load_lab_data stamps its id onto the dataset so both read as "Received by: Global
+# GELF". Idempotent. (After docker_graylog_https.sh the API is HTTPS on 443.)
+GL_API_URL="https://localhost" TLS_VERIFY=0 python3 /$CLASS/scripts/provision_input.py
+
+# --- 5. Apply the class OliveTin config (buttons: Demo Log / Launch Dataset / Playback) ---
+# setup_olivetin.sh (step 1) installed the DEFAULT config; swap ours in + restart so the
+# buttons appear track-wide. Live path = /OliveTin-linux-amd64/config.yaml (symlink
+# /etc/OliveTin, capital). Service is `OliveTin`. (Per-challenge button variation, if ever
+# needed, is an Instruqt-UI challenge-setup step — not needed for Mod2, same buttons.)
+cp /$CLASS/configs/olivetin/playback.yaml /etc/OliveTin/config.yaml
+systemctl restart OliveTin
+
+# --- 6. Dataset load is LEARNER-TRIGGERED, not at boot ---
+# The learner clicks the OliveTin "Launch Dataset" button in challenge 1 to bulk-load
+# the module dataset ONCE (configs/olivetin/playback.yaml); the other challenges reuse
+# it. load_lab_data.py re-stamps to launch, preserves arrays/field types, waits for the
+# Illuminate streams (routing into the real ones when present, else auto-creating),
+# coerces hex process ids, and stamps gl2_source_input for the "Received by" line.
+# NOTE: not run here on purpose — see the Launch Dataset button.
 
 echo "Complete!"
